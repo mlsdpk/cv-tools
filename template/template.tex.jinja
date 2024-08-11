@@ -52,32 +52,62 @@
 
 \begin{rSection}{Education}
 {% for edu in education %}
-{\textbf{% raw %}{{% endraw %}{{ edu.university }}}, {{ edu.location }}} \hfill {\em {{ edu.dates }}} 
-\\ {{ edu.degree }} \hfill {{ edu.honors | default("") }}{% if edu.thesis_title %}
-\\ Thesis Title: \textit{ {{ edu.thesis_title }} } 
-{% endif %}\\ Supervisor: {{ edu.supervisor }}
+{\textbf{ {{-edu.university-}} }, {{ edu.location }}} \hfill {\em {{ edu.dates }}} 
+\\ {{ edu.degree }} \hfill {{ edu.honors | default("") }}
+{%-if edu.thesis_title-%}
+\\ Thesis Title: \textit{ {{-edu.thesis_title-}} }
+{%-endif-%}
+\\ Supervisor: {{ edu.supervisor }}
 {% endfor %}
 \end{rSection}
 
-% ====================== Research and Work Experience Section ====================== %
+{%-macro generate_section(section_title, entries)-%}
+% ====================== {{ section_title }} Section ====================== %
 
-\begin{rSection}{Research and Work Experience}
-{% for job in work_experience %}
-\begin{rSubsection}{\textbf{% raw %}{{% endraw %}{{ job.company }}}}{ {{ job.dates }} }{ {{ job.position }} }{}{}{% if job.responsibilities %}{% for responsibility in job.responsibilities %}
-    \item {{ responsibility }}{% endfor %}
-{% endif %}\end{rSubsection}
-{% endfor %}
-\end{rSection}
-
-% ====================== Teaching and Volunteering Section ====================== %
-
-\begin{rSection}{Teaching and Volunteering}
-{% for entry in teaching_volunteering %}
-\begin{rSubsection}{\textbf{% raw %}{{% endraw %}{{ entry.organization }}}}{ {{ entry.dates }} }{ {{ entry.position }}}{% raw %}{{% endraw %}{% if entry.supervisor %}Supervisor: {{ entry.supervisor }}{% endif %}}{% raw %}{{% endraw %}{% if entry.department %}{{ entry.department }}\\{% endif %}{{ entry.location }}}{% for responsibility in entry.responsibilities %}
-    \item {{ responsibility }}{% endfor %}
+\begin{rSection}{ {{-section_title-}} }
+{% for entry in entries %}
+\begin{rSubsection}
+{\textbf{ {{-entry.organization-}} }}
+{ {{ entry.dates }} }
+{ {{ entry.position }} }
+{ {%-if entry.supervisor-%}Supervisor: {{ entry.supervisor }}{% endif %}}
+{ {%-if entry.department-%}{{-entry.department-}}\\{% endif %}
+{{-entry.location-}}}
+{%-if entry.responsibilities-%}
+{%-for responsibility in entry.responsibilities%}
+    \item {{ responsibility }}
+{%-endfor-%}
+{% endif %}
 \end{rSubsection}
 {% endfor %}
 \end{rSection}
+{% endmacro %}
+
+{% if experience %}
+{% for exp in experience %}
+{{ generate_section( exp.name, exp.entity ) }}
+{% endfor %}
+{% endif %}
+
+{% if skills %}
+% ====================== Skills Section ====================== %
+\begin{rSection}{Skills}
+{%-for entry in skills %}
+\\{ {{-entry.name-}} :} \hfill { {{-entry.data-}} }
+{%-endfor%}
+\end{rSection}
+{% endif %}
+
+{% if talks %}
+% ====================== Talks/Workshops Section ====================== %
+\begin{rSection}{Invited Talks/Workshops}
+\begin{tabular}{p{0.5cm} p{1cm} p{14cm}}
+{%-for entry in talks %}
+{{ entry.month }} & {{ entry.year }} & {{ entry.name }} \\
+{%-endfor%}
+\end{tabular}
+\end{rSection}
+{% endif %}
 
 % ====================== Publications Section ====================== %
 
