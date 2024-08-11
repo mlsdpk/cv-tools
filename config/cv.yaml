@@ -73,22 +73,3 @@ talks:
   - name: "``Robotics in Modern Industry'', Guest lecture, Imaginary Institute of Technology."
     month: "May"
     year: "2021"
-
-publications:
-  - authors: "John Doe, Jane Smith, Alice Wonder"
-    title: "Quantum Computing: Bridging the Gap Between Theory and Application"
-    venue: "Journal of Computer Science"
-    year: "2024"
-    link: "https://example.com/quantum-computing-paper"
-
-  - authors: "John Doe, Bob Builder, Eve Code"
-    title: "Autonomous Robots: Navigating the Challenges of Real-World Environments"
-    venue: "International Journal of Robotics"
-    year: "2022"
-    link: "https://example.com/autonomous-robots-paper"
-
-  - authors: "John Doe, Charlie Tech"
-    title: "AI-Driven Cloud Solutions: Enhancing Efficiency and Scalability"
-    venue: "Conference on Cloud Computing"
-    year: "2021"
-    link: "https://example.com/ai-cloud-solutions-paper"

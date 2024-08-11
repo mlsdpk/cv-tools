@@ -26,18 +26,14 @@
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Set the paths based on the script's location
-CONFIG_FILE="$CURRENT_DIR/config/cv.yaml"
+CONFIG_DIR="$CURRENT_DIR/config"
+CONFIG_FILE="$CONFIG_DIR/cv.yaml"
+BIBTEX_FILE="$CONFIG_DIR/publications.bib"
 TEMPLATE_DIR="$CURRENT_DIR/template"
 LATEX_TEMPLATE_FILE="$TEMPLATE_DIR/template.tex.jinja"
 SCRIPT_DIR="$CURRENT_DIR/scripts"
 OUTPUT_DIR="$CURRENT_DIR/output"
 OUTPUT_FILE="$OUTPUT_DIR/output.tex"
-
-echo "CONFIG_FILE: $CONFIG_FILE"
-echo "TEMPLATE_DIR: $TEMPLATE_DIR"
-echo "LATEX_TEMPLATE_FILE: $LATEX_TEMPLATE_FILE"
-echo "OUTPUT_DIR: $OUTPUT_DIR"
-echo "OUTPUT_FILE: $OUTPUT_FILE"
 
 # Create the output directory if it doesn't exist
 mkdir -p "$OUTPUT_DIR"
@@ -47,7 +43,7 @@ cp "$TEMPLATE_DIR/resume.cls" "$OUTPUT_DIR/"
 
 # Run the Python script with the generated paths
 echo "python "$SCRIPT_DIR/generate_latex.py" "$CONFIG_FILE" "$LATEX_TEMPLATE_FILE" "$OUTPUT_FILE""
-python "$SCRIPT_DIR/generate_latex.py" "$CONFIG_FILE" "$LATEX_TEMPLATE_FILE" "$OUTPUT_FILE"
+python "$SCRIPT_DIR/generate_latex.py" "$CONFIG_FILE" "$LATEX_TEMPLATE_FILE" "$OUTPUT_FILE" --bibtex "$BIBTEX_FILE"
 
 # Notify the user that the script has completed
 echo "Latex cv generation complete. Output saved to $OUTPUT_FILE"

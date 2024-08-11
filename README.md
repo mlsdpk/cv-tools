@@ -10,6 +10,7 @@ An example CV created using this tool can be found [here](https://www.phonethk.c
 # Features
 - **Customizable LaTeX Templates**: Pre-defined LaTeX templates for creating professional CVs.
 - **Flexible Configuration**: Easy-to-edit configuration files to personalize your CV.
+- **BibTeX Support**: Automatically generate a formatted list of publications from a BibTeX file.
 - **Automated Build Process**: Scripted build process to generate the final PDF CV.
 
 # Getting Started
@@ -41,9 +42,12 @@ pip install -r requirements.txt
 ## Usage
 
 ### 1. YAML Configuration
-Edit the cv.yaml file in the config directory to include your personal details, education, work experience, and publications etc.
+Edit the `cv.yaml` file in the config directory to include your personal details, education, work experience, and publications etc.
 
-### 2. Run
+### 2. BibTeX Configuration
+To manage your publications, use a BibTeX file. The BibTeX file allows you to maintain a structured list of your publications, which can be automatically formatted and included in your CV. Ensure you have a .bib file in the config directory with your publication details.
+
+### 3. Run
 Use the provided script to generate your CV:
 ```
 ./run.sh

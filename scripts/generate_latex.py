@@ -22,6 +22,7 @@
 
 import yaml
 from jinja2 import Environment, FileSystemLoader
+from pybtex.database import parse_file
 import argparse
 import os
 
@@ -29,6 +30,48 @@ def load_config(config_path):
     """Load YAML configuration file."""
     with open(config_path) as file:
         return yaml.safe_load(file)
+    
+def format_name(person):
+    """Format the name by combining first, middle, and last names."""
+    first_names = ' '.join(person.first_names) if person.first_names else ''
+    middle_names = ' '.join(person.middle_names) if person.middle_names else ''
+    last_names = ' '.join(person.last_names) if person.last_names else ''
+    
+    full_name = f"{first_names} {middle_names} {last_names}".strip()
+    return full_name
+
+def load_bibtex(bibtex_path):
+    """Load BibTeX file and extract publication data."""
+    bib_data = parse_file(bibtex_path)
+    publications = []
+    
+    for entry in bib_data.entries.values():
+        authors_list = []
+        for person in entry.persons['author']:
+            full_name = format_name(person)
+            authors_list.append(full_name)
+        authors = ', '.join(authors_list)
+
+        # format the authors
+        def format_authors(authors_list):
+            """Format the authors list with commas and 'and' before the last author."""
+            if len(authors_list) > 1:
+                return ', '.join(authors_list[:-1]) + ' and ' + authors_list[-1]
+            elif authors_list:
+                return authors_list[0]
+            return ''
+        
+        authors = format_authors(authors_list)
+
+        publications.append({
+            'authors': authors,
+            'title': entry.fields['title'],
+            'venue': entry.fields.get('journal', entry.fields.get('booktitle', '')),
+            'year': entry.fields['year'],
+            'link': entry.fields.get('url', '')
+        })
+    
+    return publications
 
 def render_template(template_dir, template_file, config):
     """Render the Jinja2 template with the configuration data."""
@@ -47,14 +90,21 @@ def main():
     parser.add_argument('config', type=str, help="Path to the YAML configuration file.")
     parser.add_argument('template', type=str, help="Path to the Jinja2 template file.")
     parser.add_argument('output', type=str, help="Path to save the generated LaTeX file.")
+    parser.add_argument('--bibtex', type=str, help="Path to the BibTeX file for publications.", default=None)
     
     args = parser.parse_args()
     
     # Extract directory and file names
     template_dir, template_file = os.path.split(args.template)
     
-    # Load config, render template, and save output
+    # Load config
     config = load_config(args.config)
+
+    # If BibTeX file is provided, load it and update the config
+    if args.bibtex:
+        config['publications'] = load_bibtex(args.bibtex)
+    
+    # render template, and save output
     output_data = render_template(template_dir, template_file, config)
     save_output(args.output, output_data)
 
