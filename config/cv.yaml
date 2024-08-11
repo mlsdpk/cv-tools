@@ -1,0 +1,64 @@
+author_name: "Your Name"
+portfolio_url: "https://www.your_portfolio_website.com"
+orcid_id: "your-orcid-id"
+linkedin: "https://linkedin.com/in/your-linkedin-username"
+email: "your-email@email.com"
+
+education:
+  - university: "Sample University"
+    location: "Sample City, Sample Country"
+    dates: "Month Year - Month Year"
+    degree: "Bachelor of Science in Sample Field"
+    honors: "With Distinction"
+    thesis_title: "An Innovative Approach to Sample Topic"
+    supervisor: "Dr. Sample Supervisor"
+  - university: "Another Sample University"
+    location: "Another City, Another Country"
+    dates: "Month Year - Month Year"
+    degree: "Master of Science in Another Field"
+    supervisor: "Dr. Another Supervisor"
+
+work_experience:
+  - company: "Sample Company, Country"
+    dates: "Month Year - Present"
+    position: "Senior Role, Department"
+  - company: "Previous Company, Country"
+    dates: "Month Year - Month Year"
+    position: "Role, Department"
+    responsibilities:
+      - "Key responsibility or achievement"
+      - "Leadership role or project contribution"
+      - "Any specific technologies or methods used"
+      - "Additional notable achievements or contributions"
+
+teaching_volunteering:
+  - organization: "Sample Organization"
+    dates: "Month Year - Month Year"
+    position: "Teaching Assistant"
+    supervisor: "Dr. Sample Supervisor"
+    department: "Sample Department"
+    location: "Sample University, Country"
+    responsibilities:
+      - "Developed course material on Sample Topic"
+  - organization: "Another Organization"
+    dates: "Month Year - Month Year"
+    position: "President"
+    department: ""
+    location: "Sample University, Country"
+    responsibilities:
+      - "Led the organization and managed events"
+      - "Promoted engagement in relevant topics"
+      - "Contributed to the community through activities"
+
+publications:
+  - authors: "Author One, Author Two, Your Name, Author Four"
+    title: "Title of the Publication"
+    venue: "Journal or Conference Name"
+    year: "Year"
+    link: "https://example.com/publication"
+
+  - authors: "Your Name, Author Two, Author Three, Author Four"
+    title: "Another Publication Title"
+    venue: "Journal or Conference Name"
+    year: "Year"
+    link: "https://example.com/publication"

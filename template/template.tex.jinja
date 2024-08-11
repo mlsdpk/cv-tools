@@ -1,0 +1,91 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Medium Length Professional CV
+% LaTeX Template
+% Version 2.0 (8/5/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Trey Hunner (http://www.treyhunner.com/)
+%
+% Important note:
+% This template requires the resume.cls file to be in the same directory as the
+% .tex file. The resume.cls file provides the resume style used for structuring the
+% document.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MIT License
+%
+% Copyright (c) 2024 Phone Thiha Kyaw
+
+% Permission is hereby granted, free of charge, to any person obtaining a copy
+% of this software and associated documentation files (the "Software"), to deal
+% in the Software without restriction, including without limitation the rights
+% to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+% copies of the Software, and to permit persons to whom the Software is
+% furnished to do so, subject to the following conditions:
+% 
+% The above copyright notice and this permission notice shall be included in all
+% copies or substantial portions of the Software.
+% 
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+% IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+% FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+% AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+% LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+% OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+% SOFTWARE.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{resume} % Use the custom resume.cls style
+
+\name{ {{author_name}} }
+\address{\url{ {{portfolio_url}} } \orcidicon{ {{ orcid_id }} } \href{ {{ linkedin }} }{\colorfaLinkedinSquare}}
+\address{ {{ email }} \\ Curriculum Vitae, \today}
+
+\begin{document}
+
+% ====================== Education Section ====================== %
+
+\begin{rSection}{Education}
+{% for edu in education %}
+{\textbf{% raw %}{{% endraw %}{{ edu.university }}}, {{ edu.location }}} \hfill {\em {{ edu.dates }}} 
+\\ {{ edu.degree }} \hfill {{ edu.honors | default("") }}{% if edu.thesis_title %}
+\\ Thesis Title: \textit{ {{ edu.thesis_title }} } 
+{% endif %}\\ Supervisor: {{ edu.supervisor }}
+{% endfor %}
+\end{rSection}
+
+% ====================== Research and Work Experience Section ====================== %
+
+\begin{rSection}{Research and Work Experience}
+{% for job in work_experience %}
+\begin{rSubsection}{\textbf{% raw %}{{% endraw %}{{ job.company }}}}{ {{ job.dates }} }{ {{ job.position }} }{}{}{% if job.responsibilities %}{% for responsibility in job.responsibilities %}
+    \item {{ responsibility }}{% endfor %}
+{% endif %}\end{rSubsection}
+{% endfor %}
+\end{rSection}
+
+% ====================== Teaching and Volunteering Section ====================== %
+
+\begin{rSection}{Teaching and Volunteering}
+{% for entry in teaching_volunteering %}
+\begin{rSubsection}{\textbf{% raw %}{{% endraw %}{{ entry.organization }}}}{ {{ entry.dates }} }{ {{ entry.position }}}{% raw %}{{% endraw %}{% if entry.supervisor %}Supervisor: {{ entry.supervisor }}{% endif %}}{% raw %}{{% endraw %}{% if entry.department %}{{ entry.department }}\\{% endif %}{{ entry.location }}}{% for responsibility in entry.responsibilities %}
+    \item {{ responsibility }}{% endfor %}
+\end{rSubsection}
+{% endfor %}
+\end{rSection}
+
+% ====================== Publications Section ====================== %
+
+\begin{rSection}{Publications}
+\vspace{-1.1em}
+{% for publication in publications %}
+    \item {{ publication.authors | replace(author_name, "\\textbf{" + author_name + "}") }}, \emph{% raw %}{{% endraw %}{{ publication.title }}}, {{ publication.venue }}, {{ publication.year }}{% if publication.link %} \href{% raw %}{{% endraw %}{{ publication.link }}}{[Link]}{% endif %}.
+{% endfor %}
+\end{rSection}
+
+\end{document}
