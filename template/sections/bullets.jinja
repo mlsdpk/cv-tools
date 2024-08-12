@@ -1,0 +1,21 @@
+{% macro render(title, description, content) %}
+    \begin{rSection}{ {{ title }} }
+    {% if description %}
+        {{ description }}
+    {%-endif-%}
+    \begin{itemize}[leftmargin=*]
+    {% for entry in content %}
+        {% if entry.subitems %}
+            \item {{ entry.item }}
+            \begin{itemize}
+                {% for subitem in entry.subitems %}
+                    \item {{ subitem }}
+                {% endfor %}
+            \end{itemize}
+        {% else %}
+            \item {{ entry.item }}
+        {%-endif-%}
+    {% endfor %}
+    \end{itemize}
+    \end{rSection}
+{% endmacro %}

@@ -40,6 +40,13 @@
 % SOFTWARE.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+{% import 'sections/education.jinja' as education_macros %}
+{% import 'sections/bullets.jinja' as bullets_macros %}
+{% import 'sections/experience.jinja' as experience_macros %}
+{% import 'sections/skills.jinja' as skills_macros %}
+{% import 'sections/talks.jinja' as talks_macros %}
+{% import 'sections/publications.jinja' as publications_macros %}
+
 \documentclass{resume} % Use the custom resume.cls style
 
 \name{ {{author_name}} }
@@ -48,74 +55,24 @@
 
 \begin{document}
 
-% ====================== Education Section ====================== %
-
-\begin{rSection}{Education}
-{% for edu in education %}
-{\textbf{ {{-edu.university-}} }, {{ edu.location }}} \hfill {\em {{ edu.dates }}} 
-\\ {{ edu.degree }} \hfill {{ edu.honors | default("") }}
-{%-if edu.thesis_title-%}
-\\ Thesis Title: \textit{ {{-edu.thesis_title-}} }
-{%-endif-%}
-\\ Supervisor: {{ edu.supervisor }}
-{% endfor %}
-\end{rSection}
-
-{%-macro generate_section(section_title, entries)-%}
-% ====================== {{ section_title }} Section ====================== %
-
-\begin{rSection}{ {{-section_title-}} }
-{% for entry in entries %}
-\begin{rSubsection}
-{\textbf{ {{-entry.organization-}} }}
-{ {{ entry.dates }} }
-{ {{ entry.position }} }
-{ {%-if entry.supervisor-%}Supervisor: {{ entry.supervisor }}{% endif %}}
-{ {%-if entry.department-%}{{-entry.department-}}\\{% endif %}
-{{-entry.location-}}}
-{%-if entry.responsibilities-%}
-{%-for responsibility in entry.responsibilities%}
-    \item {{ responsibility }}
-{%-endfor-%}
-{% endif %}
-\end{rSubsection}
-{% endfor %}
-\end{rSection}
-{% endmacro %}
-
-{% if experience %}
-{% for exp in experience %}
-{{ generate_section( exp.name, exp.entity ) }}
-{% endfor %}
+{% if sections %}
+  {% for section in sections %}
+    {% if section.type == 'education' %}
+        {{ education_macros.render(section.content) }}
+    {% elif section.type == 'bullets' %}
+        {{ bullets_macros.render(section.title, section.description, section.content) }}
+    {% elif section.type == 'experience' %}
+        {{ experience_macros.render(section.content) }}
+    {% elif section.type == 'skills' %}
+        {{ skills_macros.render(section.content) }}
+    {% elif section.type == 'talks' %}
+        {{ talks_macros.render(section.content) }}
+    {% endif %}
+  {% endfor %}
 {% endif %}
 
-{% if skills %}
-% ====================== Skills Section ====================== %
-\begin{rSection}{Skills}
-{%-for entry in skills %}
-\\{ {{-entry.name-}} :} \hfill { {{-entry.data-}} }
-{%-endfor%}
-\end{rSection}
+{% if publications %}
+  {{ publications_macros.render(publications) }}
 {% endif %}
-
-{% if talks %}
-% ====================== Talks/Workshops Section ====================== %
-\begin{rSection}{Invited Talks/Workshops}
-\begin{tabular}{p{0.5cm} p{1cm} p{14cm}}
-{%-for entry in talks %}
-{{ entry.month }} & {{ entry.year }} & {{ entry.name }} \\
-{%-endfor%}
-\end{tabular}
-\end{rSection}
-{% endif %}
-
-% ====================== Publications Section ====================== %
-
-\begin{rSection}{Publications}
-\vspace{-1.1em}
-{% for publication in publications %}
-    \item {{ publication.authors | replace(author_name, "\\textbf{" + author_name + "}") }}, \emph{% raw %}{{% endraw %}{{ publication.title }}}, {{ publication.venue }}, {{ publication.year }}{% if publication.link %} \href{% raw %}{{% endraw %}{{ publication.link }}}{[Link]}{% endif %}.
-{% endfor %}
-\end{rSection}
 
 \end{document}

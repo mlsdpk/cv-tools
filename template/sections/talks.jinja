@@ -1,0 +1,10 @@
+{% macro render(talks) %}
+    % ====================== Talks/Workshops Section ====================== %
+    \begin{rSection}{Invited Talks/Workshops}
+    \begin{tabular}{p{0.5cm} p{1cm} p{14cm}}
+    {%-for entry in talks %}
+    {{ entry.month }} & {{ entry.year }} & {{ entry.name }} \\
+    {%-endfor%}
+    \end{tabular}
+    \end{rSection}
+{% endmacro %}

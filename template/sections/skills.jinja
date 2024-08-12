@@ -1,0 +1,8 @@
+{% macro render(skills) %}
+    % ====================== Skills Section ====================== %
+    \begin{rSection}{Skills}
+    {%-for entry in skills %}
+    \\{ {{-entry.name-}} :} \hfill { {{-entry.data-}} }
+    {%-endfor%}
+    \end{rSection}
+{% endmacro %}

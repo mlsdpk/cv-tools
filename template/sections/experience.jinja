@@ -1,0 +1,28 @@
+{%-macro _render_section(section_title, entries)-%}
+    % ====================== {{ section_title }} Section ====================== %
+    \begin{rSection}{ {{-section_title-}} }
+    {% for entry in entries %}
+    \begin{rSubsection}
+    {\textbf{ {{-entry.organization-}} }}
+    { {{ entry.dates }} }
+    { {{ entry.position }} }
+    { {%-if entry.supervisor-%}Supervisor: {{ entry.supervisor }}{% endif %}}
+    { {%-if entry.department-%}{{-entry.department-}}\\{% endif %}
+    {{-entry.location-}}}
+    {%-if entry.responsibilities-%}
+    \begin{itemize}
+    {%-for responsibility in entry.responsibilities-%}
+        \item {{ responsibility}}
+    {%-endfor%}
+    \end{itemize}
+    {% endif %}
+    \end{rSubsection}
+    {% endfor %}
+    \end{rSection}
+{% endmacro %}
+
+{%-macro render(experience)-%}
+    {% for exp in experience %}
+        {{ _render_section( exp.name, exp.entity ) }}
+    {% endfor %}
+{% endmacro %}

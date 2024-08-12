@@ -1,0 +1,13 @@
+{% macro render(education) %}
+    % ====================== Education Section ====================== %
+    \begin{rSection}{Education}
+    {% for edu in education %}
+    {\textbf{ {{-edu.university-}} }, {{ edu.location }}} \hfill {\em {{ edu.dates }}} 
+    \\ {{ edu.degree }} \hfill {{ edu.honors | default("") }}
+    {%-if edu.thesis_title-%}
+    \\ Thesis Title: \textit{ {{-edu.thesis_title-}} }
+    {%-endif-%}
+    \\ Supervisor: {{ edu.supervisor }}
+    {% endfor %}
+    \end{rSection}
+{% endmacro %}
