@@ -1,5 +1,16 @@
-CV Tools
-========
+<!-- markdownlint-disable-next-line -->
+<div align="center">
+
+  <!-- markdownlint-disable-next-line -->
+  # CV Tools
+
+  A tool to automate the creation of professional LaTeX-based CVs.
+
+  ![LaTeX](https://img.shields.io/badge/latex-%23008080.svg?style=for-the-badge&logo=latex&logoColor=white)
+  ![Jinja](https://img.shields.io/badge/jinja-white.svg?style=for-the-badge&logo=jinja&logoColor=black)
+  ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+
+</div>
 
 CV Tools is a project designed to streamline the creation of academic CVs using LaTeX. This project provides templates and configuration files to easily generate an academic CV with customizable sections for education, work experience, publications, and more.
 
