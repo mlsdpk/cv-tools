@@ -27,52 +27,68 @@ An example CV created using this tool can be found [here](https://www.phonethk.c
 
 # Table of Contents
 - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
     - [Installation](#installation)
     - [Usage](#usage)
 - [YAML Configuration](#yaml-configuration)
-- [Publications](#publications)
+- [BibTeX Configuration](#bibtex-configuration)
+- [Contributing](#contributing)
 
 # Getting Started
 
-Follow these instructions to set up and use CV Tools on your local machine.
-
-## Prerequisites
-- **LaTeX Distribution**: Ensure you have a LaTeX distribution installed. For instance, TeX Live or MikTeX.
-- **Python**: Python 3.x is required for running the build scripts.
+Below are two installation methods to set up and use CV Tools on your local machine. The Docker-based setup is recommended for a hassle-free experience, but you can also set up manually from the source if you prefer.
 
 ## Installation
-### 1. Clone the Repository:
+
+### Method 1: Using Docker (Recommended)
+
+> [!WARNING]  
+> Coming soon.
+
+#### Prerequisites
+- **Docker**: Ensure you have Docker installed on your machine. You can download and install Docker from [here](https://docs.docker.com/engine/install/).
+
+### Method 2: From Source with Manual Installation
+
+If you prefer to set up the environment manually on your local machine, follow the steps below.
+
+#### Prerequisites
+- **LaTeX Distribution**: Ensure you have a LaTeX distribution installed. For instance, [TeX Live](https://www.tug.org/texlive/) (recommended) or [MikTeX](https://miktex.org/).
+- **Python**: Python 3.x is required for running the build scripts.
+
+#### Installing Dependencies
+
+Make sure the necessary LaTeX packages are installed:
 ```bash
-git clone https://github.com/yourusername/cv-tools.git
-cd cv-tools
+$ tlmgr install fontawesome xcolor geometry datetime2 scalerel academicons
 ```
 
-### 2. Install Dependencies:
-Ensure you have the required LaTeX packages installed:
+To manage your Python dependencies, it's recommended to use a virtual environment:
 ```bash
-tlmgr install fontawesome xcolor geometry datetime2 scalerel academicons
+$ python3 -m venv cv-tools
+$ source cv-tools/bin/activate
 ```
 
-Install python dependencies using the provided `requirements.txt` file:
+Install the required Python packages using requirements.txt:
 ```bash
-pip install -r requirements.txt
+$ pip install -r requirements.txt
+```
+
+Clone the Repository:
+```bash
+$ git clone https://github.com/mlsdpk/cv-tools.git
+$ cd cv-tools
 ```
 
 ## Usage
-
-### 1. YAML Configuration
-Edit the `cv.yaml` file in the config directory to include your personal details, education, work experience, and publications etc.
-
-### 2. BibTeX Configuration
-To manage your publications, use a BibTeX file. The BibTeX file allows you to maintain a structured list of your publications, which can be automatically formatted and included in your CV. Ensure you have a .bib file in the config directory with your publication details.
-
-### 3. Run
-Use the provided script to generate your CV:
+To generate the default CV, you can run the provided shell script. This script will use the sample `cv.yaml` and `publications.bib` files located in the config directory.
+```bash
+$ ./run.sh 
 ```
-./run.sh
-```
-This script creates a directory called `output` and the generated `.tex` file and the resulting PDF will be saved under that directory.
+This command will create a PDF file of the CV using the default configuration. The generated `.tex` file and the resulting PDF file will be located in the `output` directory.
+
+You can customize the content of your CV by editing the `cv.yaml` file in the `config` directory. This file allows you to define your personal details, education, work experience, skills, and more. You can add or remove sections, modify the fields, and tailor the CV content to your specific needs. The supported section types include `education`, `experience`, `skills`, `bullets`, `talks`, and `publications`. For more information, refer to [YAML Configuration](#yaml-configuration) section.
+
+This tool also supports to automatically list your publications based on BibTeX entries provided in this BibTeX file. Refer to [BibTeX Configuration](#bibtex-configuration) section for more details on configuring BibTeX entries.
 
 # YAML Configuration
 
@@ -276,8 +292,25 @@ Example:
 
 An example of a complete YAML configuration can be found [here](config/cv.yaml).
 
-# Publications
-This tool will automatically list your publications based on BibTeX entries. You can manage your publications by adding BibTeX data to a file named `publications.bib` under config directory. The list of publications will be automatically populated in the CV based on the entries provided in this BibTeX file. An example BibTeX data file is provided [here](config/publications.bib).
+# BibTeX Configuration
+
+Managing your publications is straightforward with a BibTeX file. The BibTeX file allows you to maintain a structured list of your publications, which can be automatically formatted and included in your CV.
+
+## Steps to Configure BibTeX:
+1. Ensure you have a `publications.bib` file in the config directory with your publication details.
+2. Add your BibTeX entries directly into this file, and they will be automatically formatted and included in your CV.
+
+**Example BibTeX Entry:**
+```bibtex
+@article{doe2024quantum,
+  author = {John Doe and Jane Smith and Alice Wonder},
+  title = {Quantum Computing: Bridging the Gap Between Theory and Application},
+  journal = {Journal of Computer Science},
+  year = {2024},
+  url = {https://example.com/quantum-computing-paper}
+}
+```
+Your publications will be included in the CV in the order they appear in the .bib file. An example BibTeX data file is provided [here](config/publications.bib).
 
 # Contributing
 Feel free to contribute to this project by submitting issues or pull requests. Contributions are welcome to improve the templates, add new features, or fix bugs.
