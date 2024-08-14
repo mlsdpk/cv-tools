@@ -315,5 +315,8 @@ Your publications will be included in the CV in the order they appear in the .bi
 # Contributing
 Feel free to contribute to this project by submitting issues or pull requests. Contributions are welcome to improve the templates, add new features, or fix bugs.
 
+# Acknowledgments
+The LaTeX template currently supported in this project is based on the **Medium Length Professional CV** template from [LaTeXTemplates.com](https://www.latextemplates.com/template/medium-length-professional-cv), which has been extensively modified for this project. The original template was created by [Trey Hunner](https://treyhunner.com).
+
 # License
 This project is licensed under the [MIT License](https://opensource.org/license/mit).
