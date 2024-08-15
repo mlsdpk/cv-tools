@@ -56,19 +56,21 @@
 \begin{document}
 
 {% if sections %}
-  {% for section in sections %}
-    {% if section.type == 'education' %}
-        {{ education_macros.render(section.content) }}
-    {% elif section.type == 'bullets' %}
-        {{ bullets_macros.render(section.title, section.description, section.content) }}
-    {% elif section.type == 'experience' %}
-        {{ experience_macros.render(section.content) }}
-    {% elif section.type == 'skills' %}
-        {{ skills_macros.render(section.content) }}
-    {% elif section.type == 'talks' %}
-        {{ talks_macros.render(section.content) }}
-    {% endif %}
-  {% endfor %}
+  {%-for section in sections-%}
+    {%-if section.type == 'education'-%}
+        {{-education_macros.render(section.content)-}}
+    {%-elif section.type == 'bullets'-%}
+        {{-bullets_macros.render(section.title, section.description, section.content)-}}
+    {%-elif section.type == 'experience'-%}
+        {{-experience_macros.render(section.content)-}}
+    {%-elif section.type == 'skills'-%}
+        {{-skills_macros.render(section.content)-}}
+    {%-elif section.type == 'talks'-%}
+        {{-talks_macros.render(section.content)-}}
+    {%-elif section.type == 'newpage'-%}
+        \newpage
+    {%-endif-%}
+  {%-endfor-%}
 {% endif %}
 
 {% if publications %}

@@ -127,8 +127,8 @@
    {#5}
    }
   }\smallskip
-  \begin{list}{$\cdot$}{\leftmargin=0em} % \cdot used for bullets, no indentation
-   \itemsep -0.5em \vspace{-0.5em} % Compress items in list together for aesthetics
+  \begin{list}{\textbullet}{\leftmargin=1em} % \cdot used for bullets, no indentation
+    \setlength{\itemsep}{-0.5em} \vspace{-0.5em} % Reduce vertical spacing between items in the list for a tighter look
   }{
   \end{list}
   \vspace{0.5em} % Some space after the list of bullet points
@@ -167,8 +167,7 @@
 \end{tikzpicture}
 }{|}}}}
 
-\usepackage[en-GB]{datetime2}
-\DTMlangsetup[en-GB]{ord=raise}
+\usepackage[nodayofweek, short]{datetime}
 
 \usepackage[left=0.55in,top=0.6in,right=0.55in,bottom=0.6in]{geometry} % Document margins
 \newcommand{\tab}[1]{\hspace{.2667\textwidth}\rlap{#1}}

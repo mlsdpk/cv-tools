@@ -2,7 +2,7 @@
     % ====================== Publications Section ====================== %
     \begin{rSection}{Publications}
     \vspace{-1.1em}
-    {% for publication in publications %}
+    {%-for publication in publications %}
         \item {{ publication.authors }}, \emph{% raw %}{{% endraw %}{{ publication.title }}}, {{ publication.venue }}, {{ publication.year }}{% if publication.link %} \href{% raw %}{{% endraw %}{{ publication.link }}}{[Link]}{% endif %}.
     {% endfor %}
     \end{rSection}

@@ -1,8 +1,10 @@
 {% macro render(skills) %}
     % ====================== Skills Section ====================== %
     \begin{rSection}{Skills}
-    {%-for entry in skills %}
-    \\{ {{-entry.name-}} :} \hfill { {{-entry.data-}} }
-    {%-endfor%}
+    \begin{itemize}[leftmargin=0em, label={}, noitemsep]
+    {% for entry in skills %}
+    \item { {{-entry.name-}} :} \hfill { {{-entry.data-}} }
+    {%-endfor %}
+    \end{itemize}
     \end{rSection}
 {% endmacro %}

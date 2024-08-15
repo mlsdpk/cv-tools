@@ -10,12 +10,12 @@
     { {%-if entry.department-%}{{-entry.department-}}\\{% endif %}
     {{-entry.location-}}}
     {%-if entry.responsibilities-%}
-    \begin{itemize}
     {%-for responsibility in entry.responsibilities-%}
         \item {{ responsibility}}
     {%-endfor%}
-    \end{itemize}
-    {% endif %}
+    {% else %} 
+        \item[]\vspace{-2em}
+    {%-endif-%}
     \end{rSubsection}
     {% endfor %}
     \end{rSection}

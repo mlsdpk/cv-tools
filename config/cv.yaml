@@ -65,6 +65,8 @@ sections:
       - item: "Best Paper Award at Tech Innovations Conference (2023)"
       - item: "Outstanding Graduate Award, Fictional University (2024)"
 
+  - type: newpage
+
   - type: experience
     content:
       - name: "Certifications"
