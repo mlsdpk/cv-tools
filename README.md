@@ -13,9 +13,9 @@
   ![cover photo](docs/img/cover.png)
 </div>
 
-CV Tools is a project designed to streamline the creation of academic CVs using LaTeX. This project provides templates and configuration files to easily generate an academic CV with customizable sections for education, work experience, publications, and more.
+CV Tools is a project designed to streamline the creation of professional CVs using LaTeX. This tool provides templates and configuration files to easily generate a CV with customizable sections for education, work experience, publications, and much more.
 
-Feel free to edit and use this project according to your needs. Customize the LaTeX templates and configuration files to fit your personal requirements and preferences.
+Feel free to edit and use this tool according to your needs. Customize the LaTeX templates and configuration files to fit your personal requirements and preferences.
 
 An example CV created using this tool can be found [here](https://www.phonethk.com/assets/docs/cv.pdf).
 
