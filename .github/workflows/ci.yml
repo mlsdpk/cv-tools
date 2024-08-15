@@ -1,0 +1,43 @@
+name: CI - CV Generation
+
+on:
+  push:
+    branches:
+      - master  # Run on every push to the master branch
+  pull_request:
+    branches:
+      - master  # Run on every pull request to the master branch
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]  # Define the OS matrix
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up TeX Live on Ubuntu
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-full
+
+      - name: Set up TeX Live on macOS
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew install --cask mactex-no-gui
+          sudo tlmgr update --self
+
+      - name: Generate CV
+        run: |
+          ./run.sh
+
+      - name: Upload CV PDF as an artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: cv-pdf-${{ matrix.os }}
+          path: output/output.pdf
