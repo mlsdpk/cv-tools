@@ -24,7 +24,9 @@ jobs:
         uses: teatimeguest/setup-texlive-action@v3
         with:
           packages: |
-            pdflatex
+            scheme-basic
+            hyperref
+            microtype
 
       - name: Generate CV
         run: |
