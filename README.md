@@ -80,15 +80,41 @@ $ cd cv-tools
 ```
 
 ## Usage
-To generate the default CV, you can run the provided shell script. This script will use the sample `cv.yaml` and `publications.bib` files located in the config directory.
+To generate a CV, you can use the provided shell script, which offers flexibility through various command-line options.
+
+## Default CV Generation
+Running the script without any options will generate the CV using the default configuration (`cv.yaml`) and publication data (`publications.bib`) located in the `config` directory.
 ```bash
-$ ./run.sh 
+$ ./run.sh
 ```
-This command will create a PDF file of the CV using the default configuration. The generated `.tex` file and the resulting PDF file will be located in the `output` directory.
+This command will also check and install all necessary dependencies before generating a `.tex` file and a PDF file, both of which will be saved in the `output` directory.
 
-You can customize the content of your CV by editing the `cv.yaml` file in the `config` directory. This file allows you to define your personal details, education, work experience, skills, and more. You can add or remove sections, modify the fields, and tailor the CV content to your specific needs. The supported section types include `education`, `experience`, `skills`, `bullets`, `talks`, and `publications`. For more information, refer to [YAML Configuration](#yaml-configuration) section.
+## Customize the CV Generation
+You can customize the CV generation by specifying different configuration and publication files, as well as changing the output file location.
+- **Specify a different YAML configuration file:**
+  ```bash
+  $ ./run.sh -c path/to/custom_config.yaml
+  ```
+- **Use a different BibTeX file for publications:**
+  ```bash
+  $ ./run.sh -b path/to/custom_publications.bib
+  ```
+- **Change the output file location:**
+  ```bash
+  $ ./run.sh -o path/to/output/custom_cv.tex
+  ```
+These options can be combined together as well to suit your needs.
 
-This tool also supports to automatically list your publications based on BibTeX entries provided in this BibTeX file. Refer to [BibTeX Configuration](#bibtex-configuration) section for more details on configuring BibTeX entries.
+You can customize the content of your CV by editing the YAML configuration file. By default, this is the `cv.yaml` file located in the `config` directory, but you can specify a different YAML file from any location. This file allows you to define your personal details, education, work experience, skills, and more. You can add or remove sections, modify the fields, and tailor the CV content to your specific needs. The supported section types include `education`, `experience`, `skills`, `bullets`, `talks`, and `publications`. For more information, refer to [YAML Configuration](#yaml-configuration) section.
+
+This tool also supports to automatically list your publications based on BibTeX entries provided in a specified BibTeX file. By default, this is the `publications.bib` file located in the `config` directory, but you can use a different BibTeX file from any location. Refer to [BibTeX Configuration](#bibtex-configuration) section for more details on configuring BibTeX entries.
+
+## Skipping Dependency Checks and Installations
+If you already have all dependencies installed and want to skip the automatic checking and installation process, use the `--no-deps` option:
+```bash
+$ ./run.sh --no-deps
+```
+This option is useful for speeding up subsequent runs when you know that all dependencies are already satisfied.
 
 # YAML Configuration
 
@@ -297,8 +323,8 @@ An example of a complete YAML configuration can be found [here](config/cv.yaml).
 Managing your publications is straightforward with a BibTeX file. The BibTeX file allows you to maintain a structured list of your publications, which can be automatically formatted and included in your CV.
 
 ## Steps to Configure BibTeX:
-1. Ensure you have a `publications.bib` file in the config directory with your publication details.
-2. Add your BibTeX entries directly into this file, and they will be automatically formatted and included in your CV.
+1. **Specify Your BibTeX File:** By default, the tool uses a `publications.bib` file located in the `config` directory. However, you can specify a different BibTeX file from any location when running the script.
+2. **Add BibTeX Entries:** Ensure your BibTeX file contains the entries for your publications. The tool will automatically format these entries and include them in your CV.
 
 **Example BibTeX Entry:**
 ```bibtex
