@@ -20,17 +20,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up TeX Live on Ubuntu
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y texlive-full texlive-fonts-extra texlive-fonts-recommended
-
-      - name: Set up TeX Live on macOS
-        if: matrix.os == 'macos-latest'
-        run: |
-          brew install --cask mactex-no-gui
-          sudo tlmgr update --self
+      - name: Setup TeX Live
+        uses: teatimeguest/setup-texlive-action@v3
+        with:
+          packages: |
+            pdflatex
 
       - name: Generate CV
         run: |
