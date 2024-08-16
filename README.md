@@ -6,9 +6,6 @@
 
   A tool to automate the creation of professional LaTeX-based CVs.
 
-  ![GitHub license](https://img.shields.io/github/license/mlsdpk/cv-tools)
-  ![CI](https://img.shields.io/github/actions/workflow/status/mlsdpk/cv-tools/ci.yml?logo=github)
-
   ![LaTeX](https://img.shields.io/badge/latex-%23008080.svg?style=for-the-badge&logo=latex&logoColor=white)
   ![Jinja](https://img.shields.io/badge/jinja-white.svg?style=for-the-badge&logo=jinja&logoColor=black)
   ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
@@ -20,13 +17,16 @@ CV Tools is a project designed to streamline the creation of professional CVs us
 
 Feel free to edit and use this tool according to your needs. Customize the LaTeX templates and configuration files to fit your personal requirements and preferences.
 
-An example CV created using this tool can be found [here](https://www.phonethk.com/assets/docs/cv.pdf).
-
 # Features
 - **Customizable LaTeX Templates**: Pre-defined LaTeX templates for creating professional CVs.
 - **Flexible Configuration**: Easy-to-edit configuration files to personalize your CV.
 - **BibTeX Support**: Automatically generate a formatted list of publications from a BibTeX file.
 - **Automated Build Process**: Scripted build process to generate the final PDF CV.
+
+# Build Status
+| Ubuntu | macOS |
+|-----------------------|----------------------|
+| ![Ubuntu Build](https://github.com/mlsdpk/cv-tools/actions/workflows/ubuntu.yml/badge.svg) | ![macOS Build](https://github.com/mlsdpk/cv-tools/actions/workflows/macos.yml/badge.svg) |
 
 # Table of Contents
 - [Getting Started](#getting-started)
