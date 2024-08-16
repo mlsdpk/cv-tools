@@ -1,0 +1,15 @@
+name: Ubuntu
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    uses: ./.github/workflows/common.yml
+    with:
+      os: ubuntu-latest

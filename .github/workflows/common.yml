@@ -1,20 +1,16 @@
-name: CI - CV Generation
+name: Reusable workflow
 
 on:
-  push:
-    branches:
-      - master  # Run on every push to the master branch
-  pull_request:
-    branches:
-      - master  # Run on every pull request to the master branch
+  workflow_call:
+    inputs:
+      os:
+        required: true
+        type: string
+        default: ubuntu-latest
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]  # Define the OS matrix
+    runs-on: ${{ inputs.os }}
 
     steps:
       - name: Checkout repository
@@ -44,5 +40,5 @@ jobs:
       - name: Upload CV PDF as an artifact
         uses: actions/upload-artifact@v3
         with:
-          name: cv-pdf-${{ matrix.os }}
+          name: cv-pdf-${{ inputs.os }}
           path: output/output.pdf
