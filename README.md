@@ -6,6 +6,9 @@
 
   A tool to automate the creation of professional LaTeX-based CVs.
 
+  ![GitHub license](https://img.shields.io/github/license/mlsdpk/cv-tools)
+  ![CI](https://img.shields.io/github/actions/workflow/status/mlsdpk/cv-tools/ci.yml?logo=github)
+
   ![LaTeX](https://img.shields.io/badge/latex-%23008080.svg?style=for-the-badge&logo=latex&logoColor=white)
   ![Jinja](https://img.shields.io/badge/jinja-white.svg?style=for-the-badge&logo=jinja&logoColor=black)
   ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
