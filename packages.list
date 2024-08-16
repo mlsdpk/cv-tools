@@ -1,6 +1,13 @@
 fontawesome
 xcolor
 geometry
-datetime
 fmtcount
 academicons
+parskip
+scalerel
+pgf
+enumitem
+hyperref
+datetime
+geometry
+xkeyval

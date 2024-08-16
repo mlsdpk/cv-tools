@@ -48,19 +48,9 @@ check_latex_package() {
     else
         error "LaTeX package $package is not installed."
         info "Attempting to install $package..."
-        
-        # Prompt the user for sudo access if needed
-        if [ "$(id -u)" -ne "0" ]; then
-            echo "This operation requires sudo privileges."
-            sudo -v  # Prompt for sudo password if not already cached
-            if [ $? -ne 0 ]; then
-                error "Sudo authentication failed. Cannot install LaTeX package."
-                exit 1
-            fi
-        fi
 
-        # Run the installation with sudo
-        sudo tlmgr install "$package"
+        # Run the installation
+        tlmgr install "$package"
         if [ $? -eq 0 ]; then
             success "LaTeX package $package has been installed."
         else
