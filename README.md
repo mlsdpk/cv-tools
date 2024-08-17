@@ -44,11 +44,28 @@ Below are two installation methods to set up and use CV Tools on your local mach
 
 ### Method 1: Using Docker (Recommended)
 
-> [!WARNING]  
-> Coming soon.
+Using docker allows you to run the tool in a consistent environment without worrying about dependencies on your local machine.
 
 #### Prerequisites
 - **Docker**: Ensure you have Docker installed on your machine. You can download and install Docker from [here](https://docs.docker.com/engine/install/).
+
+#### Steps
+Clone the Repository:
+```bash
+$ git clone https://github.com/mlsdpk/cv-tools.git
+$ cd cv-tools
+```
+
+Build the Docker image using the provided `Dockerfile`.
+```bash
+$ docker build -t cv-tools .
+```
+
+Start a Docker container with the image you just built. This will launch an interactive shell with the virtual environment activated and mount the current cv-tools directory.
+```bash
+$ docker run --rm -it -v $(pwd):/workdir cv-tools
+```
+The `-v $(pwd):/workdir` option mounts your local cv-tools directory to the `/workdir` directory inside the container.
 
 ### Method 2: From Source with Manual Installation
 
