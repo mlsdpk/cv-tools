@@ -167,7 +167,11 @@
 \end{tikzpicture}
 }{|}}}}
 
-\usepackage[nodayofweek, short]{datetime}
+\usepackage[nodayofweek]{datetime}
+
+% Redefine the date format
+\newdateformat{customdate}{%
+\ordinal{DAY} \monthname[\THEMONTH] \THEYEAR}
 
 \usepackage[left=0.55in,top=0.6in,right=0.55in,bottom=0.6in]{geometry} % Document margins
 \newcommand{\tab}[1]{\hspace{.2667\textwidth}\rlap{#1}}
