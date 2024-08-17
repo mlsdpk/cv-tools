@@ -143,8 +143,6 @@ if [ "$SKIP_DEPS_INSTALL" -eq 0 ]; then
     else
         error "Error: command pdflatex not found." 
         error "LaTeX is not installed. Please install LaTeX (e.g., TeX Live) to proceed."
-        info "If you are on Ubuntu, you can install it using:"
-        info "  sudo apt-get install texlive-latex-base"    
         exit 1
     fi
 
