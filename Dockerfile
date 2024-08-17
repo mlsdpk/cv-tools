@@ -18,5 +18,7 @@ COPY requirements.txt /app/
 RUN $VENV_PATH/bin/pip install --upgrade pip setuptools wheel && \
     $VENV_PATH/bin/pip install -r /app/requirements.txt
 
-# Set the default command to activate the virtual environment
-CMD ["/bin/bash", "-c", "source /venv/bin/activate && /bin/bash"]
+# Setup entrypoint
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
