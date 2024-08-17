@@ -25,6 +25,7 @@ from jinja2 import Environment, FileSystemLoader
 from pybtex.database import parse_file
 import argparse
 import os
+import sys
 
 def load_config(config_path):
     """Load YAML configuration file."""
@@ -100,9 +101,15 @@ def main():
     # Load config
     config = load_config(args.config)
 
-    # If BibTeX file is provided, load it and update the config
-    if args.bibtex:
-        config['publications'] = load_bibtex(args.bibtex)
+    # publications handling
+    # Check if "publications" type is given
+    publications_found = any(_type["type"] == "publications" for _type in config['sections'])
+    if publications_found:
+        # If BibTeX file is provided, load it and update the config
+        if args.bibtex:
+                config['publications'] = load_bibtex(args.bibtex)
+        else:
+            sys.exit("Error: section 'publications' found in the config but BibTeX file not provided.")
     
     # render template, and save output
     output_data = render_template(template_dir, template_file, config)

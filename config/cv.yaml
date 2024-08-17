@@ -118,3 +118,5 @@ sections:
       - name: "``Ethics in AI'', Panel discussion, Ethics in Technology Conference 2022, Metropolis."
         month: "Sep."
         year: "2022"
+
+  - type: publications
