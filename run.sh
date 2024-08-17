@@ -165,8 +165,8 @@ if [ "$SKIP_DEPS_INSTALL" -eq 0 ]; then
 
     # Check and install required Python packages from requirements.txt
     info "Checking for required Python packages..."
-    if [ -f "requirements.txt" ]; then
-        pip install -r requirements.txt
+    if [ -f "$CURRENT_DIR/requirements.txt" ]; then
+        pip install -r $CURRENT_DIR/requirements.txt
         if [ $? -eq 0 ]; then
             success "All required Python packages have been installed."
         else
