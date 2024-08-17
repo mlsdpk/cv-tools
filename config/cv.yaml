@@ -1,8 +1,23 @@
-author_name: "John Doe"
-portfolio_url: "https://www.johndoeportfolio.com"
-orcid_id: "0000-0000-0000-0000"
-linkedin: "https://linkedin.com/in/johndoe"
-email: "johndoe@email.com"
+heading:
+  name: "John Doe" # mandatory
+
+sub_heading:
+  - type: links
+    content:
+      - name: "https://www.johndoeportfolio.com"
+        highlight: true
+        show_below: false
+      - name: "johndoe@email.com"
+        highlight: false
+        show_below: true
+  - type: socials
+    content:
+      - type: orcid_id
+        url: "0000-0000-0000-0000"
+        show_below: false
+      - type: linkedin
+        url: "https://linkedin.com/in/johndoe"
+        show_below: false
 
 sections:
   - type: education

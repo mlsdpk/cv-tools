@@ -40,18 +40,21 @@
 % SOFTWARE.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-{% import 'sections/education.jinja' as education_macros %}
-{% import 'sections/bullets.jinja' as bullets_macros %}
-{% import 'sections/experience.jinja' as experience_macros %}
-{% import 'sections/skills.jinja' as skills_macros %}
-{% import 'sections/talks.jinja' as talks_macros %}
-{% import 'sections/publications.jinja' as publications_macros %}
+{%-import 'sections/education.jinja' as education_macros-%}
+{%-import 'sections/bullets.jinja' as bullets_macros-%}
+{%-import 'sections/experience.jinja' as experience_macros-%}
+{%-import 'sections/skills.jinja' as skills_macros-%}
+{%-import 'sections/talks.jinja' as talks_macros-%}
+{%-import 'sections/publications.jinja' as publications_macros-%}
+{%-import 'sections/headings.jinja' as headings_macros %}
 
 \documentclass{resume} % Use the custom resume.cls style
 
-\name{ {{author_name}} }
-\address{\url{ {{portfolio_url}} } \orcidicon{ {{ orcid_id }} } \href{ {{ linkedin }} }{\colorfaLinkedinSquare}}
-\address{ {{ email }} \\ Curriculum Vitae, \customdate\today}
+{{-headings_macros.render_heading(heading) }}
+
+{%-if sub_heading-%}
+  {{ headings_macros.render_subheading(sub_heading) }}
+{%-endif-%}
 
 \begin{document}
 

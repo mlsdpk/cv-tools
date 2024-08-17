@@ -1,0 +1,52 @@
+{%-macro __render_link(link)-%}
+    {%-if link.highlight is sameas true-%}
+    \url{ {{ link.name }} }
+    {%-else-%}
+    {{ link.name }}
+    {%-endif-%}
+{%-endmacro-%}
+
+{%-macro __render_social(social)-%}   
+    {%-if social.type == 'orcid_id'-%}
+    \orcidicon{ {{ social.url }} } 
+    {%-elif social.type == 'linkedin'-%}
+    \href{ {{ social.url }} }{\colorfaLinkedinSquare} 
+    {%-endif-%}
+{%-endmacro-%}
+
+{% macro __render_entity_by_type(entity, gp_type) %}
+    {%-if gp_type == 'links'-%}
+    {{ __render_link(entity) }}
+    {%-elif gp_type == 'socials'-%}
+    {{ __render_social(entity) }}
+    {%-endif-%}
+{% endmacro %}
+
+{% macro __render_entity(subheading, show_below) %}
+    {%-for group in subheading-%}
+        {%-for entity in group.content %}
+            {%-if entity.show_below is sameas show_below-%}
+                {{ __render_entity_by_type(entity, group.type) }}  
+            {% endif-%}
+        {%-endfor-%}
+    {%-endfor-%}
+{% endmacro %}
+
+{%-macro render_heading(heading)-%}
+% ====================== Heading Section ====================== %
+\name{ {{heading.name}} }
+{%-endmacro-%}
+
+{% macro render_subheading(subheading) %}
+% ====================== Sub-heading Section ====================== %
+\address{
+{{ __render_entity(subheading, false) }} }
+
+\address{
+{%- set rendered_content = __render_entity(subheading, true) -%}
+{{ rendered_content }}
+{%- if rendered_content -%}
+\\
+{%- endif %}
+Curriculum Vitae, \customdate\today}
+{% endmacro %}
