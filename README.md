@@ -137,18 +137,72 @@ $ ./run.sh --no-deps
 This option is useful for speeding up subsequent runs when you know that all dependencies are already satisfied.
 
 # YAML Configuration
+The YAML configuration file allows you to customize various aspects of your CV. This section provides detailed instructions on configuring each parameter, including the `heading`, `subheading`, and `sections` fields. Each parameter controls different parts of the CV layout and content.
 
-## General Information
+## Heading
+The `heading` parameter sets the main title of the CV.
+| Field | Type | Description | Required |
+|-------|------|-------------|-----------|
+| `name` | string | The name of the author, displayed as the main heading. | Yes |
 
-| Key            | Description                                      |
-|----------------|--------------------------------------------------|
-| `author_name`  | The full name of the author.                     |
-| `portfolio_url`| URL to the author's online portfolio.            |
-| `orcid_id`     | ORCID ID for unique identification.              |
-| `linkedin`     | LinkedIn profile URL.                            |
-| `email`        | Email address of the author.                     |
+Example:
+```yaml
+heading:
+  name: "John Doe"  # The name of the CV author
+```
 
-## Supported Section Types
+## Subheading
+The `subheading` parameter allows you to add supplementary details below the main heading. This includes personal links and social media profiles, which are displayed on one or two lines depending on the configuration.
+
+### Links
+The `links` type includes personal URLs or contact details. They can be highlighted and placed either on the first or second line.
+
+| Field | Type | Description | Required |
+|-------|------|-------------|-----------|
+| `type` | string | Type of the subheading content; set to `links` for URLs or contact details. | No |
+| `content` | array | List of link objects. Each object includes: `name`, `highlight`, and `show_below`. | No |
+| `name` | string | The URL or contact detail. | No |
+| `highlight` | boolean | Whether or not the link should be highlighted and clickable. | No |
+| `show_below` | boolean | Determines if the link should be on the first line (false) or second line (true). | No |
+
+Example:
+```yaml
+subheading:
+  - type: links
+    content:
+      - name: "https://www.johndoeportfolio.com"
+        highlight: true
+        show_below: false
+      - name: "johndoe@email.com"
+        highlight: false
+        show_below: true
+```
+
+### Socials
+The `socials` type includes links to social media profiles and are rendered as icons. Supported types are `orcid_id` and `linkedin`.
+
+| Field | Type | Description | Required |
+|-------|------|-------------|-----------|
+| `type` | string | Type of the subheading content; set to socials for social media profiles. | No |
+| `content` | array | List of social objects. Each object includes: `type`, `url`, and `show_below`. | No |
+| `type` | string | Type of social link (`orcid_id` or `linkedin`). | No |
+| `url` | string | The URL or ID of the social profile. | No |
+| `show_below` | boolean | Determines if the social link should be on the first line (false) or second line (true). | No |
+
+Example:
+```yaml
+subheading:
+  - type: socials
+    content:
+      - type: orcid_id
+        url: "0000-0000-0000-0000"
+        show_below: false
+      - type: linkedin
+        url: "https://linkedin.com/in/johndoe"
+        show_below: false
+```
+
+### Supported Section Types
 
 ### 1. Education
 

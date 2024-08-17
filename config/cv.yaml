@@ -1,7 +1,7 @@
 heading:
   name: "John Doe" # mandatory
 
-sub_heading:
+subheading:
   - type: links
     content:
       - name: "https://www.johndoeportfolio.com"
