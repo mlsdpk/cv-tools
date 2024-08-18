@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import re
 import yaml
 from jinja2 import Environment, FileSystemLoader
 from pybtex.database import parse_file
@@ -74,9 +75,48 @@ def load_bibtex(bibtex_path):
     
     return publications
 
+def decode_special_characters(text):
+    # Convert bold (**text**) to LaTeX \textbf{text}
+    text = re.sub(r'\*\*(.*?)\*\*', r'\\textbf{\1}', text)
+
+    # Convert italics (*text*) to LaTeX \textit{text}
+    text = re.sub(r'\*(.*?)\*', r'\\textit{\1}', text)
+
+    # Convert markdown links [text](url) to LaTeX \href{url}{text}
+    text = re.sub(r'\[(.*?)\]\((.*?)\)', r'\\href{\2}{\1}', text)
+
+    # Convert newline characters (\n) to LaTeX \\ for line breaks
+    text = text.replace('\n', '\\\\')
+
+    # Convert horizontal spacing
+    text = re.sub(r' {4}', r'\\quad ', text)   # Replace 4 spaces with \quad
+    text = re.sub(r'\t', r'\\quad ', text)     # Replace tab with \quad
+    text = re.sub(r' {2}', r'\\ ', text)       # Replace 2 spaces with a small space in LaTeX
+
+    # Add more conversions if needed
+
+    return text
+
+def transform_configs(data):
+    if isinstance(data, dict):
+        return {k: transform_configs(v) for k, v in data.items()}
+    elif isinstance(data, list):
+        return [transform_configs(item) for item in data]
+    elif isinstance(data, str):
+        return decode_special_characters(data) 
+    return data
+
 def render_template(template_dir, template_file, config):
     """Render the Jinja2 template with the configuration data."""
     env = Environment(loader=FileSystemLoader(template_dir))
+
+    # Register all the filters here if needed
+    # env.filters['markdown_to_latex'] = markdown_to_latex
+
+    # apply transformation to all the yaml configs
+    config = transform_configs(config)
+
+    # render the final template
     template = env.get_template(template_file)
     return template.render(config)
 
