@@ -214,13 +214,17 @@ subheading:
 
 ### Socials
 
-The `socials` type includes links to social media profiles and are rendered as icons. Supported types are `orcid_id` and `linkedin`.
+The `socials` type includes links to social media profiles and are rendered as icons. Supported types are:
+- `orcid_id`
+- `linkedin`
+- `github`
+- `twitter`
 
 | Field        | Type    | Description                                                                              | Required |
 | ------------ | ------- | ---------------------------------------------------------------------------------------- | -------- |
 | `type`       | string  | Type of the subheading content; set to socials for social media profiles.                | No       |
 | `content`    | array   | List of social objects. Each object includes: `type`, `url`, and `show_below`.           | No       |
-| `type`       | string  | Type of social link (`orcid_id` or `linkedin`).                                          | No       |
+| `type`       | string  | Type of social link (`orcid_id`, `linkedin`, `github` or `twitter`).                     | No       |
 | `url`        | string  | The URL or ID of the social profile.                                                     | No       |
 | `show_below` | boolean | Determines if the social link should be on the first line (false) or second line (true). | No       |
 

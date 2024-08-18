@@ -32,6 +32,8 @@
 \usepackage{tikz}
 
 \newcommand{\colorfaLinkedinSquare}{\textcolor{rgb:red,6;green,108;blue,170}{\raisebox{-0.7pt}{\faLinkedinSquare}}}
+\newcommand{\colorfaGithub}{\textcolor{black}{\raisebox{-1.3pt}{\large\faGithub}}}
+\newcommand{\colorfaTwitter}{\textcolor{rgb:red,29;green,161;blue,242}{\raisebox{-1.5pt}{\large\faTwitter}}}
 
 \pagestyle{empty} % Suppress page numbers
 

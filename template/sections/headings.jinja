@@ -11,6 +11,10 @@
     \orcidicon{ {{ social.url }} } 
     {%-elif social.type == 'linkedin'-%}
     \href{ {{-social.url-}} }{\colorfaLinkedinSquare} 
+    {%-elif social.type == 'github'-%}
+    \href{ {{-social.url-}} }{\colorfaGithub} 
+    {%-elif social.type == 'twitter'-%}
+    \href{ {{-social.url-}} }{\colorfaTwitter} 
     {%-endif-%}
 {%-endmacro-%}
 
