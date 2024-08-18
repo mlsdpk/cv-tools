@@ -7,7 +7,9 @@
     {%-if edu.thesis_title-%}
     \\ Thesis Title: \textit{ {{-edu.thesis_title-}} }
     {%-endif-%}
+    {%-if edu.supervisor-%}
     \\ Supervisor: {{ edu.supervisor }}
+    {%-endif-%}
     {% endfor %}
     \end{rSection}
 {% endmacro %}
