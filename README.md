@@ -89,10 +89,12 @@ If you prefer to set up the environment manually on your local machine, follow t
 
 #### Installing Dependencies
 
-Make sure the necessary LaTeX packages are installed:
+Depending on your installed LaTeX distribution, you may need to ensure that all the required LaTeX packages are installed. A list of these necessary packages can be found in the `packages.list` file.
+
+You can use the tlmgr command to install the packages as follows:
 
 ```bash
-$ tlmgr install fontawesome xcolor geometry datetime2 scalerel academicons
+$ tlmgr install <package1> <package2> ...
 ```
 
 To manage your Python dependencies, it's recommended to use a virtual environment:
