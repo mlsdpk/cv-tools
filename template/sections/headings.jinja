@@ -10,7 +10,7 @@
     {%-if social.type == 'orcid_id'-%}
     \orcidicon{ {{ social.url }} } 
     {%-elif social.type == 'linkedin'-%}
-    \href{ {{ social.url }} }{\colorfaLinkedinSquare} 
+    \href{ {{-social.url-}} }{\colorfaLinkedinSquare} 
     {%-endif-%}
 {%-endmacro-%}
 
