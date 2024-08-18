@@ -38,6 +38,10 @@ Feel free to edit and use this tool according to your needs. Customize the LaTeX
   - [Installation](#installation)
   - [Usage](#usage)
 - [YAML Configuration](#yaml-configuration)
+  - [Heading](#heading)
+  - [Subheading](#subheading)
+  - [Sections](#sections)
+  - [Using Special Characters](#using-special-characters)
 - [BibTeX Configuration](#bibtex-configuration)
 - [Contributing](#contributing)
 
