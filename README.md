@@ -479,6 +479,46 @@ sections:
 
 An example of a complete YAML configuration can be found [here](config/cv.yaml).
 
+## Using Special Characters
+
+When configuring your YAML files, you might want to include special formatting within strings, such as bold text, hyperlinks, line breaks, and horizontal spacing. These special characters and formatting options will be automatically converted into the appropriate LaTeX commands during the rendering process. Here's how to use them:
+
+### Supported Characters
+
+- **Bold Text:**  
+  To make text bold, wrap the text with `**` (e.g., `"**Bold Text**"`).
+
+- **Italics:**  
+  To italicize text, wrap the text with `*` (e.g., `"*Italic Text*"`).
+
+- **Hyperlinks:**  
+  To create a hyperlink, use the Markdown link syntax `[text](url)` (e.g., `"[My Portfolio](https://myportfolio.com)"`).
+
+- **Line Breaks:**  
+  To insert a line break, use the newline character `\n` (e.g., `"First Line\nSecond Line"`).
+
+- **Horizontal Spacing:**
+  - To add a small space, use two spaces (e.g., `"Text  2 spaces later"`).
+  - To add an "em" space, use four spaces or a tab (e.g., `"Text    4 spaces later"` or `"Text\twith a tab"`).
+
+Here’s an example YAML configuration that utilizes these special characters:
+
+```yaml
+heading:
+  name: "John Doe" # mandatory
+
+sections:
+  - type: education
+    content:
+      - university: "Fictional University"
+        location: "Imaginaria, Wonderland"
+        dates: "September 2021 - June 2024"
+        degree: "Bachelor of Science in *Computer Science*"
+        honors: "**Magna Cum Laude**"
+        thesis_title: "An Exploration of **Quantum Computing** in Virtual Environments"
+        supervisor: "Dr. Alice Wonder"
+```
+
 # BibTeX Configuration
 
 Managing your publications is straightforward with a BibTeX file. The BibTeX file allows you to maintain a structured list of your publications, which can be automatically formatted and included in your CV.
