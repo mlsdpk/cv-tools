@@ -64,7 +64,7 @@ check_latex_package() {
 check_latex_packages_from_file() {
     local package_file="$1"
     while IFS= read -r package || [ -n "$package" ]; do
-        package=$(echo "$package" | xargs)  # Trim any surrounding whitespace
+        package=$(echo "$package" | tr -d '\r' | xargs)  # Trim whitespace and strip CR
         if [ -n "$package" ]; then
             check_latex_package "$package"
         fi
