@@ -40,15 +40,16 @@
 % SOFTWARE.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\documentclass{resume} % Use the custom resume.cls style
+
 {%-import 'sections/education.jinja' as education_macros-%}
 {%-import 'sections/bullets.jinja' as bullets_macros-%}
 {%-import 'sections/experience.jinja' as experience_macros-%}
 {%-import 'sections/skills.jinja' as skills_macros-%}
 {%-import 'sections/talks.jinja' as talks_macros-%}
 {%-import 'sections/publications.jinja' as publications_macros-%}
-{%-import 'sections/headings.jinja' as headings_macros %}
+{%-import 'sections/headings.jinja' as headings_macros-%}
 
-\documentclass{resume} % Use the custom resume.cls style
 
 {{-headings_macros.render_heading(heading) }}
 
