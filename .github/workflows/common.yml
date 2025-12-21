@@ -26,18 +26,20 @@ jobs:
           python -m pip install --upgrade pip setuptools wheel
           pip install -r requirements.txt
 
-      - name: Setup TeX Live
-        uses: teatimeguest/setup-texlive-action@v3
-        with:
-          packages: |
-            scheme-basic
-            microtype
-
       - name: Generate CV
         run: |
-          ./run.sh
+          ./run.sh --tex-only
+
+      - name: Compile LaTeX document
+        if: runner.os == 'Linux'
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: output/output.tex
+          work_in_root_file_dir: true
+          os: alpine
 
       - name: Upload CV PDF as an artifact
+        if: runner.os == 'Linux'
         uses: actions/upload-artifact@v4
         with:
           name: cv-pdf-${{ inputs.os }}
