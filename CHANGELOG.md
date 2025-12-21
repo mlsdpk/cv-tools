@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - No longer supports specifying bibtex file through the script options
 
 ### Fixed
+- Fix issue where social links are not rendered correctly
 
 <br>
 

@@ -8,7 +8,7 @@
 
 {%-macro __render_social(social)-%}   
     {%-if social.type == 'orcid_id'-%}
-    \orcidicon{ {{ social.url }} } 
+    \orcidicon{ {{-social.url-}} }
     {%-elif social.type == 'linkedin'-%}
     \href{ {{-social.url-}} }{\colorfaLinkedinSquare} 
     {%-elif social.type == 'github'-%}
