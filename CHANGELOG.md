@@ -8,28 +8,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+<br>
+
+## Released
+
+### [1.1.0] - 2025-12-21
+
+#### Added
 - Two new entries in `publications` section type
     - `title` for specifying custom section name for publications
     - `bibfile` for specifying a path to BibTex file
 
-### Changed
+#### Changed
 - Update readme to support new way of specifying a bibtex file
 - Section type `publications` is now part of sections list in jinja template
 - Modify publications handling logic in `generate_latex.py`
     - now support one or more publication sections
     - add support for `title` and `bibfile` fields
+- Migrate to latex-action GitHub action for building LaTeX documents
 
-### Deprecated
-
-### Removed
+#### Removed
 - No longer supports specifying bibtex file through the script options
 
-### Fixed
-- Fix issue where social links are not rendered correctly
-
-<br>
-
-## Released
+#### Fixed
+- Remove extra space from orcidurl
 
 ### [1.0.0] - 2025-06-20
 
