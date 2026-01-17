@@ -10,6 +10,15 @@
     {%-if edu.supervisor-%}
     \\ Supervisor: {{ edu.supervisor }}
     {%-endif %}
+    {%- if edu.bullets -%}
+    \begin{list}{\textbullet}{\leftmargin=1em}
+        \setlength{\itemsep}{-0.5em} \vspace{-0.5em}
+        {%- for bullet in edu.bullets -%}
+        \item {{ bullet }}
+        {%- endfor -%}
+    \end{list}
+    {%- endif -%}
+    \medskip
     {% endfor %}
     \end{rSection}
 {% endmacro %}

@@ -290,6 +290,8 @@ The `education` section is used to list your academic qualifications. It typical
 | `honors`       | string | Honors received, if any.                        | No       |
 | `thesis_title` | string | Title of the thesis, if applicable.             | No       |
 | `supervisor`   | string | Name of the supervisor, if applicable.          | No       |
+| `bullets`      | list   | List of bullet points (optional).               | No       |
+
 
 Example:
 
@@ -309,6 +311,8 @@ sections:
         dates: "August 2018 - May 2021"
         degree: "Associate Degree in Artificial Intelligence"
         supervisor: "Dr. Bob Builder"
+        bullets:
+          - "Relevant Coursework: Machine Learning, Advanced Algorithms"
 ```
 
 ![education-section](docs/img/education-section.png)
