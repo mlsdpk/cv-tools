@@ -41,7 +41,9 @@ command_exists() {
 # Function to check and install if a LaTeX package is not found
 check_latex_package() {
     local package="$1"
-    PACKAGE_INFO=$(tlmgr info "$package" 2>/dev/null)
+    # --only-installed reads the local package database only. Without it, tlmgr downloads the
+    # database of a CTAN mirror on every call and reports nothing when that mirror is down.
+    PACKAGE_INFO=$(tlmgr info --only-installed "$package" 2>/dev/null)
     
     if echo "$PACKAGE_INFO" | grep -q -E "installed:\s*Yes"; then
         success "LaTeX package $package is already installed."
