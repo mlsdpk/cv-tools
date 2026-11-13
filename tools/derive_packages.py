@@ -6,6 +6,7 @@ Run it after changing resume.cls, the templates or unicode.txt (--check exits 1 
 from __future__ import annotations
 
 import argparse
+import difflib
 import json
 import subprocess
 import sys
@@ -91,8 +92,10 @@ def main() -> int:
     args = parser.parse_args()
     text = derive()
     if args.check:
-        if OUTPUT.read_text(encoding="utf-8") != text:
+        current = OUTPUT.read_text(encoding="utf-8")
+        if current != text:
             print(f"{OUTPUT} is out of date; run tools/derive_packages.py", file=sys.stderr)
+            sys.stderr.writelines(difflib.unified_diff(current.splitlines(True), text.splitlines(True), "packages.txt", "derived"))
             return 1
         return 0
     OUTPUT.write_text(text, encoding="utf-8")

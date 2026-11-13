@@ -55,7 +55,7 @@ def test_rebuilds_once_per_settled_change(tmp_path):
     builds = []
 
     def build():
-        builds.append(sorted(p.read_text() for p in (cv, bib)))
+        builds.append(sorted(p.read_text(encoding="utf-8") for p in (cv, bib)))
         return [cv, bib]
 
     # tick 2: bib changes; tick 3 it changes again before settling; tick 4 stable -> one rebuild.
@@ -138,15 +138,15 @@ def test_watch_command_rebuilds_on_bib_change(tmp_path):
         assert seen[:3] == ["wrote cv.tex", "wrote resume.cls", "wrote orcid.pdf"]
         assert seen[3] == "watching cv.yaml, publications.bib (Ctrl-C to stop)"
 
-        before = (tmp_path / "cv.tex").read_text()
+        before = (tmp_path / "cv.tex").read_text(encoding="utf-8")
         with open(tmp_path / "publications.bib", "a") as f:
             f.write("\n@misc{watchtest, author={A. Tester}, title={Watched entry}, year={2025}}\n")
         _wait_for(lines, lambda l: l == "changed: publications.bib; rebuilding", seen)
         _wait_for(lines, lambda l: l == "wrote orcid.pdf", seen)
-        assert "Watched entry" in (tmp_path / "cv.tex").read_text() != before
+        assert "Watched entry" in (tmp_path / "cv.tex").read_text(encoding="utf-8") != before
 
         # A broken file is reported and watched; fixing it rebuilds.
-        good = (tmp_path / "cv.yaml").read_text()
+        good = (tmp_path / "cv.yaml").read_text(encoding="utf-8")
         (tmp_path / "cv.yaml").write_text("version: 2\nname: [unclosed\n")
         _wait_for(lines, lambda l: "error:" in l, seen)
         (tmp_path / "cv.yaml").write_text(good)

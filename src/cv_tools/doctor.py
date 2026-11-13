@@ -25,7 +25,7 @@ PROBES = {
     "graphics-cfg": "graphics.cfg",
     "graphics-def": "pdftex.def",
     "kpathsea": "texmf.cnf",
-    "l3backend": "l3backend-pdftex.def",
+    "l3kernel": "l3backend-pdftex.def",
     "latex": "latex.ltx",
     "latexconfig": "epstopdf-sys.cfg",
     "mptopdf": "supp-pdf.mkii",

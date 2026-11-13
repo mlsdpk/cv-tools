@@ -278,4 +278,17 @@ describe("busytex.wasm.gz", () => {
     assert.equal(last.stage, "start");
     assert.equal(last.loaded, last.total);
   });
+
+  test("still loads when the browser leaves the server's gzip encoding on", async () => {
+    const dir = bundleCopy("wasm-gz-twice", (d) => {
+      const wasm = readFileSync(join(d, "busytex.wasm"));
+      const m = resign(d, "busytex.wasm.gz", gzipSync(gzipSync(wasm)), wasm);
+      m.wasm = "busytex.wasm.gz";
+      m.files = m.files.filter((f) => f.name !== "busytex.wasm");
+      writeFileSync(join(d, "manifest.json"), JSON.stringify(m));
+    });
+    const engine = await nodeEngine(dir, { sourceDateEpoch: EPOCH });
+    const plain = await nodeEngine(undefined, { sourceDateEpoch: EPOCH });
+    assert.ok(same((await engine.compile(example)).pdf, (await plain.compile(example)).pdf));
+  });
 });

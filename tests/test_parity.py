@@ -180,7 +180,7 @@ def _orcid_boxes(tmp_path, cls_dir):
     (tmp_path / "t.tex").write_text(ORCID_PROBE)
     subprocess.run(["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "t.tex"], cwd=tmp_path,
                    check=True, capture_output=True)
-    return re.findall(r"^ORCID .*$", (tmp_path / "t.log").read_text(), re.M)
+    return re.findall(r"^ORCID .*$", (tmp_path / "t.log").read_text(encoding="utf-8"), re.M)
 
 
 def test_orcid_box_is_the_tikz_box(tmp_path):

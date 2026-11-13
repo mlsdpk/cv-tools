@@ -1,5 +1,8 @@
 import { expect, test as base, type Page } from "@playwright/test";
 
+// WebKit reports a same-origin request cancelled by a reload as an access control failure.
+const CANCELLED_BY_RELOAD = /^Fetch API cannot load http:\/\/127\.0\.0\.1:\d+\/\S* due to access control checks\.$/;
+
 /** Every test fails on a console error or an uncaught exception; `allowConsole` lists expected ones. */
 export const test = base.extend<{ consoleErrors: string[]; allowConsole: RegExp[] }>({
   allowConsole: [[], { option: true }],
@@ -7,7 +10,7 @@ export const test = base.extend<{ consoleErrors: string[]; allowConsole: RegExp[
     async ({ page, allowConsole }, use) => {
       const errors: string[] = [];
       page.on("console", (m) => {
-        if (m.type() === "error" && !allowConsole.some((r) => r.test(m.text()))) errors.push(`${m.text()} (${m.location().url}:${m.location().lineNumber})`);
+        if (m.type() === "error" && !CANCELLED_BY_RELOAD.test(m.text()) && !allowConsole.some((r) => r.test(m.text()))) errors.push(`${m.text()} (${m.location().url}:${m.location().lineNumber})`);
       });
       page.on("pageerror", (e) => errors.push(`pageerror: ${e.message}`));
       await use(errors);

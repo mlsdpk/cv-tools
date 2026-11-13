@@ -6,12 +6,12 @@ from cv_tools.render.latex import TEMPLATE_DIR
 
 
 def listed():
-    lines = (TEMPLATE_DIR / "packages.txt").read_text().splitlines()
+    lines = (TEMPLATE_DIR / "packages.txt").read_text(encoding="utf-8").splitlines()
     return {line for line in lines if line and not line.startswith("#")}
 
 
 def test_class_packages_are_listed():
-    cls = (TEMPLATE_DIR / "resume.cls").read_text()
+    cls = (TEMPLATE_DIR / "resume.cls").read_text(encoding="utf-8")
     used = set(re.findall(r"\\usepackage(?:\[[^\]]*\])?\{([^}]+)\}", cls))
     # TeX Live ships these inside larger packages.
     tl_names = {"graphicx": "graphics", "array": "tools", "calc": "tools", "ifthen": "latex"}

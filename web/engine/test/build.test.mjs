@@ -84,7 +84,7 @@ describe("licences", () => {
     assert.equal(rows("TECkit").length, 0, "TECkit is not linked");
     assert.equal(rows("zziplib").length, 0, "zziplib is not linked");
     assert.equal(rows("pdfTeX").length, 1);
-    assert.match(md, /publishes the complete source of the engine next to the binaries/);
+    assert.match(md, /The complete source of the engine is published with cv-tools, as the assets of the GitHub Release/);
     for (const s of LOCK.sources) assert.ok(md.includes(s.sha256), `${s.name} source is listed`);
     for (const [name, font] of Object.entries(COMPONENTS.fonts)) {
       if (rows(name).length) assert.ok(rows(name)[0].includes(font.license.split(" ")[0]));

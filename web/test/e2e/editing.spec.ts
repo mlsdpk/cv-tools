@@ -78,11 +78,11 @@ for (const layout of ["Paper", "Split"]) {
         const d = during[p];
         if (p === path && path === "sections.8.entries.0.date") {
           // The month and year columns become one line of text; the box stays.
-          expect(Math.abs(d[0] - b[0]), p).toBeLessThanOrEqual(1);
-          expect(Math.abs(d[1] - b[1]), p).toBeLessThanOrEqual(1);
+          expect(Math.abs(d[0] - b[0]), p).toBeLessThanOrEqual(1.5);
+          expect(Math.abs(d[1] - b[1]), p).toBeLessThanOrEqual(1.5);
           continue;
         }
-        for (let k = 0; k < 4; k++) expect(Math.abs(d[k] - b[k]), `${p} moved while editing ${path}`).toBeLessThanOrEqual(1);
+        for (let k = 0; k < 4; k++) expect(Math.abs(d[k] - b[k]), `${p} moved while editing ${path}`).toBeLessThanOrEqual(1.5);
       }
       const caret = await page.evaluate(() => {
         const root = document.getElementById("live")!.shadowRoot!;

@@ -159,14 +159,17 @@ async function verify(name: string, data: Uint8Array, want: string | undefined):
 
 const isGzip = (b: Uint8Array) => b.length > 2 && b[0] === 0x1f && b[1] === 0x8b;
 
-/** A `.gz` asset, inflated unless the server already sent it with `Content-Encoding: gzip`. */
+/** A `.gz` asset, inflated up to twice, since some browsers keep the gzip encoding of a `.gz` URL. */
 async function gunzipIfNeeded(name: string, raw: Uint8Array): Promise<Uint8Array> {
-  if (!isGzip(raw)) return raw;
-  try {
-    return await bytesOf(new Blob([raw as BlobPart]).stream().pipeThrough(new DecompressionStream("gzip")));
-  } catch (e) {
-    throw new EngineError("integrity", `the engine file ${name} is damaged: it does not decompress (${String(e)})`);
+  let data = raw;
+  for (let layer = 0; layer < 2 && isGzip(data); layer++) {
+    try {
+      data = await bytesOf(new Blob([data as BlobPart]).stream().pipeThrough(new DecompressionStream("gzip")));
+    } catch (e) {
+      throw new EngineError("integrity", `the engine file ${name} is damaged: it does not decompress (${String(e)})`);
+    }
   }
+  return data;
 }
 
 export async function loadAssets(options: LoadOptions): Promise<Assets> {
@@ -735,7 +738,7 @@ export function logErrors(log: string, context = 3): string {
 }
 
 // What web2c prints when it cannot load the format (damaged, truncated, or written by another binary).
-const FORMAT_BROKEN = /Could not undump|Fatal format file error|I can't find the format file|made by different executable version|---! \S+ (?:was written by|doesn't match)/;
+const FORMAT_BROKEN = /Could not undump|Fatal format file error|I can't find the format file|made by different executable version|of \.fmt array at|---! \S+ (?:was written by|doesn't match)/;
 
 function failure(log: string, out: string, code: number): Error {
   if (FORMAT_BROKEN.test(out) || FORMAT_BROKEN.test(log)) {

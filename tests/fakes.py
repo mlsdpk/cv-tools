@@ -149,7 +149,7 @@ def fake_docker(bin_dir: Path, running: bool = True, log: Optional[Path] = None,
 
 
 def docker_calls(log: Path, command: Optional[str] = None) -> list[list[str]]:
-    calls = [json.loads(line) for line in log.read_text().splitlines()] if log.exists() else []
+    calls = [json.loads(line) for line in log.read_text(encoding="utf-8").splitlines()] if log.exists() else []
     return [c for c in calls if command is None or c[:1] == [command]]
 
 
