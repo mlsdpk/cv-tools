@@ -1,0 +1,14 @@
+# Set default line endings to LF for all text files
+* text=auto eol=lf
+
+# Explicitly set LF for specific file types
+*.sh text eol=lf
+Dockerfile text eol=lf
+*.py text eol=lf
+*.jinja text eol=lf
+*.tex text eol=lf
+*.cls text eol=lf
+*.yaml text eol=lf
+*.bib text eol=lf
+*.md text eol=lf
+.gitignore text eol=lf

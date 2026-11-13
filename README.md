@@ -80,6 +80,11 @@ Start a Docker container with the image you just built. This will launch an inte
 $ docker run -it -v $(pwd):/workdir cv-tools
 ```
 
+for windows systems:
+```bash
+$ docker run -it -v $(pwd -W):/workdir cv-tools
+```
+
 The `-v $(pwd):/workdir` option mounts your local cv-tools directory to the `/workdir` directory inside the container.
 
 ### Method 2: From Source with Manual Installation
