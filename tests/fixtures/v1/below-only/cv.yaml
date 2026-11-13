@@ -1,0 +1,17 @@
+heading:
+  name: "Jane Roe"
+subheading:
+  - type: socials
+    content:
+      - type: orcid_id
+        url: "0000-0002-1825-0097"
+        show_below: true
+  - type: links
+    content:
+      - name: "jane@roe.dev"
+        show_below: true
+sections:
+  - type: bullets
+    title: "Notes"
+    content:
+      - item: "The first contact line is empty and the second starts with an icon."

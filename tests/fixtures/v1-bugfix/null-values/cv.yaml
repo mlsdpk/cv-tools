@@ -1,0 +1,27 @@
+# v1 printed "None" for null values in fields it always prints.
+heading:
+  name: "Jane Roe"
+sections:
+  - type: education
+    content:
+      - university: "Uni"
+        location:
+        dates: "2020"
+        degree: "BSc"
+        honors:
+  - type: experience
+    content:
+      - name: "Work"
+        entity:
+          - organization: "Org"
+            dates: "2021"
+            position:
+            location:
+            responsibilities:
+              - "Did things"
+  - type: talks
+    title: "Talks"
+    content:
+      - name: "Talk"
+        month: "Nov."
+        year:

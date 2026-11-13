@@ -1,0 +1,14 @@
+# An itemize without items is a LaTeX error, so v1 failed on these sections.
+heading:
+  name: "Jane Roe"
+sections:
+  - type: bullets
+    title: "Empty"
+    description: "Nothing yet"
+    content: []
+  - type: bullets
+    title: "Missing content"
+  - type: bullets
+    title: "Not empty"
+    content:
+      - item: "One"

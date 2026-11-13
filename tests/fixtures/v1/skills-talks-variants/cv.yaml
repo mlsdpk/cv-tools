@@ -1,0 +1,33 @@
+heading:
+  name: "Jane Roe"
+sections:
+  - type: skills
+    content:
+      - name: "Languages"
+        data: "Python, C++"
+      - name: "Missing data"
+      - data: "Missing name"
+  - type: talks
+    title: "Talks"
+    content:
+      - name: "Normal talk"
+        month: "Nov."
+        year: "2023"
+      - name: "Integer year"
+        month: "Jan."
+        year: 2022
+      - name: "No month"
+        year: "2021"
+      - name: "No year"
+        month: "Dec."
+      - name: "Month with a space"
+        month: "Early Nov."
+        year: "2020"
+      - name: "Year with a space"
+        month: "Mar."
+        year: "2019 (online)"
+      - name: "No date at all"
+      - month: "Apr."
+        year: "2018"
+  - type: talks
+    content: []

@@ -1,0 +1,10 @@
+# 'yes' and 'on' as skill values and names.
+heading:
+  name: "Jane Roe"
+sections:
+  - type: skills
+    content:
+      - name: "Driving licence"
+        data: "yes"
+      - name: "on"
+        data: "1:30"

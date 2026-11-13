@@ -1,0 +1,16 @@
+version: 2
+name: Jane Roe
+date: "*May* 2025"
+contact:
+  - - url: https://janeroe.dev
+    - orcid: 0000-0002-1825-0097
+    - linkedin: https://linkedin.com/in/janeroe
+    - github: https://github.com/janeroe
+    - twitter: https://twitter.com/janeroe
+  - items: [jane@roe.dev, +1 555 0100]
+    separator: " · "
+  - - Nowhere, Utopia
+    - {latex: "\\textsc{Curriculum Vitae}"}
+    - "Updated {date}"
+    - "**{date}**th [{date}](https://x.org/)"
+sections: []

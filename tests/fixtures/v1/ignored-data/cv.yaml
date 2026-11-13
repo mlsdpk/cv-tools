@@ -1,0 +1,41 @@
+# Fields and items v1 never printed. Migration drops them with a warning.
+# (Unknown social types made v1 fail; see v1-bugfix/unknown-social.)
+heading:
+  name: "Jane Roe"
+  email: "jane@roe.dev"
+summary: "A top-level key v1 ignored"
+subheading:
+  - type: links
+    content:
+      - name: "jane@roe.dev"
+        show_below: true
+      - name: "no show_below"
+      - name: "show_below is a string"
+        show_below: "true"
+  - type: socials
+    content:
+      - type: github
+        url: "https://github.com/janeroe"
+        show_below: false
+        extra: 1
+sections:
+  - type: education
+    title: "Ignored title"
+    content:
+      - university: "Uni"
+        location: "City"
+        dates: "2020"
+        degree: "BSc"
+        gpa: "4.0"
+  - type: unknown-section
+    content:
+      - item: "never printed"
+  - type: experience
+    content:
+      - name: "Work"
+        entity:
+          - organization: "Org"
+            dates: "2021"
+            location: ""
+            responsibilities:
+              - "Did things"

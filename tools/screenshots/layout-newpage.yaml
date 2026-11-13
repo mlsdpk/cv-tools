@@ -1,0 +1,17 @@
+version: 2
+name: John Doe
+sections:
+  - title: Honors and Awards
+    layout: list
+    entries:
+      - Dean's List (2023, 2022)
+      - Best Paper Award at Tech Innovations Conference (2023)
+
+  - newpage
+
+  - title: Certifications
+    layout: entries
+    entries:
+      - title: Certified Kubernetes Administrator
+        date: Graduated December 2023
+        subtitle: Cloud Native Computing Foundation

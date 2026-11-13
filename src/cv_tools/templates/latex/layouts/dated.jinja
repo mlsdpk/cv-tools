@@ -1,0 +1,12 @@
+{#- v1 "talks": a table with the date split into two columns. -#}
+{% macro render(section) %}
+    % ====================== {{ section.comment }} Section ====================== %
+    \begin{rSection}{ {{ section.title }} }
+    {%- if section.description %}{{ section.description }}\par{% endif %}
+    \begin{tabular}{p{0.5cm} p{1cm} p{14cm}}
+    {%-for entry in section.entries %}
+    {{ entry.month }} & {{ entry.year }} & {{ entry.text }} \\
+    {%-endfor%}
+    \end{tabular}
+    \end{rSection}
+{% endmacro %}

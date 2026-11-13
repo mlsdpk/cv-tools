@@ -1,0 +1,8 @@
+# BibTeX fields are LaTeX: printed as written, with URLs unescaped. Empty
+# fields count as missing. cv-tools 1.x applied its markdown conversion to them.
+heading:
+  name: "Jane Roe"
+sections:
+  - type: publications
+    title: "Publications"
+    bibfile: pubs.bib

@@ -1,0 +1,17 @@
+version: 2
+name: Jane Roe
+sections:
+  - title: Invited Talks
+    layout: dated
+    description: Talks and workshops.
+    entries:
+      - date: Nov. 2023
+        text: "'AI in Everyday Life', Invited talk, Tech Conference 2023."
+      - date: "2022"
+        text: A date without a space goes into the second column.
+      - date: Early Nov. 2021
+        text: Split at the last space.
+      - text: No date.
+      - date: 2020
+        text: A number.
+      - A plain string is shorthand for an entry without a date.

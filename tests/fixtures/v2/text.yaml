@@ -1,0 +1,14 @@
+version: 2
+name: Jane Roe
+sections:
+  - title: Summary
+    layout: text
+    description: In short.
+    entries:
+      - A paragraph of free text with *markup* and a [link](https://example.com).
+      - text: A second paragraph, written as a mapping.
+  - newpage
+  - title: After a Page Break
+    layout: text
+    entries:
+      - The newpage item starts this section on a new page.

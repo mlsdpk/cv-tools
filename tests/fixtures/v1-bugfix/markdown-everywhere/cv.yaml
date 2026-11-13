@@ -1,0 +1,55 @@
+heading:
+  name: "**Jane** *Roe*"
+subheading:
+  - type: links
+    content:
+      - name: "[jane.dev](https://jane.dev)"
+        show_below: false
+      - name: "*italic contact*"
+        show_below: true
+sections:
+  - type: education
+    content:
+      - university: "*Italic* University"
+        location: "**Bold** City"
+        dates: "*2019* - **2023**"
+        degree: "[Degree](https://example.com/degree)"
+        honors: "'Honors'"
+        thesis_title: "**Bold** inside italic"
+        supervisor: "*Dr.* **X**"
+        bullets:
+          - "[link **bold**](https://example.com)"
+  - type: experience
+    content:
+      - name: "*Experience*"
+        entity:
+          - organization: "*Org*"
+            dates: "**2020**"
+            position: "'Position'"
+            supervisor: "[Sup](https://example.com/sup)"
+            department: "*Dept*"
+            location: "**Loc**"
+            responsibilities:
+              - "*a* **b** [c](https://example.com/c) 'd'"
+              - "**bold *nested italic* bold**"
+              - "*italic **nested bold** italic*"
+  - type: bullets
+    title: "**Bullets**"
+    description: "*Description*"
+    content:
+      - item: "**Item**"
+        subitems:
+          - "*Subitem*"
+  - type: skills
+    content:
+      - name: "**Skill**"
+        data: "*Data* and [link](https://example.com/skill)"
+  - type: talks
+    title: "*Talks*"
+    content:
+      - name: "'Talk' at **Venue**"
+        month: "*Nov.*"
+        year: "**2023**"
+  - type: publications
+    title: "*Publications*"
+    bibfile: pubs.bib

@@ -1,0 +1,19 @@
+# Random contact probe case c12-7 (orcid, socials and links on both lines).
+heading:
+  name: Jane Roe
+subheading:
+  - type: socials
+    content:
+      - type: orcid_id
+        url: 0000-0002-1825-0097
+        show_below: false
+  - type: socials
+    content:
+      - type: linkedin
+        url: https://janeroe.dev
+        show_below: true
+sections:
+  - type: bullets
+    title: T
+    content:
+      - item: x

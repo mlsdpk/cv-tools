@@ -1,2 +1,32 @@
 output/
 .DS_Store
+
+# Python
+.venv/
+__pycache__/
+*.egg-info/
+build/
+dist/
+.coverage
+htmlcov/
+.pytest_cache/
+.hypothesis/
+
+# Test artifacts
+tests/_artifacts/
+
+# LaTeX build outputs (tools/orcid is built in place)
+*.aux
+*.fls
+*.log
+*.out
+tools/orcid/orcid.pdf
+
+# Web engine: downloaded and generated assets (web/engine)
+web/engine/.cache/
+web/engine/node_modules/
+web/engine/test/_artifacts/
+web/public/engine/
+
+# Your own CV files (run.sh reads config/cv.yaml)
+config/

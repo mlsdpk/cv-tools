@@ -1,0 +1,197 @@
+name: Engine sources
+
+# Publishes the engine's GPL corresponding source as the GitHub Release engine-sources-<tag>, which the About page links to.
+
+# Run it by hand before a release that changes web/engine/engine.lock.json.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish the engine's source archives
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      LOCK: web/engine/engine.lock.json
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Check the published release
+        id: plan
+        run: |
+          prefix=$(jq -er '.engineSourcesTagPrefix' web/site.config.json)
+          release="$prefix$(jq -er '.tag' "$LOCK")"
+          expected="$RUNNER_TEMP/expected"
+          mkdir -p "$expected"
+          jq -j '.sources[] | "\(.sha256)  \(.file)\n"' "$LOCK" > "$expected/SHA256SUMS"
+          jq --indent 2 '{tag, sourceCommit, archives: .sources}' "$LOCK" > "$expected/sources.json"
+          assets="$expected/assets.txt"
+          {
+            jq -r '.sources[] | "\(.file) \(.sha256)"' "$LOCK"
+            for f in SHA256SUMS sources.json; do
+              echo "$f $(sha256sum < "$expected/$f" | cut -d' ' -f1)"
+            done
+          } > "$assets"
+
+          stale="$RUNNER_TEMP/stale.txt"
+          published="$RUNNER_TEMP/release.json"
+          if gh api "repos/$GITHUB_REPOSITORY/releases/tags/$release" > "$published" 2> "$RUNNER_TEMP/gh.err"; then
+            exists=true
+          elif grep -q 'HTTP 404' "$RUNNER_TEMP/gh.err"; then
+            exists=false
+          else
+            cat "$RUNNER_TEMP/gh.err" >&2
+            exit 1
+          fi
+
+          if [ "$exists" = false ]; then
+            echo "Release $release does not exist yet"
+            cut -d' ' -f1 "$assets" > "$stale"
+          elif jq -e --rawfile names <(cut -d' ' -f1 "$assets") \
+              '[.assets[] | select(.name | IN($names | split("\n")[])) | .digest] | any(. == null)' \
+              "$published" > /dev/null; then
+            # Without digests, compare the index files and sizes and replace everything on a mismatch.
+            echo "::notice::Release $release gives no asset digests; comparing SHA256SUMS, sources.json and sizes"
+            ok=true
+            for f in SHA256SUMS sources.json; do
+              if ! gh release download "$release" --repo "$GITHUB_REPOSITORY" --pattern "$f" \
+                  --output "$RUNNER_TEMP/published-$f" --clobber ||
+                 ! cmp -s "$RUNNER_TEMP/published-$f" "$expected/$f"; then
+                echo "$f is missing or differs"
+                ok=false
+              fi
+            done
+            while read -r name bytes <&3; do
+              size=$(jq -r --arg n "$name" '.assets[] | select(.name == $n) | .size' "$published")
+              if [ "$size" != "$bytes" ]; then
+                echo "$name is missing or has ${size:-no} bytes instead of $bytes"
+                ok=false
+              fi
+            done 3< <(jq -r '.sources[] | "\(.file) \(.bytes)"' "$LOCK")
+            if [ "$ok" = true ]; then : > "$stale"; else cut -d' ' -f1 "$assets" > "$stale"; fi
+          else
+            : > "$stale"
+            while read -r name sha <&3; do
+              digest=$(jq -r --arg n "$name" '.assets[] | select(.name == $n) | .digest' "$published")
+              if [ -z "$digest" ]; then
+                echo "$name is missing"
+                echo "$name" >> "$stale"
+              elif [ "$digest" != "sha256:$sha" ]; then
+                echo "$name differs ($digest, expected sha256:$sha)"
+                echo "$name" >> "$stale"
+              else
+                echo "$name is up to date"
+              fi
+            done 3< "$assets"
+          fi
+
+          if [ "$exists" = true ]; then
+            extra=$(jq -r '.assets[].name' "$published" | grep -vxF -f <(cut -d' ' -f1 "$assets") || true)
+            if [ -n "$extra" ]; then
+              echo "::warning::Release $release holds assets that engine.lock.json does not name: $(echo "$extra" | tr '\n' ' ')"
+            fi
+          fi
+
+          if [ -s "$stale" ]; then upload=true; else upload=false; fi
+          {
+            echo "release=$release"
+            echo "exists=$exists"
+            echo "upload=$upload"
+            echo "stale=$stale"
+            echo "expected=$expected"
+            echo "dir=$RUNNER_TEMP/engine-sources"
+          } >> "$GITHUB_OUTPUT"
+          if [ "$upload" = true ]; then
+            echo "Release $release needs $(wc -l < "$stale") of $(wc -l < "$assets") assets" | tee -a "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Release $release already holds every asset with the right SHA256" | tee -a "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        if: steps.plan.outputs.upload == 'true'
+        with:
+          node-version: "24"
+
+      - name: Cache the source archives
+        if: steps.plan.outputs.upload == 'true'
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.plan.outputs.dir }}
+          key: engine-sources-${{ hashFiles('web/engine/engine.lock.json') }}
+
+      - name: Download the source archives
+        if: steps.plan.outputs.upload == 'true'
+        env:
+          DIR: ${{ steps.plan.outputs.dir }}
+          EXPECTED: ${{ steps.plan.outputs.expected }}
+        run: |
+          node web/engine/mirror-sources.mjs "$DIR"
+          (cd "$DIR" && sha256sum -c SHA256SUMS)
+          for f in SHA256SUMS sources.json; do
+            cmp "$DIR/$f" "$EXPECTED/$f" ||
+              { echo "::error::$f from mirror-sources.mjs differs from the one this workflow expects; update the check step"; exit 1; }
+          done
+
+      - name: Create the release
+        if: steps.plan.outputs.upload == 'true' && steps.plan.outputs.exists == 'false'
+        env:
+          RELEASE: ${{ steps.plan.outputs.release }}
+        run: |
+          engine_tag=$(jq -er '.tag' "$LOCK")
+          source_commit=$(jq -er '.sourceCommit' "$LOCK")
+          busytex=$(jq -er '.repo' "$LOCK")
+          origin=$(jq -er '.origin' web/site.config.json)
+          notes="$RUNNER_TEMP/notes.md"
+          cat > "$notes" <<EOF
+          These archives are the exact sources of the pdfTeX WebAssembly engine that the cv-tools web app at ${origin}/ ships. The engine is the ${busytex} release \`${engine_tag}\`, built from commit \`${source_commit}\`.
+
+          The engine links pdfTeX, kpathsea and other components under the GPL, the LGPL and other free licences, and this release holds their corresponding source. \`SHA256SUMS\` lists the SHA256 of each archive, and \`sources.json\` names the upstream URL and licence of each one. The app's About page and ${origin}/engine/licenses/THIRD_PARTY.md list the components and their licences.
+
+          The workflow \`.github/workflows/engine-sources.yml\` publishes this release from \`web/engine/engine.lock.json\`.
+          EOF
+          gh release create "$RELEASE" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --latest=false \
+            --title "Sources of the pdfTeX WebAssembly engine ($engine_tag)" --notes-file "$notes"
+
+      - name: Upload the missing or changed assets
+        if: steps.plan.outputs.upload == 'true'
+        env:
+          RELEASE: ${{ steps.plan.outputs.release }}
+          DIR: ${{ steps.plan.outputs.dir }}
+          STALE: ${{ steps.plan.outputs.stale }}
+        run: |
+          mapfile -t files < "$STALE"
+          cd "$DIR"
+          gh release upload "$RELEASE" "${files[@]}" --repo "$GITHUB_REPOSITORY" --clobber
+
+      - name: Check the published assets
+        if: steps.plan.outputs.upload == 'true'
+        env:
+          RELEASE: ${{ steps.plan.outputs.release }}
+          DIR: ${{ steps.plan.outputs.dir }}
+        run: |
+          published=$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$RELEASE")
+          bad=0
+          for name in $(jq -r '.sources[].file' "$LOCK") SHA256SUMS sources.json; do
+            want="sha256:$(sha256sum < "$DIR/$name" | cut -d' ' -f1)"
+            got=$(jq -r --arg n "$name" '.assets[] | select(.name == $n) | .digest // "none"' <<< "$published")
+            if [ "$got" = none ]; then
+              echo "$name is published (the API gives no digest)"
+            elif [ "$got" != "$want" ]; then
+              echo "::error::$name is published as ${got:-nothing}, expected $want"
+              bad=1
+            else
+              echo "$name is published with $want"
+            fi
+          done
+          exit "$bad"

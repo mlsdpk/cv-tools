@@ -1,0 +1,24 @@
+version: 2
+name: ""
+sections:
+  - title: Teaching and Volunteering
+    layout: entries
+    entries:
+      - title: Virtual Coding Academy
+        date: January 2020 - December 2021
+        subtitle: Instructor
+        note: 'Supervisor: Dr. Eve Code'
+        details:
+          - Department of Computer Science
+          - Imaginaria, Wonderland
+        bullets:
+          - Taught introductory and advanced courses in Python programming.
+          - Mentored students on their final projects and provided guidance on coding best practices.
+      - title: Tech Youth Initiative
+        date: July 2019 - June 2020
+        subtitle: Volunteer Coordinator
+        details:
+          - Nowhere City, Utopia
+        bullets:
+          - Organized coding boot camps and hackathons for underprivileged youth.
+          - Managed a team of volunteers and ensured smooth operation of all events.

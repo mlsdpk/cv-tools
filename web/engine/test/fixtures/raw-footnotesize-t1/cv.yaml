@@ -1,0 +1,17 @@
+# Web engine parity fixture: raw LaTeX, accented OT1 at 9pt, in a contact item, an entry title, date and bullet.
+# From the engine review (2026-11-12), where the browser engine lacked the fonts.
+
+version: 2
+name: Jane Roe
+contact:
+  - - latex: '{\footnotesize fööt}'
+sections:
+  - title: Raw
+    layout: entries
+    entries:
+      - title:
+          latex: '{\footnotesize fööt}'
+        date:
+          latex: '{\footnotesize fööt}'
+        bullets:
+          - latex: '{\footnotesize fööt}'

@@ -5,18 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.0.0] - Unreleased
 
 ### Added
-- Add support for bullet points in the `education` section
+- Web app to edit your CV in the browser with a live preview
+- `cv-tools` command with `build`, `watch`, `init`, `validate`, `migrate` and `doctor`
+- Generic section layouts, including a new `text` layout
+- JSON Schema for autocompletion in editors
+- Greek letters and common math symbols
 
 ### Changed
+- New YAML format with the same keys in every layout
+- Smaller Docker image that runs `cv-tools` directly
+- LaTeX special characters such as `%` and `&` no longer need escaping
 
 ### Deprecated
+- The v1 YAML format and `run.sh`, to be removed in a future release
 
 ### Removed
+- Raw `\tikz` and `\scalerel` commands
 
 ### Fixed
+- Author names keep "van" and "Jr." parts
+- Missing publication fields no longer print ", ," or stop the build
+- Empty values no longer print "None"
+- Duplicate YAML keys are reported instead of silently replaced
 
 <br>
 

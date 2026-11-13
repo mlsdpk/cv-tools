@@ -1,0 +1,22 @@
+version: 2
+name: Jane Roe
+sections:
+  - title: Experience
+    layout: entries
+    description: Selected positions.
+    entries:
+      - title: Full Lab
+        location: Nowhere, Utopia
+        date: 2020 - now
+        subtitle: Researcher
+        note: "Supervisor: Prof. X"
+        details:
+          - Department of Things
+          - Building 5
+        bullets:
+          - Did *research*
+          - Wrote **papers**
+      - title: Minimal Entry
+      - title: No Bullets
+        date: "2019"
+        subtitle: Intern

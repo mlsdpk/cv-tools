@@ -1,0 +1,17 @@
+# Web engine parity fixture: raw LaTeX, TS1 symbols (the euro) and T1 glyphs (an explicit \fontencoding) at sizes and in shapes the templates do not use, which need the font pack, in a contact item, an entry title, date and bullet.
+# Not from the review: it checks that the browser engine loads its font pack on demand.
+
+version: 2
+name: Jane Roe
+contact:
+  - - latex: '{\footnotesize €} {\Large\textit{€}} \textsf{€} {\fontencoding{T1}\selectfont\footnotesize \ng\ \guillemotleft\ \DH\ \th\ \textsc{\ng} \texttt{\textit{\ng}}}'
+sections:
+  - title: Raw
+    layout: entries
+    entries:
+      - title:
+          latex: '{\footnotesize €} {\Large\textit{€}} \textsf{€} {\fontencoding{T1}\selectfont\footnotesize \ng\ \guillemotleft\ \DH\ \th\ \textsc{\ng} \texttt{\textit{\ng}}}'
+        date:
+          latex: '{\footnotesize €} {\Large\textit{€}} \textsf{€} {\fontencoding{T1}\selectfont\footnotesize \ng\ \guillemotleft\ \DH\ \th\ \textsc{\ng} \texttt{\textit{\ng}}}'
+        bullets:
+          - latex: '{\footnotesize €} {\Large\textit{€}} \textsf{€} {\fontencoding{T1}\selectfont\footnotesize \ng\ \guillemotleft\ \DH\ \th\ \textsc{\ng} \texttt{\textit{\ng}}}'

@@ -1,0 +1,11 @@
+{
+ "pages": 1,
+ "links": [
+  [
+   "https://example.com/a_b%20c#frag",
+   "https://en.wikipedia.org/wiki/Foo_(bar)",
+   "https://x.org/%C3%A9%5E"
+  ]
+ ],
+ "text": "JANE ROE Special: # $ % & { } ∼ ˆ \\ < > | | 14th November 2023 MARKUP • bold, italic, link, “quoted” • Two spaces, four spaces, a tab • Line one Line two • [not a link] at the start • Italic with bold inside • Escapes: 30% of $5 & #1 in C 1 {x} ∼ ˆ \\ < > | • Raw: 30% and emphasis • 2024 • Bold italic and bold with italic • Escaped stars: 5* and 4*, [not a link](x), ’not quoted’, a backslash \\ • Tilde ∼ and caret ˆˆ in text • Link with parentheses and ́e • Is it ?“quoted”? Yes !“quoted”! • Control characters: a b c"
+}

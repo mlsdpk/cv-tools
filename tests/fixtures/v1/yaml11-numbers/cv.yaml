@@ -1,0 +1,17 @@
+# Strings that YAML 1.1 or YAML 1.2 read as numbers when unquoted.
+heading:
+  name: "Jane Roe"
+sections:
+  - type: bullets
+    title: T
+    content:
+      - item: "0o17"
+      - item: "017"
+      - item: "0x1F"
+      - item: "+12"
+      - item: "1e3"
+      - item: "0b101"
+      - item: ".5"
+      - item: "1.0"
+      - item: "-0"
+      - item: "0.10"

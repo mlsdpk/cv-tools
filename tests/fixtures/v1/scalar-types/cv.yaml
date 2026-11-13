@@ -1,0 +1,37 @@
+# Numbers, booleans and dates where v1 expected strings.
+heading:
+  name: "Jane Roe"
+subheading:
+  - type: links
+    content:
+      - name: 5550100
+        show_below: true
+sections:
+  - type: education
+    content:
+      - university: 42
+        location: 3.5
+        dates: 2024-05-01
+        degree: yes
+        honors: 2024
+  - type: experience
+    content:
+      - name: 2024
+        entity:
+          - organization: "Org"
+            dates: 2020
+            position: 1.0
+            location: 7
+            responsibilities:
+              - 100
+              - true
+  - type: skills
+    content:
+      - name: 1
+        data: 2
+  - type: talks
+    title: 2023
+    content:
+      - name: 1
+        month: 12
+        year: 2023

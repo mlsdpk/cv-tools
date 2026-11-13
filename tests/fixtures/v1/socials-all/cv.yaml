@@ -1,0 +1,39 @@
+heading:
+  name: "Jane Roe"
+
+subheading:
+  - type: socials
+    content:
+      - type: github
+        url: "https://github.com/janeroe"
+        show_below: false
+      - type: twitter
+        url: "https://twitter.com/janeroe"
+        show_below: true
+  - type: links
+    content:
+      - name: "https://janeroe.dev"
+        highlight: true
+        show_below: false
+      - name: "jane@roe.dev"
+        highlight: false
+        show_below: false
+      - name: "+1 555 0100"
+        show_below: true
+      - name: "https://example.org/~jane"
+        highlight: true
+        show_below: true
+  - type: socials
+    content:
+      - type: orcid_id
+        url: "0000-0002-1825-0097"
+        show_below: false
+      - type: linkedin
+        url: "https://www.linkedin.com/in/jane-roe"
+        show_below: true
+
+sections:
+  - type: bullets
+    title: "Notes"
+    content:
+      - item: "Every social type, both lines, links with and without highlight."

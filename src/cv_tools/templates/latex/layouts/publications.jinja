@@ -1,0 +1,14 @@
+{#- v1 "publications": one item per BibTeX entry, in file order. -#}
+{% macro render(section) %}
+    % ====================== {{ section.comment }} Section ====================== %
+    \begin{rSection}{ {{ section.title }} }
+    {%- if section.description %}
+    {{ section.description }}
+    {%- else %}
+    \vspace{-1.1em}
+    {%- endif %}
+    {%-for citation in section.citations %}
+        \item {{ citation }}
+    {% endfor %}
+    \end{rSection}
+{% endmacro %}

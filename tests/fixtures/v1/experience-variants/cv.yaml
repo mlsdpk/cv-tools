@@ -1,0 +1,46 @@
+heading:
+  name: "Jane Roe"
+sections:
+  - type: experience
+    content:
+      - name: "Research"
+        entity:
+          - organization: "Full Lab"
+            dates: "2020 - now"
+            position: "Researcher"
+            supervisor: "Prof. X"
+            department: "Dept. of Things"
+            location: "City"
+            responsibilities:
+              - "Did research"
+          - organization: "Department Only"
+            dates: "2019"
+            position: "Intern"
+            department: "Dept. of Stuff"
+            responsibilities:
+              - "Trailing line break quirk"
+          - organization: "No Position"
+            dates: "2018"
+            location: "Nowhere"
+          - organization: "Empty Responsibilities"
+            dates: "2017"
+            position: "Helper"
+            responsibilities: []
+          - organization: "Supervisor Only"
+            position: "Assistant"
+            supervisor: "Dr. Y"
+      - name: "Teaching"
+        entity:
+          - organization: "School"
+            dates: "2016"
+            position: "TA"
+      - name: "Empty group"
+        entity: []
+      - entity:
+          - organization: "Group without a name"
+            dates: "2015"
+            position: "Volunteer"
+  - type: bullets
+    title: "After"
+    content:
+      - item: "A section after experience"

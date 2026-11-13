@@ -1,0 +1,89 @@
+{#- field() is a Python function, which Jinja calls much faster than a macro. -#}
+
+{# ---------------------------------------------------------------- header #}
+
+{% macro contact_line(line) -%}
+<p class="cv-contact"{{ line.where }}>{% for item in line['items'] %}{% if item.joiner == "space" %}{{ " " }}{% elif item.joiner is not none %}{{ field("span", "cv-sep", item.joiner) }}{% endif %}{{ contact_item(item) }}{% endfor %}</p>
+{%- endmacro %}
+
+{% macro contact_item(item) -%}
+{% if item.kind == "text" %}{{ field("span", "cv-contact-text", item.field) }}
+{%- elif item.kind == "url" %}{{ link("cv-url", item) }}{{ item.field.html }}</{{ "a" if item.href else "span" }}>
+{%- else %}{{ link("cv-icon cv-icon-" ~ item.kind, item) }}{% if item.field.latex %}{{ item.field.html }}{% else %}{% include "icons/" ~ item.kind ~ ".svg" %}{% endif %}</{{ "a" if item.href else "span" }}>
+{%- endif %}
+{%- endmacro %}
+
+{#- <a> with a safe target, else <span>. -#}
+{% macro link(cls, item) -%}
+<{{ "a" if item.href else "span" }} class="{{ cls }}"{% if item.href %} href="{{ item.href }}"{% endif %}{% if item.kind in ICON_LABELS %} aria-label="{{ ICON_LABELS[item.kind] }}"{% endif %}{{ item.field.attrs }}>
+{%- endmacro %}
+
+{# -------------------------------------------------------------- sections #}
+
+{% macro section(s) -%}
+<section class="cv-section cv-layout-{{ s.layout }}"{{ s.where }} data-layout="{{ s.layout }}">
+{{ field("h2", s.title_class, s.title) }}
+<div class="cv-section-body">
+{% if s.description is not none %}
+{{ field("p", "cv-description", s.description) }}
+{% endif %}
+{% if s.layout in ("entries", "entries-inline") %}
+{% for e in s.entries %}
+{{ entry(e) }}
+{% endfor %}
+{% elif s.layout == "list" %}
+{% if s.entries %}
+<ul class="cv-list">
+{% for e in s.entries %}
+<li class="cv-list-item"{{ e.where }}>{{ field("span", "cv-text", e.text) }}{% if e.bullets %}<ul class="cv-sublist">{% for b in e.bullets %}{{ field("li", "cv-subitem", b) }}{% endfor %}</ul>{% endif %}</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% elif s.layout == "pairs" %}
+<div class="cv-pairs">
+{% for e in s.entries %}
+<div class="cv-pair cv-line"{{ e.where }}><span class="cv-pair-title">{{ field("span", "cv-title", e.title) }}:</span>{% if e.text is not none %}{{ HFILL }}{% endif %}{{ field("span", "cv-text cv-right", e.text) }}</div>
+{% endfor %}
+</div>
+{% elif s.layout == "dated" %}
+<div class="cv-dated">
+{% for e in s.entries %}
+<div class="cv-dated-row"{{ e.where }}>{% if e.date is not none %}<span class="cv-dated-date"{{ e.date.attrs }}><span class="cv-month">{{ e.date.month }}</span><span class="cv-year">{{ e.date.year }}</span></span>{% else %}<span class="cv-dated-date"></span>{% endif %}{{ field("span", "cv-text", e.text) }}</div>
+{% endfor %}
+</div>
+{% elif s.layout == "text" %}
+{% for e in s.entries %}
+<div class="cv-text-entry"{{ e.where }}>{{ field("p", "cv-paragraph", e.text) }}</div>
+{% endfor %}
+{% elif s.layout == "publications" %}
+{% if s.citations %}
+<ul class="cv-publications">
+{% for c in s.citations %}
+<li class="cv-citation" data-readonly>{{ c }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endif %}
+</div>
+</section>
+{%- endmacro %}
+
+{#- entries and entries-inline (v1 experience and education). -#}
+{% macro entry(e) -%}
+<div class="cv-entry{% if not e.bullets %} cv-no-bullets{% endif %}"{{ e.where }}>
+<div class="cv-line"><span class="cv-head">{{ field("strong", "cv-title", e.title) }}{% if e.location is not none %},{{ SP }}{{ field("span", "cv-location", e.location) }}{% endif %}</span>{% if e.date is not none %}{{ HFILL }}{% endif %}{{ field("em", "cv-date cv-right", e.date) }}</div>
+{% if e.note_left %}
+<div class="cv-line">{{ field("span", "cv-subtitle", e.subtitle) }}{{ field("span", "cv-note", e.note) }}</div>
+{% else %}
+<div class="cv-line">{{ field("span", "cv-subtitle", e.subtitle) }}{% if e.note is not none %}{{ HFILL }}{% endif %}{{ field("span", "cv-note cv-right", e.note) }}</div>
+{% endif %}
+{% if e.show_details %}
+{% for d in e.details %}
+{{ field("div", "cv-detail", d) }}
+{% endfor %}
+{% endif %}
+{% if e.bullets %}
+<ul class="cv-bullets">{% for b in e.bullets %}{{ field("li", "cv-bullet", b) }}{% endfor %}</ul>
+{% endif %}
+</div>
+{%- endmacro %}

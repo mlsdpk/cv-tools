@@ -1,0 +1,6 @@
+heading:
+  name: "John Doe"
+sections:
+  - type: publications
+    title: "Publications"
+    bibfile: pubs.bib

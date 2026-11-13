@@ -1,0 +1,10 @@
+# Strings that YAML 1.1 reads as base-60 numbers when unquoted.
+heading:
+  name: "Jane Roe"
+sections:
+  - type: bullets
+    title: T
+    content:
+      - item: "10:30"
+      - item: "1:20:30"
+      - item: "-1:30"

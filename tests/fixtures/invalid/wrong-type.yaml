@@ -1,0 +1,8 @@
+version: 2
+name: Jane Roe
+sections:
+  - title: Awards
+    layout: list
+    entries:
+      - text: Best paper
+        bullets: Not a list

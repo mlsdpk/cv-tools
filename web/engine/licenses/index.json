@@ -1,0 +1,135 @@
+{
+  "comment": "Licence texts and notices shipped in web/public/engine/licenses/. build-bundle.mjs checks each SHA256. See web/engine/README.md, 'Updating the engine', for how to refresh them.",
+  "files": [
+    {
+      "file": "texts/GPL-2.0.txt",
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "from": "texlive-source f26cc5ed05a1f784d1e694fe5b9cfc3ce992c03d:texk/web2c/pdftexdir/COPYINGv2"
+    },
+    {
+      "file": "texts/GPL-3.0.txt",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "from": "texlive-source f26cc5ed05a1f784d1e694fe5b9cfc3ce992c03d:libs/xpdf/xpdf-src/COPYING3"
+    },
+    {
+      "file": "texts/LGPL-2.1.txt",
+      "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551",
+      "from": "texlive-source f26cc5ed05a1f784d1e694fe5b9cfc3ce992c03d:texk/kpathsea/COPYING.LESSERv2"
+    },
+    {
+      "file": "texts/LGPL-3.0.txt",
+      "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c",
+      "from": "texlive-source f26cc5ed05a1f784d1e694fe5b9cfc3ce992c03d:utils/asymptote/LICENSE.LESSER"
+    },
+    {
+      "file": "texts/LPPL-1.3c.txt",
+      "sha256": "c1ae6e179a6d28bbd5c483fbacc744acc75e922d598281dc3390aab26126e163",
+      "from": "https://www.latex-project.org/lppl/lppl-1-3c.txt"
+    },
+    {
+      "file": "texts/OFL-1.1.txt",
+      "sha256": "8eea8287e5876b539670cadb82e99f9a7afddec6f6730811be1daf25d2e9bcfd",
+      "from": "https://raw.githubusercontent.com/spdx/license-list-data/v3.29.0/text/OFL-1.1.txt"
+    },
+    {
+      "file": "notices/amsfonts-OFL.txt",
+      "sha256": "aa783fdd47e92743bafe79277ac4067d20339344dc5b64a09c2d0f869b2999dc",
+      "from": "TeX Live 2025 texmf-dist/doc/fonts/amsfonts/OFL.txt"
+    },
+    {
+      "file": "notices/cm-super-README.txt",
+      "sha256": "8d5eaaae218d4330992b506cd080ddac5a91382103b697eb3d1456957c8a68fe",
+      "from": "TeX Live 2025 texmf-dist/doc/fonts/cm-super/README"
+    },
+    {
+      "file": "notices/ec-copyrite.txt",
+      "sha256": "ff60c4b3c1099ca7ec439fc3c7fa141f0ebde71ff0e54fd68b03de6a98151974",
+      "from": "TeX Live 2025 texmf-dist/doc/fonts/ec/copyrite.txt"
+    },
+    {
+      "file": "notices/freetype-LICENSE.txt",
+      "sha256": "bd36c8b474855fa294c2ec5c184544478ef3720aad37d65a6296a4f264fd2d3b",
+      "from": "texlive-source f26cc5ed05a1f784d1e694fe5b9cfc3ce992c03d:libs/freetype2/freetype-src/LICENSE.TXT"
+    },
+    {
+      "file": "notices/freetype-FTL.txt",
+      "sha256": "5a5ee54c5001bbad1cdc1a57cc3dd4c42199b2da09d39c7ee41fab002d02967f",
+      "from": "texlive-source f26cc5ed05a1f784d1e694fe5b9cfc3ce992c03d:libs/freetype2/freetype-src/docs/FTL.TXT"
+    },
+    {
+      "file": "notices/harfbuzz-COPYING.txt",
+      "sha256": "ba8f810f2455c2f08e2d56bb49b72f37fcf68f1f4fade38977cfd7372050ad64",
+      "from": "texlive-source f26cc5ed05a1f784d1e694fe5b9cfc3ce992c03d:libs/harfbuzz/harfbuzz-src/COPYING"
+    },
+    {
+      "file": "notices/graphite2-LICENSE.txt",
+      "sha256": "a9bdde5616ecdd1e980b44f360600ee8783b1f99b8cc83a2beb163a0a390e861",
+      "from": "texlive-source f26cc5ed05a1f784d1e694fe5b9cfc3ce992c03d:libs/graphite2/graphite2-src/LICENSE"
+    },
+    {
+      "file": "notices/icu-LICENSE.txt",
+      "sha256": "e55522d81edc687a341a4411e0776e54ca654e90147f354a90458aaced4116af",
+      "from": "texlive-source f26cc5ed05a1f784d1e694fe5b9cfc3ce992c03d:libs/icu/icu-src/LICENSE"
+    },
+    {
+      "file": "notices/libpng-LICENSE.txt",
+      "sha256": "bdb0a645ea18c60507d0368379b1ac5474b92255fcc2d115e07486a7672ba526",
+      "from": "texlive-source f26cc5ed05a1f784d1e694fe5b9cfc3ce992c03d:libs/libpng/libpng-src/LICENSE"
+    },
+    {
+      "file": "notices/zlib-LICENSE.txt",
+      "sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2",
+      "from": "texlive-source f26cc5ed05a1f784d1e694fe5b9cfc3ce992c03d:libs/zlib/zlib-src/LICENSE"
+    },
+    {
+      "file": "notices/lua-5.3-notice.txt",
+      "sha256": "4e57f30b9c6f0a82059c41b059219ee25b312661b59bc4025cf499659218521a",
+      "from": "texlive-source f26cc5ed05a1f784d1e694fe5b9cfc3ce992c03d:libs/lua53/lua53-src/src/lua.h (lines 459 to the end)"
+    },
+    {
+      "file": "notices/luafilesystem-LICENSE.txt",
+      "sha256": "beb2c9eed6466d572c3888028a77421206053a3c023429cbd69e5015badba842",
+      "from": "texlive-source f26cc5ed05a1f784d1e694fe5b9cfc3ce992c03d:texk/web2c/luatexdir/luafilesystem/LICENSE"
+    },
+    {
+      "file": "notices/luasocket-LICENSE.txt",
+      "sha256": "8e8c6314d9e78fe452ee355167f2c40cfbee8207e14dcb5ddd4a2655cb5c6aad",
+      "from": "texlive-source f26cc5ed05a1f784d1e694fe5b9cfc3ce992c03d:texk/web2c/luatexdir/luasocket/LICENSE"
+    },
+    {
+      "file": "notices/luaharfbuzz-LICENSE.txt",
+      "sha256": "0adbe9a18a0e2c10e939b4cf136d1aa59cce294aa11bce0aaf318b4ae1959c8a",
+      "from": "texlive-source f26cc5ed05a1f784d1e694fe5b9cfc3ce992c03d:texk/web2c/luatexdir/luaharfbuzz/LICENSE"
+    },
+    {
+      "file": "notices/makeindex-COPYING.txt",
+      "sha256": "9de7394ed884ea714157e049990757d7052c93e53ac93d9688e0b4444d37b4ed",
+      "from": "texlive-source f26cc5ed05a1f784d1e694fe5b9cfc3ce992c03d:texk/makeindexk/COPYING"
+    },
+    {
+      "file": "notices/xetex-COPYING.txt",
+      "sha256": "5bf166af469a06c013cb1c5613cdb54007eecb37c145b3ea71bb08bf34b474ff",
+      "from": "texlive-source f26cc5ed05a1f784d1e694fe5b9cfc3ce992c03d:texk/web2c/xetexdir/COPYING"
+    },
+    {
+      "file": "notices/expat-COPYING.txt",
+      "sha256": "122f2c27000472a201d337b9b31f7eb2b52d091b02857061a8880371612d9534",
+      "from": "expat-2.5.0.tar.gz:expat-2.5.0/COPYING"
+    },
+    {
+      "file": "notices/fontconfig-COPYING.txt",
+      "sha256": "51a51aa9823704fd90bccc616cdd17ebabb5b2b3e9cbde886ca02c7002288067",
+      "from": "fontconfig-2.13.96.tar.gz:fontconfig-2.13.96/COPYING"
+    },
+    {
+      "file": "notices/emscripten-LICENSE.txt",
+      "sha256": "620a78084fc7ca97c0b5dea9abf891f3ffcadfdbf305276f099c9c4e12fc1d86",
+      "from": "emscripten 3.1.43:LICENSE"
+    },
+    {
+      "file": "notices/musl-COPYRIGHT.txt",
+      "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+      "from": "emscripten 3.1.43:system/lib/libc/musl/COPYRIGHT"
+    }
+  ]
+}

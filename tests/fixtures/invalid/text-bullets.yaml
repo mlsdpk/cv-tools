@@ -1,0 +1,8 @@
+version: 2
+name: Jane Roe
+sections:
+  - title: Summary
+    layout: text
+    entries:
+      - text: A paragraph.
+        bullets: [a]

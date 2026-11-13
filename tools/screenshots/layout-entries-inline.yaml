@@ -1,0 +1,22 @@
+version: 2
+name: ""
+sections:
+  - title: Education
+    layout: entries-inline
+    entries:
+      - title: Fictional University
+        location: Imaginaria, Wonderland
+        date: September 2021 - June 2024
+        subtitle: Bachelor of Science in *Computer Science*
+        note: '**Magna Cum Laude**'
+        details:
+          - "Thesis Title: *An Exploration of ['Quantum Computing'](https://en.wikipedia.org/wiki/Quantum_computing) in Virtual Environments*"
+          - 'Supervisor: Dr. Alice Wonder'
+      - title: Imaginary Institute of Technology
+        location: Nowhere City, Utopia
+        date: August 2018 - May 2021
+        subtitle: Associate Degree in Artificial Intelligence
+        details:
+          - 'Supervisor: Dr. Bob Builder'
+        bullets:
+          - 'Relevant Coursework: Machine Learning, Advanced Algorithms'

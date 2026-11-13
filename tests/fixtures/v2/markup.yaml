@@ -1,0 +1,24 @@
+version: 2
+name: "**Jane** Roe"
+date: auto
+contact:
+  - - "Special: # $ % & _ { } ~ ^ \\ < > |"
+    - "{date}"
+sections:
+  - title: Markup
+    layout: list
+    entries:
+      - "**bold**, *italic*, [link](https://example.com/a_b%20c#frag), 'quoted'"
+      - "Two  spaces, four    spaces, a\ttab"
+      - "Line one\nLine two"
+      - "[not a link] at the start"
+      - "*Italic with **bold** inside*"
+      - "Escapes: 30% of $5 & #1 in C_1 {x} ~ ^ \\ < > |"
+      - {latex: "Raw: 30\\% and \\emph{emphasis}"}
+      - 2024
+      - "***Bold italic*** and **bold *with italic***"
+      - "Escaped stars: 5\\* and 4\\*, \\[not a link\\](x), \\'not quoted\\', a backslash \\\\"
+      - "Tilde ~ and caret ^^ in text"
+      - "[Link with parentheses](https://en.wikipedia.org/wiki/Foo_(bar)) and [é](https://x.org/é^)"
+      - "Is it ?'quoted'? Yes !'quoted'!"
+      - "Control characters: a\rb\fc"

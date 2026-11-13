@@ -1,0 +1,11 @@
+version: 2
+name: Jane Roe
+sections:
+  - title: Skills
+    layout: pairs
+    description: Languages and tools I use.
+    entries:
+      - title: Programming Languages
+        text: Python, Java, C++
+      - title: Tools
+        text: Git, Docker & Kubernetes

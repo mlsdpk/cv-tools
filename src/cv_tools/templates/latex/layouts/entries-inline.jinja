@@ -1,0 +1,23 @@
+{#- v1 "education": entries separated by \medskip, details as extra lines. -#}
+{% macro render(section) %}
+    % ====================== {{ section.comment }} Section ====================== %
+    \begin{rSection}{ {{-section.title-}} }
+    {%- if section.description %}{{ section.description }}\par{% endif %}
+    {% for entry in section.entries %}
+    {\textbf{ {{-entry.title-}} }{% if entry.location is not none %}, {{ entry.location }}{% endif %}} \hfill {\em {{ entry.date }}} 
+    \\ {{ entry.subtitle }} \hfill {{ entry.note }}
+    {%-for detail in entry.details-%}
+    \\ {{ detail }}
+    {%-endfor %}
+    {%- if entry.bullets -%}
+    \begin{list}{\textbullet}{\leftmargin=1em}
+        \setlength{\itemsep}{-0.5em} \vspace{-0.5em}
+        {%- for bullet in entry.bullets -%}
+        \item {{ bullet }}
+        {%- endfor -%}
+    \end{list}
+    {%- endif -%}
+    \medskip
+    {% endfor %}
+    \end{rSection}
+{% endmacro %}

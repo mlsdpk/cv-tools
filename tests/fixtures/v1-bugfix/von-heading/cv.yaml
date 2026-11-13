@@ -1,0 +1,7 @@
+# A heading name with a von part, and the same author written in other forms.
+heading:
+  name: "Ludwig van Beethoven"
+sections:
+  - type: publications
+    title: P
+    bibfile: p.bib

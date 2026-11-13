@@ -1,0 +1,20 @@
+heading:
+  name: "Jane Roe"
+subheading:
+  - type: links
+    content:
+      - name: "jane@roe.dev"
+        show_below: false
+  - type: socials
+    content:
+      - type: linkedin
+        url: "https://www.linkedin.com/in/jane-roe"
+        show_below: false
+      - type: github
+        url: "https://github.com/janeroe"
+        show_below: false
+sections:
+  - type: bullets
+    title: "Notes"
+    content:
+      - item: "Only the date item is on the second line."

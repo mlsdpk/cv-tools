@@ -1,0 +1,6 @@
+version: 2
+name: Dropped Person
+sections:
+  - title: Pubs
+    layout: publications
+    bib: mine.bib

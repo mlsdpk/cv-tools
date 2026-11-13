@@ -1,0 +1,8 @@
+version: 2
+name: Jane Roe
+sections:
+  - title: Skills
+    layout: pairs
+    entries:
+      - titel: Languages
+        text: Python

@@ -1,0 +1,17 @@
+# Web engine parity fixture: raw LaTeX, sans serif, in a contact item, an entry title, date and bullet.
+# From the engine review (2026-11-12), where the browser engine lacked the fonts.
+
+version: 2
+name: Jane Roe
+contact:
+  - - latex: '\textsf{sans}'
+sections:
+  - title: Raw
+    layout: entries
+    entries:
+      - title:
+          latex: '\textsf{sans}'
+        date:
+          latex: '\textsf{sans}'
+        bullets:
+          - latex: '\textsf{sans}'

@@ -1,0 +1,707 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cv-tools.phonethk.com/schema/v2.json",
+  "title": "cv-tools CV (format version 2)",
+  "type": "object",
+  "required": [
+    "version",
+    "name"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "const": 2,
+      "description": "Format version. Always 2."
+    },
+    "name": {
+      "$ref": "#/$defs/text",
+      "description": "Your name, printed as the page heading."
+    },
+    "date": {
+      "$ref": "#/$defs/dateText",
+      "description": "\"auto\" (default) prints the compile date. Anything else is text, printed with markup, such as \"Spring 2025\" or {latex: ...}. It must fit on one line."
+    },
+    "contact": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "$ref": "#/$defs/contactLine"
+      },
+      "description": "Up to three lines under the name. Each line is a list of items."
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/sectionItem"
+      }
+    }
+  },
+  "$defs": {
+    "latex": {
+      "type": "object",
+      "required": [
+        "latex"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "latex": {
+          "type": "string",
+          "description": "Raw LaTeX, inserted verbatim."
+        }
+      }
+    },
+    "text": {
+      "x-expected": "text (a string, a number or {latex: ...})",
+      "if": {
+        "type": "object"
+      },
+      "then": {
+        "$ref": "#/$defs/latex"
+      },
+      "else": {
+        "type": [
+          "string",
+          "number"
+        ],
+        "x-expected": "text (a string, a number or {latex: ...})"
+      }
+    },
+    "textList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "link": {
+      "x-expected": "a URL (a string or {latex: ...})",
+      "if": {
+        "type": "object"
+      },
+      "then": {
+        "$ref": "#/$defs/lineLatex"
+      },
+      "else": {
+        "type": "string",
+        "x-expected": "a URL (a string or {latex: ...})",
+        "not": {
+          "pattern": "[\\n\\r\\u000b\\u000c\\u001c-\\u001e\\u0085\\u2028\\u2029]"
+        },
+        "x-message": "contact items are single-line; add another contact line"
+      }
+    },
+    "linkItem": {
+      "type": "object",
+      "minProperties": 1,
+      "maxProperties": 1,
+      "additionalProperties": false,
+      "x-expected": "exactly one of the keys url, orcid, linkedin, github, twitter",
+      "properties": {
+        "url": {
+          "$ref": "#/$defs/link",
+          "description": "A web address, printed as a link."
+        },
+        "orcid": {
+          "$ref": "#/$defs/link",
+          "description": "An ORCID iD, printed as the ORCID icon."
+        },
+        "linkedin": {
+          "$ref": "#/$defs/link",
+          "description": "A LinkedIn URL, printed as an icon."
+        },
+        "github": {
+          "$ref": "#/$defs/link",
+          "description": "A GitHub URL, printed as an icon."
+        },
+        "twitter": {
+          "$ref": "#/$defs/link",
+          "description": "A Twitter URL, printed as an icon."
+        }
+      }
+    },
+    "contactItem": {
+      "if": {
+        "type": "object",
+        "required": [
+          "latex"
+        ]
+      },
+      "then": {
+        "$ref": "#/$defs/lineLatex"
+      },
+      "else": {
+        "if": {
+          "type": "object"
+        },
+        "then": {
+          "$ref": "#/$defs/linkItem"
+        },
+        "else": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "x-expected": "a contact item (text or a {url: ...} style mapping)",
+          "not": {
+            "type": "string",
+            "pattern": "[\\n\\r\\u000b\\u000c\\u001c-\\u001e\\u0085\\u2028\\u2029]"
+          },
+          "x-message": "contact items are single-line; add another contact line"
+        }
+      }
+    },
+    "contactLine": {
+      "if": {
+        "type": "object"
+      },
+      "then": {
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/contactItem"
+            }
+          },
+          "separator": {
+            "$ref": "#/$defs/lineText",
+            "description": "Printed between items. Default \" | \"."
+          }
+        }
+      },
+      "else": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/contactItem"
+        },
+        "x-expected": "a contact line (a list of items, or {items: [...]})"
+      }
+    },
+    "sectionItem": {
+      "if": {
+        "type": "string"
+      },
+      "then": {
+        "const": "newpage",
+        "x-expected": "'newpage' or a section mapping"
+      },
+      "else": {
+        "$ref": "#/$defs/section"
+      }
+    },
+    "section": {
+      "type": "object",
+      "required": [
+        "title",
+        "layout"
+      ],
+      "properties": {
+        "layout": {
+          "enum": [
+            "entries",
+            "entries-inline",
+            "list",
+            "pairs",
+            "dated",
+            "text",
+            "publications"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "layout"
+            ],
+            "properties": {
+              "layout": {
+                "const": "entries"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/section-entries"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "layout"
+            ],
+            "properties": {
+              "layout": {
+                "const": "entries-inline"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/section-entries-inline"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "layout"
+            ],
+            "properties": {
+              "layout": {
+                "const": "list"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/section-list"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "layout"
+            ],
+            "properties": {
+              "layout": {
+                "const": "pairs"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/section-pairs"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "layout"
+            ],
+            "properties": {
+              "layout": {
+                "const": "dated"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/section-dated"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "layout"
+            ],
+            "properties": {
+              "layout": {
+                "const": "text"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/section-text"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "layout"
+            ],
+            "properties": {
+              "layout": {
+                "const": "publications"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/section-publications"
+          }
+        }
+      ]
+    },
+    "section-entries": {
+      "type": "object",
+      "required": [
+        "title",
+        "layout",
+        "entries"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "layout": {
+          "const": "entries"
+        },
+        "description": {
+          "$ref": "#/$defs/text"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/entry"
+          }
+        }
+      }
+    },
+    "section-entries-inline": {
+      "type": "object",
+      "required": [
+        "title",
+        "layout",
+        "entries"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "layout": {
+          "const": "entries-inline"
+        },
+        "description": {
+          "$ref": "#/$defs/text"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/entry"
+          }
+        }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "required": [
+        "title"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "date": {
+          "$ref": "#/$defs/text"
+        },
+        "subtitle": {
+          "$ref": "#/$defs/text"
+        },
+        "note": {
+          "$ref": "#/$defs/text"
+        },
+        "location": {
+          "$ref": "#/$defs/text"
+        },
+        "details": {
+          "$ref": "#/$defs/textList"
+        },
+        "bullets": {
+          "$ref": "#/$defs/textList"
+        }
+      }
+    },
+    "section-list": {
+      "type": "object",
+      "required": [
+        "title",
+        "layout",
+        "entries"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "layout": {
+          "const": "list"
+        },
+        "description": {
+          "$ref": "#/$defs/text"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/listEntry"
+          }
+        }
+      }
+    },
+    "listEntry": {
+      "if": {
+        "type": "object",
+        "required": [
+          "latex"
+        ]
+      },
+      "then": {
+        "$ref": "#/$defs/latex"
+      },
+      "else": {
+        "if": {
+          "type": "object"
+        },
+        "then": {
+          "type": "object",
+          "required": [
+            "text"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "text": {
+              "$ref": "#/$defs/text"
+            },
+            "bullets": {
+              "$ref": "#/$defs/textList"
+            }
+          }
+        },
+        "else": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "section-pairs": {
+      "type": "object",
+      "required": [
+        "title",
+        "layout",
+        "entries"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "layout": {
+          "const": "pairs"
+        },
+        "description": {
+          "$ref": "#/$defs/text"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "title",
+              "text"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "title": {
+                "$ref": "#/$defs/text"
+              },
+              "text": {
+                "$ref": "#/$defs/text"
+              }
+            }
+          }
+        }
+      }
+    },
+    "section-dated": {
+      "type": "object",
+      "required": [
+        "title",
+        "layout",
+        "entries"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "layout": {
+          "const": "dated"
+        },
+        "description": {
+          "$ref": "#/$defs/text"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/datedEntry"
+          }
+        }
+      }
+    },
+    "section-text": {
+      "type": "object",
+      "required": [
+        "title",
+        "layout",
+        "entries"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "layout": {
+          "const": "text"
+        },
+        "description": {
+          "$ref": "#/$defs/text"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/textEntry"
+          }
+        }
+      }
+    },
+    "section-publications": {
+      "type": "object",
+      "required": [
+        "title",
+        "layout",
+        "bib"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "layout": {
+          "const": "publications"
+        },
+        "description": {
+          "$ref": "#/$defs/text"
+        },
+        "bib": {
+          "type": "string",
+          "description": "Path to a .bib file, relative to this YAML file."
+        },
+        "highlight": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Author names to print in bold. Default: [name]."
+        }
+      }
+    },
+    "lineText": {
+      "x-expected": "text (a string, a number or {latex: ...})",
+      "if": {
+        "type": "object"
+      },
+      "then": {
+        "$ref": "#/$defs/lineLatex"
+      },
+      "else": {
+        "type": [
+          "string",
+          "number"
+        ],
+        "x-expected": "text (a string, a number or {latex: ...})",
+        "not": {
+          "type": "string",
+          "pattern": "[\\n\\r\\u000b\\u000c\\u001c-\\u001e\\u0085\\u2028\\u2029]"
+        },
+        "x-message": "contact items are single-line; add another contact line"
+      }
+    },
+    "lineLatex": {
+      "$ref": "#/$defs/latex",
+      "properties": {
+        "latex": {
+          "type": "string",
+          "not": {
+            "pattern": "\\n[ \\t]*\\n"
+          },
+          "x-message": "a blank line ends the paragraph; contact items and the date must not contain one"
+        }
+      }
+    },
+    "textEntry": {
+      "if": {
+        "type": "object",
+        "required": [
+          "latex"
+        ]
+      },
+      "then": {
+        "$ref": "#/$defs/latex"
+      },
+      "else": {
+        "if": {
+          "type": "object"
+        },
+        "then": {
+          "type": "object",
+          "required": [
+            "text"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "text": {
+              "$ref": "#/$defs/text"
+            }
+          }
+        },
+        "else": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "datedEntry": {
+      "if": {
+        "type": "object",
+        "required": [
+          "latex"
+        ]
+      },
+      "then": {
+        "$ref": "#/$defs/latex"
+      },
+      "else": {
+        "if": {
+          "type": "object"
+        },
+        "then": {
+          "type": "object",
+          "required": [
+            "text"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "date": {
+              "$ref": "#/$defs/text",
+              "description": "Split at its last space into two columns, such as \"Nov. 2023\"."
+            },
+            "text": {
+              "$ref": "#/$defs/text"
+            }
+          }
+        },
+        "else": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "dateText": {
+      "x-expected": "text (a string, a number or {latex: ...})",
+      "if": {
+        "type": "object"
+      },
+      "then": {
+        "$ref": "#/$defs/lineLatex"
+      },
+      "else": {
+        "type": [
+          "string",
+          "number"
+        ],
+        "x-expected": "text (a string, a number or {latex: ...})",
+        "not": {
+          "type": "string",
+          "pattern": "[\\n\\r\\u000b\\u000c\\u001c-\\u001e\\u0085\\u2028\\u2029]"
+        },
+        "x-message": "the date is printed in a contact line and must be single-line"
+      }
+    }
+  }
+}

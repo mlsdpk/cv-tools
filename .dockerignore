@@ -1,0 +1,10 @@
+# The image needs only the package sources and the files pyproject.toml names.
+*
+!pyproject.toml
+!README.md
+!LICENSE
+!src/
+!docker/constraints.txt
+!docker/tl-repository.sh
+**/__pycache__
+src/*.egg-info

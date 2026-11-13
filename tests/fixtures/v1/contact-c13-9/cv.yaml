@@ -1,0 +1,19 @@
+# Random contact probe case c13-9: the ORCID box width moved the LinkedIn icon by 0.00005pt.
+heading:
+  name: Jane Roe
+subheading:
+  - type: socials
+    content:
+      - type: orcid_id
+        url: 0000-0002-1825-0097
+        show_below: true
+  - type: socials
+    content:
+      - type: linkedin
+        url: https://x.org/~u
+        show_below: true
+sections:
+  - type: bullets
+    title: T
+    content:
+      - item: x

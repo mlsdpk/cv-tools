@@ -1,0 +1,17 @@
+# Web engine parity fixture: raw LaTeX, OT1 italic at 20.74pt, in a contact item, an entry title, date and bullet.
+# From the engine review (2026-11-12), where the browser engine lacked the fonts.
+
+version: 2
+name: Jane Roe
+contact:
+  - - latex: '{\huge Huge é}'
+sections:
+  - title: Raw
+    layout: entries
+    entries:
+      - title:
+          latex: '{\huge Huge é}'
+        date:
+          latex: '{\huge Huge é}'
+        bullets:
+          - latex: '{\huge Huge é}'

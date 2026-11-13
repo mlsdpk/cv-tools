@@ -1,0 +1,17 @@
+# Web engine parity fixture: raw LaTeX, math at 9pt, in a contact item, an entry title, date and bullet.
+# From the engine review (2026-11-12), where the browser engine lacked the fonts.
+
+version: 2
+name: Jane Roe
+contact:
+  - - latex: '{\footnotesize $x^2_i$}'
+sections:
+  - title: Raw
+    layout: entries
+    entries:
+      - title:
+          latex: '{\footnotesize $x^2_i$}'
+        date:
+          latex: '{\footnotesize $x^2_i$}'
+        bullets:
+          - latex: '{\footnotesize $x^2_i$}'

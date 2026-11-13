@@ -1,0 +1,9 @@
+heading:
+  name: "Wolfgang Amadeus Mozart"
+sections:
+  - type: publications
+    title: "Journal Articles"
+    bibfile: journals.bib
+  - type: publications
+    title: "Conference Papers"
+    bibfile: ./bib/conferences.bib
