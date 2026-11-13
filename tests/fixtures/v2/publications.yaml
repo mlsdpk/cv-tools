@@ -1,0 +1,11 @@
+version: 2
+name: Jane Roe
+sections:
+  - title: Publications
+    layout: publications
+    bib: publications.bib
+    highlight: [Jane Roe, J. Roe]
+  - title: Talks Without Highlight
+    layout: publications
+    description: Default highlight is the name.
+    bib: publications.bib

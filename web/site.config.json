@@ -1,0 +1,8 @@
+{
+  "comment": "Where the site is served. The only place to change when the hosting moves: vite.config.ts, the service worker, the e2e tests, the About page and the schema URL all read it.",
+  "origin": "https://cv-tools.phonethk.com",
+  "base": "/",
+  "repository": "mlsdpk/cv-tools",
+  "engineSourcesTagPrefix": "engine-sources-",
+  "coffee": "https://buymeacoffee.com/phonethk"
+}

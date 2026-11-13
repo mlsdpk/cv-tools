@@ -1,0 +1,9 @@
+# Web engine parity fixture: raw LaTeX in BibTeX fields, typewriter (italic in the title).
+# From the engine review (2026-11-12), where the browser engine lacked the fonts.
+
+version: 2
+name: Jane Roe
+sections:
+  - title: Publications
+    layout: publications
+    bib: publications.bib

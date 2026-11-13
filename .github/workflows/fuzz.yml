@@ -1,0 +1,55 @@
+name: Fuzz
+
+# The property-based tests with many more generated documents (CV_TOOLS_FUZZ=1).
+on:
+  schedule:
+    - cron: "17 4 * * 1"  # Mondays at 04:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fuzz:
+    name: Property tests, deep profile, with TeX Live 2026
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      CV_TOOLS_FUZZ: "1"
+      CV_TOOLS_REQUIRE_TEX: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install TeX Live 2026
+        uses: TeX-Live/setup-texlive-action@eb78d21f41941476d9121e3a0abcab73265c876f # v4.1.1
+        with:
+          version: 2026
+          packages: latex-bin
+          package-file: src/cv_tools/templates/latex/packages.txt
+
+      - name: Install pdftoppm and pdftotext
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends poppler-utils
+
+      - name: Install cv-tools with the test dependencies
+        run: python -m pip install -e '.[test]'
+
+      - name: Run the property-based tests
+        run: python -m pytest -q tests/test_markup_props.py tests/test_migrate.py
+
+      - name: Upload the pixel diffs and failing examples
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: fuzz-failures
+          path: |
+            tests/_artifacts/
+            .hypothesis/
+          if-no-files-found: ignore

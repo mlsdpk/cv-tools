@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Edit a CV as YAML and get the cv-tools PDF, entirely in your browser." />
+    <meta name="color-scheme" content="light" />
+    <title>cv-tools</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='2.5' y='1.5' width='11' height='13' fill='white' stroke='black'/%3E%3Cpath d='M5 5h6M5 8h6M5 11h4' stroke='black'/%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <div id="app" data-layout="split" data-py="loading">
+      <header class="topbar">
+        <h1 class="wordmark">cv-tools</h1>
+        <span class="file-state" id="file-state">cv.yaml</span>
+        <span class="spacer"></span>
+        <div class="seg desktop-only" role="group" aria-label="Layout" id="layout-switch">
+          <button type="button" data-layout="split" aria-pressed="true">Split</button>
+          <button type="button" data-layout="paper" aria-pressed="false">Paper</button>
+          <button type="button" data-layout="yaml" aria-pressed="false">YAML</button>
+        </div>
+        <div class="menu-wrap">
+          <button type="button" class="btn desktop-only menu-btn" id="open-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="open-menu">New / Open<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
+          <button type="button" class="icon-btn phone-only" id="m-open" aria-label="New or open" aria-haspopup="menu" aria-expanded="false" aria-controls="open-menu">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2 5h5l1.5 2H16v8H2z"></path></svg>
+          </button>
+          <div role="menu" aria-label="New or open" id="open-menu" class="menu menu-left" hidden>
+            <button type="button" role="menuitem" data-action="new">New, minimal</button>
+            <button type="button" role="menuitem" data-action="example">New from example</button>
+            <button type="button" role="menuitem" data-action="open">Open file…</button>
+          </div>
+        </div>
+        <div class="menu-wrap">
+          <div class="download desktop-only">
+            <button type="button" class="btn primary" id="download-pdf">Download PDF</button>
+            <button type="button" class="btn primary chevron" id="download-more" aria-label="Other downloads" aria-haspopup="menu" aria-expanded="false" aria-controls="download-menu"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
+          </div>
+          <button type="button" class="icon-btn primary phone-only" id="m-download" aria-label="Download" aria-haspopup="menu" aria-expanded="false" aria-controls="download-menu">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M9 2v10M5 8l4 4 4-4M3 15h12"></path></svg>
+          </button>
+          <div role="menu" aria-label="Downloads" id="download-menu" class="menu" hidden>
+            <button type="button" role="menuitem" data-action="pdf">PDF</button>
+            <button type="button" role="menuitem" data-action="latex">LaTeX for Overleaf</button>
+            <button type="button" role="menuitem" data-action="yaml">YAML</button>
+            <button type="button" role="menuitem" data-action="share">Copy share link</button>
+          </div>
+        </div>
+        <span class="topbar-rule desktop-only" aria-hidden="true"></span>
+        <a class="topbar-link" id="github" href="https://github.com/mlsdpk/cv-tools" target="_blank" rel="noopener noreferrer" aria-label="cv-tools on GitHub">
+          <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path></svg>
+        </a>
+        <a class="topbar-link coffee desktop-only" id="coffee" target="_blank" rel="noopener noreferrer" hidden>
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M2.5 6h9v4a3.5 3.5 0 0 1-3.5 3.5H6A3.5 3.5 0 0 1 2.5 10V6Zm9 1h1a1.75 1.75 0 0 1 0 3.5h-1.2M5 2.5v1.5M8 2.5v1.5"></path></svg>Buy me a coffee
+        </a>
+      </header>
+
+      <nav class="phone-tabs phone-only" aria-label="View">
+        <div class="phone-tablist" role="tablist" aria-label="View">
+          <button type="button" role="tab" id="tab-yaml" data-phone-tab="yaml" aria-selected="false" aria-controls="editor-pane">YAML</button>
+          <button type="button" role="tab" id="tab-cv" data-phone-tab="cv" aria-selected="true" aria-controls="preview-pane">CV</button>
+        </div>
+      </nav>
+
+      <div class="notice" id="lock-bar" role="status" hidden>
+        <span class="notice-text">This CV is open in another tab.</span>
+        <span class="notice-actions"><button type="button" class="btn" id="use-here">Use here</button></span>
+      </div>
+
+      <div class="notice toast" id="notice" role="status" aria-live="polite" hidden>
+        <span class="notice-text" id="notice-text"></span>
+        <span class="notice-actions" id="notice-actions"></span>
+      </div>
+
+      <main class="main">
+        <section class="editor-pane" id="editor-pane" aria-label="YAML editor">
+          <div class="file-tabs" role="tablist" aria-label="Files" id="file-tabs"></div>
+          <div class="editor" id="editor"></div>
+          <p class="sr-only" id="editor-help">YAML editor. Tab indents. To leave the editor with the keyboard, press Escape, then Tab.</p>
+        </section>
+        <section class="preview-pane" id="preview-pane" aria-label="CV preview">
+          <div class="preview-bar">
+            <div class="paper-lines">
+              <p class="hint"><span id="paper-hint">Click any text to edit it</span> <button type="button" class="btn small" id="hint-migrate" hidden>Migrate to v2</button></p>
+              <p class="paper-status" id="paper-status" role="status" aria-live="polite" hidden><span id="paper-status-text"></span> <button type="button" class="btn small" id="paper-undo" hidden>Undo</button></p>
+            </div>
+            <span class="spacer"></span>
+            <span class="page-info" id="page-info"></span>
+          </div>
+          <div class="preview-scroll" id="preview-scroll" tabindex="0" aria-label="CV page">
+            <p class="preview-message" id="preview-message" hidden></p>
+            <div class="live" id="live"></div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="status" id="status">
+        <span id="st-valid">loading Python</span>
+        <span id="st-path"></span>
+        <span class="spacer"></span>
+        <span id="st-engine" class="st-engine"></span>
+        <span id="st-pos"></span>
+        <a href="about.html" class="st-about">About and licences</a>
+      </footer>
+    </div>
+    <dialog class="confirm" id="replace" aria-labelledby="replace-title" aria-describedby="replace-text">
+      <h2 id="replace-title">Replace the current CV?</h2>
+      <p id="replace-text"></p>
+      <div class="confirm-actions">
+        <button type="button" class="btn" id="replace-cancel">Cancel</button>
+        <button type="button" class="btn" id="replace-download">Download current CV</button>
+        <button type="button" class="btn primary" id="replace-ok">Replace</button>
+      </div>
+    </dialog>
+    <dialog class="confirm" id="ask" aria-labelledby="ask-text">
+      <h2 id="ask-text"></h2>
+      <div class="confirm-actions">
+        <button type="button" class="btn" id="ask-cancel">Cancel</button>
+        <button type="button" class="btn primary" id="ask-ok">Delete</button>
+      </div>
+    </dialog>
+    <input type="file" id="file-input" multiple accept=".yaml,.yml,.bib,text/yaml,text/x-bibtex" hidden />
+    <div class="drop" id="drop" hidden><span>Drop .yaml and .bib files to open them</span></div>
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>

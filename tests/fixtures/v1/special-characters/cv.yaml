@@ -1,0 +1,40 @@
+# v1 strings are LaTeX: escapes and commands pass through unchanged.
+heading:
+  name: "Jos\\'e Mar\\'ia"
+subheading:
+  - type: links
+    content:
+      - name: "jose\\_maria@example.com"
+        show_below: true
+      - name: "R\\&D Lab"
+        show_below: false
+sections:
+  - type: education
+    content:
+      - university: "Universit\\'e de Montr\\'eal"
+        location: "Montr\\'eal, Qu\\'ebec"
+        dates: "2019 -- 2023"
+        degree: "M.Sc.\\ in Computer Science \\& Engineering"
+        honors: "Top 5\\%"
+        thesis_title: "Costs in \\$ and \\# of samples"
+        supervisor: "Dr. \\textsc{Smith}"
+  - type: experience
+    content:
+      - name: "R\\&D"
+        entity:
+          - organization: "AT\\&T Labs"
+            dates: "2020--2021"
+            position: "Engineer \\textbar{} Researcher"
+            responsibilities:
+              - "Cut costs by 30\\% and latency by 2$\\times$"
+              - "Used snake\\_case and C\\# daily"
+              - "Wrote \\LaTeX{} macros like \\verb|\\foo|"
+              - "Unicode: café, naïve, Zürich, — dash, “quotes”"
+  - type: bullets
+    title: "Spacing and quotes"
+    content:
+      - item: "Two  spaces, four    spaces, a\ttab"
+      - item: "Line one\nLine two"
+      - item: "'Quoted' and it's not 'quoted'x"
+      - item: "Five     spaces and six      spaces"
+      - item: "Mixed \t tab"

@@ -1,0 +1,252 @@
+/* cv-tools HTML preview, imitating resume.cls. Vertical spacing was measured against the PDF. */
+
+.cv-document {
+  /* Latin Modern Math prints the math symbols CMU lacks (FONT_RANGES). */
+  --cv-serif: "CMU Serif", "Latin Modern Math", "Latin Modern Roman", "Computer Modern Serif", "Times New Roman", Times, serif;
+  --cv-mono: "CMU Typewriter Text", "Latin Modern Math", "Latin Modern Mono", "Courier New", Courier, monospace;
+  --cv-link: #0000ff; /* hyperref urlcolor=blue */
+  --cv-baseline: 13.6pt;
+  --cv-word-spacing: -0.09em;
+  --cv-page-height: 11in;
+  --cv-page-break: rgba(0, 0, 0, 0.18);
+  color-scheme: light;
+}
+
+.cv-document *,
+.cv-document *::before,
+.cv-document *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* A faint line marks every 11in of a page box that outgrows its page. */
+.cv-document .cv-page {
+  position: relative;
+  width: 8.5in;
+  min-height: var(--cv-page-height);
+  margin: 0 auto 0.25in;
+  padding: 0.6in 0.55in;
+  background-color: #fff;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(var(--cv-page-height) - 1px),
+    var(--cv-page-break) calc(var(--cv-page-height) - 1px),
+    var(--cv-page-break) var(--cv-page-height)
+  );
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  /* The paper's edges clip, as in the PDF. */
+  overflow-x: clip;
+  color: #000;
+  font-family: var(--cv-serif);
+  font-size: 10.95pt;
+  font-weight: normal;
+  font-style: normal;
+  line-height: var(--cv-baseline);
+  text-align: justify;
+  /* TeX can shrink spaces to fit a line and browsers cannot, so they start narrower. */
+  word-spacing: var(--cv-word-spacing);
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures;
+  font-synthesis: none;
+  overflow-wrap: normal;
+  hyphens: manual;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+.cv-document .cv-page:last-child { margin-bottom: 0; }
+
+@media print {
+  .cv-document .cv-page {
+    margin: 0;
+    box-shadow: none;
+    background-image: none;
+    break-after: page;
+  }
+  .cv-document .cv-page:last-child { break-after: auto; }
+}
+
+/* Taller bold and italic faces must not make a line taller (TeX keeps \baselineskip). */
+.cv-document :is(strong, em, a, span, sup, code) { line-height: 1; }
+.cv-document :is(.cv-dated-row, .cv-dated-date) > * { line-height: var(--cv-baseline); }
+
+.cv-document strong { font-weight: bold; }
+.cv-document em { font-style: italic; }
+.cv-document sup { font-size: 8pt; line-height: 0; vertical-align: 3.5pt; }
+.cv-document a { color: inherit; text-decoration: none; }
+.cv-document .cv-link { color: var(--cv-link); }
+
+/* Four spaces or a tab (\quad), and runs of spaces that TeX keeps. */
+.cv-document .cv-space { white-space: pre-wrap; }
+.cv-document .cv-quad { display: inline-block; width: 1em; }
+
+/* {latex: ...} values show as source. */
+.cv-document .cv-latex {
+  font-family: var(--cv-mono);
+  font-size: 0.9em;
+  white-space: pre-wrap;
+  color: #5c3b00;
+  background: #fff3d1;
+  outline: 1px dashed #c48a00;
+  outline-offset: -1px;
+  padding: 0 0.15em;
+  border-radius: 2px;
+}
+
+/* An empty editable value stays clickable. */
+.cv-document[data-editable="true"] [data-path]:empty {
+  display: inline-block;
+  min-width: 0.5em;
+  min-height: 1em;
+}
+
+/* ---------------------------------------------------------------- header */
+
+/* \printname: \huge bold upper case, centred, then \bigskip. */
+.cv-document .cv-header { margin-bottom: 15.8pt; word-spacing: normal; }
+/* Without contact lines the name paragraph ends with an empty line. */
+.cv-document .cv-header.cv-no-contact { margin-bottom: 34.55pt; }
+
+.cv-document .cv-name {
+  margin-top: -4.5pt;
+  margin-bottom: 9pt;
+  font-size: 20.74pt;
+  font-weight: bold;
+  /* TeX uses the narrower 12pt design of the bold font at this size. */
+  letter-spacing: -0.018em;
+  line-height: 25pt;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* \printaddress: \centerline, then \smallskip. A wide line overflows both margins. */
+.cv-document .cv-contact {
+  margin: 0 -100% 3pt;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.cv-document .cv-url {
+  color: var(--cv-link);
+  font-family: var(--cv-mono);
+}
+
+.cv-document .cv-icon { display: inline-block; line-height: 0; }
+.cv-document .cv-icon-svg { display: inline-block; height: 1em; width: auto; }
+/* \orcidicon: the height plus depth of $|$ (0.75em + 0.25em), lowered by the depth. */
+.cv-document .cv-icon-orcid .cv-icon-svg { width: 1em; vertical-align: -0.25em; }
+/* \colorfaLinkedinSquare: \raisebox{-0.7pt}. The SVG box reaches 0.143em below the baseline. */
+.cv-document .cv-icon-linkedin { color: rgb(5, 97, 153); }
+.cv-document .cv-icon-linkedin .cv-icon-svg { width: 0.857em; vertical-align: calc(-0.143em - 0.7pt); }
+/* \colorfaGithub: \large, \raisebox{-1.3pt}. */
+.cv-document .cv-icon-github { color: #000; font-size: 12pt; }
+.cv-document .cv-icon-github .cv-icon-svg { width: 0.857em; vertical-align: calc(-0.143em - 1.3pt); }
+/* \colorfaTwitter: \large, \raisebox{-1.5pt}. */
+.cv-document .cv-icon-twitter { color: rgb(17, 95, 143); font-size: 12pt; }
+.cv-document .cv-icon-twitter .cv-icon-svg { width: 0.928em; vertical-align: calc(-0.143em - 1.5pt); }
+
+/* -------------------------------------------------------------- sections */
+
+/* rSection: \medskip, title, \medskip, \hrule, then a list indented by 1.5em. */
+.cv-document .cv-section { margin-top: 12.8pt; }
+/* TeX discards glue at the top of a page. */
+.cv-document .cv-page > .cv-section:first-child { margin-top: 0; }
+
+.cv-document .cv-section-title {
+  padding-bottom: 2.75pt;
+  border-bottom: 0.4pt solid #000;
+  font-size: 1em;
+  font-weight: bold;
+  line-height: var(--cv-baseline);
+  text-transform: uppercase;
+}
+/* TeX puts the rule below the title's depth. */
+.cv-document .cv-section-title.cv-depth-1 { padding-bottom: 4.85pt; }
+.cv-document .cv-section-title.cv-depth-2 { padding-bottom: 5.5pt; }
+
+.cv-document .cv-section-body {
+  padding-top: 3pt;
+  padding-left: 1.5em;
+}
+
+.cv-document .cv-description { margin-bottom: 6.8pt; }
+
+/* "left \hfill right": .cv-hfill is the only space that stretches; .cv-sp spaces keep their width. */
+.cv-document .cv-line {
+  min-height: var(--cv-baseline);
+  text-align: justify;
+  text-align-last: justify;
+  word-spacing: normal;
+}
+.cv-document .cv-sp { display: inline-block; white-space: pre; }
+
+/* entries (rSubsection): the date and note end a space or two before the margin. */
+.cv-document .cv-layout-entries .cv-date { padding-right: 0.66em; }
+.cv-document .cv-layout-entries .cv-note.cv-right { padding-right: 0.33em; }
+.cv-document .cv-layout-entries .cv-entry + .cv-entry { margin-top: 12.9pt; }
+.cv-document .cv-layout-entries .cv-entry.cv-no-bullets + .cv-entry { margin-top: 9.5pt; }
+.cv-document .cv-layout-entries .cv-section-body { padding-bottom: 6.2pt; }
+/* \item[]\vspace{-2em} of an entry without bullets pulls up what follows. */
+.cv-document .cv-layout-entries .cv-entry.cv-no-bullets:last-child { margin-bottom: -4.5pt; }
+.cv-document .cv-layout-entries-inline .cv-entry + .cv-entry { margin-top: 12.3pt; }
+.cv-document .cv-layout-entries-inline .cv-section-body { padding-bottom: 6.7pt; }
+
+/* Bullets: \textbullet, the text indented by 1em, the label 0.5em before it. */
+.cv-document .cv-bullets {
+  list-style: none;
+  margin-top: 3.75pt;
+  padding-left: 1em;
+}
+.cv-document .cv-layout-entries-inline .cv-bullets { margin-top: 1.5pt; }
+.cv-document .cv-bullet { position: relative; margin-top: 1.1pt; }
+.cv-document .cv-bullet::before,
+.cv-document .cv-list-item::before {
+  content: "\2022";
+  position: absolute;
+  right: 100%;
+  margin-right: 0.5em;
+}
+
+/* list: itemize[leftmargin=*], nested items with an en dash. */
+.cv-document .cv-list { list-style: none; padding-left: 1em; padding-bottom: 1.5pt; }
+.cv-document .cv-list-item { position: relative; margin-top: 6.6pt; }
+.cv-document .cv-list-item:first-child { margin-top: 0; }
+.cv-document .cv-sublist { list-style: none; padding-left: 1.83em; }
+.cv-document .cv-subitem { position: relative; margin-top: 6.6pt; }
+.cv-document .cv-subitem::before {
+  content: "\2013";
+  position: absolute;
+  right: 100%;
+  margin-right: 0.5em;
+}
+
+/* pairs: "title:" on the left, the text on the right. */
+.cv-document .cv-pairs { padding-bottom: 0.5pt; }
+
+/* dated: tabular{p{0.5cm} p{1cm} p{14cm}}; the first row's strut is 0.7\baselineskip. */
+.cv-document .cv-dated { padding-top: 2.25pt; }
+.cv-document .cv-description + .cv-dated { padding-top: 0; }
+.cv-document .cv-dated { margin-bottom: -1.5pt; }
+.cv-document .cv-dated-row {
+  display: grid;
+  grid-template-columns: 0.5cm 1cm 14cm;
+  column-gap: 12pt;
+  padding-left: 6pt;
+}
+.cv-document .cv-dated-date {
+  grid-column: 1 / 3;
+  display: grid;
+  grid-template-columns: 0.5cm 1cm;
+  column-gap: 12pt;
+}
+.cv-document .cv-dated-row > .cv-text { grid-column: 3; text-align: justify; }
+
+/* text: one paragraph per entry, \parskip apart. */
+.cv-document .cv-text-entry + .cv-text-entry { margin-top: 6.8pt; }
+
+/* publications: justified items, \itemsep apart. */
+.cv-document .cv-publications { list-style: none; }
+.cv-document .cv-section-body > .cv-publications:first-child { padding-top: 0.75pt; }
+.cv-document .cv-citation { text-align: justify; margin-bottom: 6.8pt; }

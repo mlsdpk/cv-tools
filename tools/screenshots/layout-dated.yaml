@@ -1,0 +1,16 @@
+version: 2
+name: ""
+sections:
+  - title: Invited Talks/Workshops
+    layout: dated
+    entries:
+      - date: Nov. 2023
+        text: "'AI in Everyday Life', Invited talk, Tech Conference 2023, Imaginaria."
+      - date: Oct. 2022
+        text: "'Cloud Computing for Beginners', Workshop, FutureTech Expo 2022, Nowhere City."
+      - date: May 2024
+        text: "'Robotics in Modern Industry', Guest lecture, Imaginary Institute of Technology."
+      - date: Aug. 2023
+        text: "'Building Scalable Systems with Docker and Kubernetes', Workshop, DevOps World 2023, Tech City."
+      - date: Sep. 2022
+        text: "'Ethics in AI', Panel discussion, Ethics in Technology Conference 2022, Metropolis."

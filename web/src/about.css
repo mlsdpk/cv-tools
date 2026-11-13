@@ -1,0 +1,66 @@
+body.about {
+  height: auto;
+  min-height: 100%;
+}
+.about .topbar a.wordmark {
+  text-decoration: none;
+}
+.about .topbar .btn {
+  text-decoration: none;
+}
+.about-main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+  line-height: 1.55;
+  font-size: 14px;
+}
+.about-main h1 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 8px 0 16px;
+}
+.about-main h2 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 32px 0 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #000;
+}
+.about-main table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+}
+.about-main th,
+.about-main td {
+  text-align: left;
+  padding: 4px 12px 4px 0;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+.about-main th {
+  font-weight: 600;
+  border-bottom-color: #000;
+}
+.about-main ul {
+  padding-left: 20px;
+}
+@media (max-width: 720px) {
+  .about .file-state {
+    display: none;
+  }
+}
+.about-main h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 20px 0 6px;
+}
+.about-main td code {
+  font-size: 11px;
+  word-break: break-all;
+}
+.about-main table {
+  display: block;
+  overflow-x: auto;
+}

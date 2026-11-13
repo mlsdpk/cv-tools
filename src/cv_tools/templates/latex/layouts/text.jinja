@@ -1,0 +1,10 @@
+{#- One paragraph per entry. -#}
+{% macro render(section) %}
+    % ====================== {{ section.comment }} Section ====================== %
+    \begin{rSection}{ {{ section.title }} }
+    {%- if section.description %}{{ section.description }}\par{% endif %}
+    {% for entry in section.entries %}
+    {{ entry.text }}\par
+    {% endfor %}
+    \end{rSection}
+{% endmacro %}

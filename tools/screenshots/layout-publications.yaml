@@ -1,0 +1,7 @@
+version: 2
+name: ""
+sections:
+  - title: Publications
+    layout: publications
+    bib: ../../examples/publications.bib
+    highlight: [John Doe]

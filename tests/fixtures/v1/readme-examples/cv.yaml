@@ -1,0 +1,116 @@
+# The YAML examples from the v1 README, combined into one file.
+heading:
+  name: "John Doe" # The name of the CV author
+
+subheading:
+  - type: links
+    content:
+      - name: "https://www.johndoeportfolio.com"
+        highlight: true
+        show_below: false
+      - name: "johndoe@email.com"
+        highlight: false
+        show_below: true
+  - type: socials
+    content:
+      - type: orcid_id
+        url: "0000-0000-0000-0000"
+        show_below: false
+      - type: linkedin
+        url: "https://linkedin.com/in/johndoe"
+        show_below: false
+
+sections:
+  - type: education
+    content:
+      - university: "Fictional University"
+        location: "Imaginaria, Wonderland"
+        dates: "September 2021 - June 2024"
+        degree: "Bachelor of Science in Computer Science"
+        honors: "Magna Cum Laude"
+        thesis_title: "An Exploration of Quantum Computing in Virtual Environments"
+        supervisor: "Dr. Alice Wonder"
+      - university: "Imaginary Institute of Technology"
+        location: "Nowhere City, Utopia"
+        dates: "August 2018 - May 2021"
+        degree: "Associate Degree in Artificial Intelligence"
+        supervisor: "Dr. Bob Builder"
+        bullets:
+          - "Relevant Coursework: Machine Learning, Advanced Algorithms"
+
+  - type: experience
+    content:
+      - name: "Professional Experience"
+        entity:
+          - organization: "Tech Innovations Inc."
+            dates: "July 2024 - Present"
+            position: "Software Engineer"
+            responsibilities:
+              - "Developed and maintained cloud-based solutions for various enterprise clients."
+              - "Led a team of developers in designing scalable software architectures."
+              - "Improved system performance by 30\\% through code optimization and database restructuring."
+          - organization: "NextGen Robotics"
+            dates: "June 2022 - June 2024"
+            position: "Robotics Engineer"
+            responsibilities:
+              - "Designed and implemented autonomous navigation systems for industrial robots."
+              - "Collaborated with cross-functional teams to integrate machine learning models into robotic platforms."
+
+  - type: bullets
+    title: "Honors and Awards"
+    description: ""
+    content:
+      - item: "Dean's List (2023, 2022)"
+      - item: "Best Paper Award at Tech Innovations Conference (2023)"
+      - item: "Outstanding Graduate Award, Fictional University (2024)"
+
+  - type: bullets
+    title: "Professional Activities"
+    description: "Served/ing as a reviewer for"
+    content:
+      - item: "Journals"
+        subitems:
+          - "Journal of Artificial Intelligence Research (JAIR)"
+          - "Journal of Machine Learning Research (JMLR)"
+      - item: "Conferences"
+        subitems:
+          - "IEEE Conference on Computer Vision and Pattern Recognition (CVPR)"
+          - "International Conference on Learning Representations (ICLR)"
+
+  - type: skills
+    content:
+      - name: "Spoken Languages"
+        data: "English (Fluent), Spanish (Intermediate)"
+      - name: "Programming Languages"
+        data: "Python, Java, C++, SQL, JavaScript"
+      - name: "Tools and Technologies"
+        data: "AWS, Docker, Kubernetes, TensorFlow, Git, Jenkins, Linux, Jira"
+
+  - type: talks
+    title: "Invited Talks/Workshops"
+    content:
+      - name: "``AI in Everyday Life'', Invited talk, Tech Conference 2023, Imaginaria."
+        month: "Nov."
+        year: "2023"
+      - name: "``Cloud Computing for Beginners'', Workshop, FutureTech Expo 2022, Nowhere City."
+        month: "Oct."
+        year: "2022"
+      - name: "``Robotics in Modern Industry'', Guest lecture, Imaginary Institute of Technology."
+        month: "May"
+        year: "2021"
+
+  - type: newpage
+
+  - type: education
+    content:
+      - university: "Fictional University"
+        location: "Imaginaria, Wonderland"
+        dates: "September 2021 - June 2024"
+        degree: "Bachelor of Science in *Computer Science*"
+        honors: "**Magna Cum Laude**"
+        thesis_title: "An Exploration of ['Quantum Computing'](https://en.wikipedia.org/wiki/Quantum_computing) in Virtual Environments"
+        supervisor: "Dr. Alice Wonder"
+
+  - type: publications
+    title: "Publications"
+    bibfile: publications.bib

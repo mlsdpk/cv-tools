@@ -1,0 +1,11 @@
+version: 2
+name: Jane Roe
+sections:
+  - title: Experience
+    layout: entries
+    entries:
+      - organization: Org
+        position: Engineer
+        honors: Award
+        year: 2020
+        responsibilities: [Things]

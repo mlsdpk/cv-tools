@@ -1,0 +1,24 @@
+{#- v1 "bullets": an itemize with optional nested bullets. -#}
+{% macro render(section) %}
+    \begin{rSection}{ {{ section.title }} }
+    {% if section.description %}
+        {{ section.description }}
+    {%-endif-%}
+    {%- if section.entries -%}
+    \begin{itemize}[leftmargin=*]
+    {% for entry in section.entries %}
+        {% if entry.bullets %}
+            \item {{ entry.text }}
+            \begin{itemize}
+                {% for bullet in entry.bullets %}
+                    \item {{ bullet }}
+                {% endfor %}
+            \end{itemize}
+        {% else %}
+            \item {{ entry.text }}
+        {%-endif-%}
+    {% endfor %}
+    \end{itemize}
+    {%- endif %}
+    \end{rSection}
+{% endmacro %}

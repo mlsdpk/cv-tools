@@ -1,0 +1,13 @@
+# Strings that YAML 1.1 reads as booleans when unquoted. The migrated file must quote them.
+heading:
+  name: "Jane Roe"
+sections:
+  - type: bullets
+    title: T
+    content:
+      - item: "yes"
+      - item: "No"
+      - item: "on"
+      - item: "OFF"
+      - item: "y"
+      - item: "n"

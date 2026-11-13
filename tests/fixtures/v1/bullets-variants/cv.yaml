@@ -1,0 +1,22 @@
+heading:
+  name: "Jane Roe"
+sections:
+  - type: bullets
+    title: "With description"
+    description: "Intro text"
+    content:
+      - item: "Plain"
+      - item: "With subitems"
+        subitems:
+          - "Sub one"
+          - "Sub *two*"
+      - item: "Empty subitems"
+        subitems: []
+  - type: bullets
+    title: "Empty description"
+    description: ""
+    content:
+      - item: "Only item"
+  - type: bullets
+    content:
+      - item: "Section without a title"

@@ -1,0 +1,5 @@
+heading:
+  name: "Jane Roe"
+sections:
+  - type: publications
+    title: "Papers"

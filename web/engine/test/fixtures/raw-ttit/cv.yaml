@@ -1,0 +1,17 @@
+# Web engine parity fixture: raw LaTeX, italic typewriter, in a contact item, an entry title, date and bullet.
+# From the engine review (2026-11-12), where the browser engine lacked the fonts.
+
+version: 2
+name: Jane Roe
+contact:
+  - - latex: '\textit{\texttt{tt italic}}'
+sections:
+  - title: Raw
+    layout: entries
+    entries:
+      - title:
+          latex: '\textit{\texttt{tt italic}}'
+        date:
+          latex: '\textit{\texttt{tt italic}}'
+        bullets:
+          - latex: '\textit{\texttt{tt italic}}'

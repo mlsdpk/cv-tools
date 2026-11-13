@@ -1,0 +1,12 @@
+version: 2
+name: ""
+sections:
+  - title: Skills
+    layout: pairs
+    entries:
+      - title: Spoken Languages
+        text: English (Fluent), Spanish (Intermediate)
+      - title: Programming Languages
+        text: Python, Java, C++, SQL, JavaScript
+      - title: Tools and Technologies
+        text: AWS, Docker, Kubernetes, TensorFlow, Git, Jenkins, Linux, Jira

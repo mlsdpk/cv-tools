@@ -1,0 +1,64 @@
+# Aliases and merge keys (the HTML preview's data-via-alias and data-anchor), from the review of the preview.
+version: 2
+name: &nm Jane "Q" Roe
+date: {latex: "\\today"}
+contact:
+  - - url: https://janeroe.dev
+    - {latex: "\\textsc{x}"}
+    - "Updated {date} and {date}"
+    - orcid: 0000-0002-1825-0097
+  - items: [a@b.c, *nm, "x {date}"]
+    separator: &sep " · "
+  - {items: [one, two]}
+sections:
+  - title: &t Shared Title
+    layout: entries
+    description: |
+      Line one
+      Line two
+    entries:
+      - &base
+        title: Base title
+        date: 2020 -- 2024
+        subtitle: Sub
+        note: Note
+        bullets: &bl [b1, "b2 *it*"]
+      - <<: *base
+        date: 2025
+      - *base
+      - title: Own
+        bullets: *bl
+        details: [d1, {latex: "\\emph{d2}"}]
+  - title: *t
+    layout: list
+    entries:
+      - plain shorthand
+      - {latex: "\\LaTeX"}
+      - text: mapping text
+        bullets: [x]
+      - 2024
+      - 0x1F
+      - 1e3
+  - &sec
+    title: Dated
+    layout: dated
+    entries:
+      - {date: Nov. 2023, text: "a"}
+      - "2021 shorthand"
+      - {date: {latex: "Jan {b c} 2020"}, text: {latex: "\\x"}}
+  - newpage
+  - *sec
+  - "title": Quoted keys
+    'layout': pairs
+    entries:
+      - {title: K, text: V}
+      - title: >-
+          folded
+          title
+        text: "crlf\r\nline"
+  - title: T
+    layout: text
+    entries: ["para *one*", {text: two}]
+  - title: Pubs
+    layout: publications
+    bib: publications.bib

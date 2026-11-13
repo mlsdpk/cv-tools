@@ -1,0 +1,30 @@
+# Random contact probe case c11-28 (orcid, socials and links on both lines).
+heading:
+  name: Jane Roe
+subheading:
+  - type: links
+    content:
+      - name: "x | y"
+        show_below: true
+  - type: links
+    content:
+      - name: "x | y"
+        show_below: false
+      - name: "https://x.org/~u"
+        highlight: true
+        show_below: true
+  - type: socials
+    content:
+      - type: github
+        url: https://x.org/~u
+        show_below: true
+  - type: socials
+    content:
+      - type: orcid_id
+        url: 0000-0002-1825-0097
+        show_below: false
+sections:
+  - type: bullets
+    title: T
+    content:
+      - item: x

@@ -1,0 +1,7 @@
+version: 2
+name: Jane Roe
+sections:
+  - title: Awards
+    layout: list
+    content:
+      - Best paper

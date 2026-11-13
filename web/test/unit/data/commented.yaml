@@ -1,0 +1,67 @@
+# My CV. Build: cv-tools build cv.yaml
+version: 2
+name: Jane Doe   # legal name
+date: 2026
+
+contact:
+  - - jane@uni.edu
+    - url: https://jane.dev        # personal site
+    # - orcid: 0000-0000-0000-0000   (add later)
+    - Curriculum Vitae, {date}
+
+sections:
+  # ---------------------------------------------------------------- education
+  - title: Education
+    layout: entries-inline
+    entries:
+      - title: Fictional University
+        location: Nowhere, Utopia
+        date: 2021 -- 2026      # expected
+        subtitle: PhD in Robotics
+        details:
+          - 'Supervisor: Prof. X'
+          # - 'Co-supervisor: TBD'
+      # - title: Old College
+      #   date: 2015 -- 2019
+      - title: Some University
+        date: 2017 -- 2021
+        subtitle: BSc
+
+  # ---------------------------------------------------------------- work
+  - title: Experience
+    layout: entries
+    entries:
+      - title: Robotics Lab   # current
+        date: 2024 -- Present
+        subtitle: Research Assistant
+        bullets:
+          - Built planners.
+          - Wrote papers.   # TODO numbers
+      - title: Startup Inc.
+        date: 2022 -- 2023
+        subtitle: Intern
+        bullets:
+          - Shipped things.
+
+  - title: Awards
+    layout: list
+    entries:
+      - Best Paper (2025)
+      # - Honourable mention (2024)
+      - Scholarship (2023)
+
+  - title: Skills
+    layout: pairs
+    entries:
+      - title: Languages
+        text: C++, Python   # main ones
+      - title: Tools
+        text: ROS, Git
+
+  - title: Talks
+    layout: dated
+    entries:
+      - date: Nov. 2025
+        text: Talk one
+      - date: May 2024
+        text: Talk two

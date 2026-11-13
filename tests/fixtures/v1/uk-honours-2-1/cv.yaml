@@ -1,0 +1,11 @@
+# A UK degree classification, which YAML 1.1 reads as the number 121 when unquoted.
+heading:
+  name: "Jane Roe"
+sections:
+  - type: education
+    content:
+      - university: "University of Leeds"
+        location: "Leeds, UK"
+        dates: "2015 - 2018"
+        degree: "BSc Mathematics"
+        honors: "2:1"

@@ -15,577 +15,382 @@ A tool to automate the creation of professional LaTeX-based CVs.
 
 </div>
 
-CV Tools is a project designed to streamline the creation of professional CVs using LaTeX. This tool provides templates and configuration files to easily generate a CV with customizable sections for education, work experience, publications, and much more.
-
-Feel free to edit and use this tool according to your needs. Customize the LaTeX templates and configuration files to fit your personal requirements and preferences.
-
-# Features
-
-- **Customizable LaTeX Templates**: Pre-defined LaTeX templates for creating professional CVs.
-- **Flexible Configuration**: Easy-to-edit configuration files to personalize your CV.
-- **BibTeX Support**: Automatically generate a formatted list of publications from a BibTeX file.
-- **Automated Build Process**: Scripted build process to generate the final PDF CV.
+CV Tools turns a YAML file into a professional LaTeX CV. You write your details in YAML, keep your publications in a BibTeX file, and get a PDF.
 
 # Build Status
 
-| Ubuntu                                                                                     | macOS                                                                                    |
-| ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
-| ![Ubuntu Build](https://github.com/mlsdpk/cv-tools/actions/workflows/ubuntu.yml/badge.svg) | ![macOS Build](https://github.com/mlsdpk/cv-tools/actions/workflows/macos.yml/badge.svg) |
+| Tests                                                                        | Docker image                                                                         | Web app                                                                              |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| ![CI](https://github.com/mlsdpk/cv-tools/actions/workflows/ci.yml/badge.svg) | ![Docker](https://github.com/mlsdpk/cv-tools/actions/workflows/docker.yml/badge.svg) | ![Web app](https://github.com/mlsdpk/cv-tools/actions/workflows/pages.yml/badge.svg) |
 
 # Table of Contents
 
+- [Use It in Your Browser](#use-it-in-your-browser)
 - [Getting Started](#getting-started)
-  - [Installation](#installation)
-  - [Usage](#usage)
 - [YAML Configuration](#yaml-configuration)
-  - [Heading](#heading)
-  - [Subheading](#subheading)
-  - [Sections](#sections)
-  - [Using Special Characters](#using-special-characters)
+- [Text Formatting](#text-formatting)
+- [Editor Support](#editor-support)
 - [BibTeX Configuration](#bibtex-configuration)
+- [Migrating from v1](#migrating-from-v1)
 - [Contributing](#contributing)
+
+# Use It in Your Browser
+
+Open [cv-tools.phonethk.com](https://cv-tools.phonethk.com/), edit the YAML and download the PDF. Nothing to install, just an up-to-date browser.
+
+![the web app](docs/img/web-demo.gif)
 
 # Getting Started
 
-Below are two installation methods to set up and use CV Tools on your local machine. The Docker-based setup is recommended for a hassle-free experience. Alternatively, you can set up the tool manually from the source, which offers flexibility to either compile the PDF locally or generate the .tex file and use an external LaTeX renderer like [Overleaf](https://www.overleaf.com).
-
 ## Installation
 
-### Method 1: Using Docker (Recommended)
-
-Using docker allows you to run the tool in a consistent environment without worrying about dependencies on your local machine.
-
-#### Prerequisites
-
-- **Docker**: Ensure you have Docker installed on your machine. You can download and install Docker from [here](https://docs.docker.com/engine/install/).
-
-#### Steps
-
-Clone the Repository:
+Install cv-tools with [pipx](https://pipx.pypa.io). It needs Python 3.10 or newer.
 
 ```bash
-$ git clone https://github.com/mlsdpk/cv-tools.git
-$ cd cv-tools
-```
-
-Build the Docker image using the provided `Dockerfile`.
-
-```bash
-$ docker build -t cv-tools .
-```
-
-Start a Docker container with the image you just built. This will launch an interactive shell with the virtual environment activated and mount the current cv-tools directory.
-
-```bash
-$ docker run -it -v $(pwd):/workdir cv-tools
-```
-
-The `-v $(pwd):/workdir` option mounts your local cv-tools directory to the `/workdir` directory inside the container.
-
-### Method 2: From Source with Manual Installation
-
-If you prefer to set up the environment manually on your local machine, follow the steps below. This method offers two options:
-
-1. Use an external LaTeX renderer (e.g., [Overleaf](https://www.overleaf.com)) to compile the .tex file.
-2. Install a LaTeX engine locally and generate the PDF directly.
-
-#### Prerequisites
-
-- **Option 1: External LaTeX Renderer**
-
-  No LaTeX distribution is needed. You can generate the .tex file and upload it to tools like [Overleaf](https://www.overleaf.com).
-
-- **Option 2: Local LaTeX Setup**
-
-  Ensure you have a LaTeX distribution installed, such as [TeX Live](https://www.tug.org/texlive/) (recommended) or [MikTeX](https://miktex.org/).
-
-- **Python**: Python 3.x is required for running the build scripts.
-
-#### Installing Dependencies
-
-Clone the Repository:
-
-```bash
-$ git clone https://github.com/mlsdpk/cv-tools.git
-$ cd cv-tools
-```
-
-Set up a Python virtual environment and install dependencies:
-
-```bash
-$ python3 -m venv cv-tools
-$ source cv-tools/bin/activate
-$ pip install -r requirements.txt
-```
-
-If you plan to use Option 2 (Local LaTeX Setup), ensure all required LaTeX packages are installed. The necessary packages are listed in the `packages.list` file.
-
-You can use the tlmgr command to install the packages as follows:
-
-```bash
-$ tlmgr install <package1> <package2> ...
+$ pipx install cv-tools
 ```
 
 ## Usage
 
-To generate a CV, you can use the provided shell script, which offers flexibility through various command-line options.
-
-## Default CV Generation
-
-Running the script without any options will generate the CV using the default configuration (`cv.yaml`) located in the `config` directory.
+`cv-tools init` writes a starter `cv.yaml` and `publications.bib`. `cv-tools build` turns them into `cv.pdf`.
 
 ```bash
-$ ./run.sh
+$ mkdir my-cv && cd my-cv
+$ cv-tools init
+$ cv-tools build cv.yaml
 ```
 
-This command will also check and install all necessary dependencies before generating a `.tex` file and a PDF file, both of which will be saved in the `output` directory.
+`cv-tools watch cv.yaml` rebuilds the PDF every time you save.
 
-### For Users Without a LaTeX Engine Installed
+## Getting a PDF
 
-> Note: If you are using the Docker-based setup, you can ignore this section as the PDF will be generated within the container automatically.
+`cv-tools build` needs pdflatex or Docker. Without either, you can still send your CV to Overleaf.
 
-If you don’t have a LaTeX engine installed locally, you can use the `--tex-only` option to generate the files required for an external LaTeX renderer:
+- **TeX Live**: Install [TeX Live](https://www.tug.org/texlive/). With a small installation such as BasicTeX, `cv-tools doctor --tlmgr` prints the command that installs the packages cv-tools needs.
+- **Docker**: With Docker running, no TeX is needed. `cv-tools build` uses it when pdflatex or its packages are missing, or you can ask for it.
 
-```bash
-$ ./run.sh --tex-only
-```
-
-This will generate the following files in the output directory:
-
-- `output.tex`: The main LaTeX source file.
-- `resume.cls`: The LaTeX class file required to compile the CV.
-
-Upload both files to an external LaTeX renderer such as [Overleaf](https://www.overleaf.com) to produce the final PDF.
-
-## Customize the CV Generation
-
-You can customize the CV generation by specifying different configuration files, as well as changing the output file location.
-
-- **Specify a different YAML configuration file:**
   ```bash
-  $ ./run.sh -c path/to/custom_config.yaml
-  ```
-- **Change the output file location:**
-  ```bash
-  $ ./run.sh -o path/to/output/custom_cv.tex
+  $ cv-tools build cv.yaml --engine docker
   ```
 
-These options can be combined together as well to suit your needs.
+- **Overleaf**: `cv-tools build cv.yaml --zip` writes `cv.zip`. Upload it to [Overleaf](https://www.overleaf.com) with New Project, then Upload Project.
 
-You can customize the content of your CV by editing the YAML configuration file. By default, this is the `cv.yaml` file located in the `config` directory, but you can specify a different YAML file from any location. This file allows you to define your personal details, education, work experience, skills, and more. You can add or remove sections, modify the fields, and tailor the CV content to your specific needs. The supported section types include `education`, `experience`, `skills`, `bullets`, `talks`, and `publications`. For more information, refer to [YAML Configuration](#yaml-configuration) section.
+## Commands
 
-This tool also supports to automatically list your publications based on BibTeX entries provided in a specified BibTeX file. By default, this is the `publications.bib` file located in the `config` directory, but you can use a different BibTeX file from any location. Refer to [BibTeX Configuration](#bibtex-configuration) section for more details on configuring BibTeX entries.
-
-## Skipping Dependency Checks and Installations
-
-If you already have all dependencies installed and want to skip the automatic checking and installation process, use the `--no-deps` option:
-
-```bash
-$ ./run.sh --no-deps
-```
-
-This option is useful for speeding up subsequent runs when you know that all dependencies are already satisfied.
+| Command                     | Description                                                   |
+| --------------------------- | ------------------------------------------------------------- |
+| `cv-tools init`             | Write a starter `cv.yaml` and `publications.bib`.             |
+| `cv-tools build cv.yaml`    | Build the PDF. Add `--zip` or `--tex-only` for LaTeX sources. |
+| `cv-tools watch cv.yaml`    | Rebuild the PDF every time you save.                          |
+| `cv-tools validate cv.yaml` | Check the file and report errors with line numbers.           |
+| `cv-tools migrate old.yaml` | Convert a v1 file to the new format.                          |
+| `cv-tools doctor`           | Check that pdflatex, the TeX packages or Docker are ready.    |
 
 # YAML Configuration
 
-The YAML configuration file allows you to customize various aspects of your CV. This section provides detailed instructions on configuring each parameter, including the `heading`, `subheading`, and `sections` fields. Each parameter controls different parts of the CV layout and content.
+A CV file has a header and a list of sections. The complete example is [`examples/cv.yaml`](examples/cv.yaml).
 
-## Heading
+## Header
 
-The `heading` parameter sets the main title of the CV.
-| Field | Type | Description | Required |
-|-------|------|-------------|-----------|
-| `name` | string | The name of the author, displayed as the main heading. | Yes |
+| Key        | Type   | Description                                                                 | Required |
+| ---------- | ------ | --------------------------------------------------------------------------- | -------- |
+| `version`  | int    | Always `2`.                                                                 | Yes      |
+| `name`     | string | Your name, printed as the page heading.                                     | Yes      |
+| `contact`  | list   | Up to three lines under the name. Each line is a list of items.             | No       |
+| `date`     | string | The text that `{date}` prints. The default `auto` prints the compile date. | No       |
+| `sections` | list   | The sections of the CV, in order.                                           | No       |
 
-Example:
-
-```yaml
-heading:
-  name: "John Doe" # The name of the CV author
-```
-
-## Subheading
-
-The `subheading` parameter allows you to add supplementary details below the main heading. This includes personal links and social media profiles, which are displayed on one or two lines depending on the configuration.
-
-### Links
-
-The `links` type includes personal URLs or contact details. They can be highlighted and placed either on the first or second line.
-
-| Field        | Type    | Description                                                                        | Required |
-| ------------ | ------- | ---------------------------------------------------------------------------------- | -------- |
-| `type`       | string  | Type of the subheading content; set to `links` for URLs or contact details.        | No       |
-| `content`    | array   | List of link objects. Each object includes: `name`, `highlight`, and `show_below`. | No       |
-| `name`       | string  | The URL or contact detail.                                                         | No       |
-| `highlight`  | boolean | Whether or not the link should be highlighted and clickable.                       | No       |
-| `show_below` | boolean | Determines if the link should be on the first line (false) or second line (true).  | No       |
-
-### Socials
-
-The `socials` type includes links to social media profiles and are rendered as icons. Supported types are:
-
-- `orcid_id`
-- `linkedin`
-- `github`
-- `twitter`
-
-| Field        | Type    | Description                                                                              | Required |
-| ------------ | ------- | ---------------------------------------------------------------------------------------- | -------- |
-| `type`       | string  | Type of the subheading content; set to socials for social media profiles.                | No       |
-| `content`    | array   | List of social objects. Each object includes: `type`, `url`, and `show_below`.           | No       |
-| `type`       | string  | Type of social link (`orcid_id`, `linkedin`, `github` or `twitter`).                     | No       |
-| `url`        | string  | The URL or ID of the social profile.                                                     | No       |
-| `show_below` | boolean | Determines if the social link should be on the first line (false) or second line (true). | No       |
-
-Example:
+A contact item is plain text or one of `url`, `orcid`, `linkedin`, `github` and `twitter`. Links print as links, and the others print as icons.
 
 ```yaml
-subheading:
-  - type: links
-    content:
-      - name: "https://www.johndoeportfolio.com"
-        highlight: true
-        show_below: false
-      - name: "johndoe@email.com"
-        highlight: false
-        show_below: true
-  - type: socials
-    content:
-      - type: orcid_id
-        url: "0000-0000-0000-0000"
-        show_below: false
-      - type: linkedin
-        url: "https://linkedin.com/in/johndoe"
-        show_below: false
+version: 2
+name: John Doe
+
+contact:
+  - - url: https://www.johndoeportfolio.com
+    - orcid: 0000-0000-0000-0000
+    - linkedin: https://linkedin.com/in/johndoe
+  - - johndoe@email.com
+    - Curriculum Vitae, {date}
 ```
 
-![subheading-section](docs/img/subheading-section.png)
+![contact lines](docs/img/contact.png)
 
 ## Sections
 
-The `sections` parameter allows you to define different sections of your CV, each designed to represent a specific kind of information. Below is a table summarizing the supported section types:
+Every section has a `title` and a `layout`, and lists its rows under `entries`. An optional `description` adds a line of text under the heading. Keys mean the same thing in every layout, so nested points are always `bullets` and a row has a `title`, a `text` and a `date`.
 
-| Key            | Description                                             |
-| -------------- | ------------------------------------------------------- |
-| `education`    | Lists academic qualifications and related details.      |
-| `experience`   | Details professional experiences.                       |
-| `bullets`      | Provides a list of items and optional subitems.         |
-| `skills`       | Lists skills, languages, tools, and technologies.       |
-| `talks`        | Lists talks, workshops, and lectures given.             |
-| `publications` | Lists research papers, articles, or other publications. |
-| `newpage`      | Inserts a new page in the CV.                           |
+| Layout                              | Use it for                                    |
+| ----------------------------------- | --------------------------------------------- |
+| [`entries`](#entries)               | Positions with a role, a date and bullets     |
+| [`entries-inline`](#entries-inline) | A more compact version of `entries`           |
+| [`list`](#list)                     | Bullet points, optionally with nested bullets |
+| [`pairs`](#pairs)                   | A label on the left and text on the right     |
+| [`dated`](#dated)                   | One line per item with a date in front        |
+| [`text`](#text)                     | Paragraphs of free text                       |
+| [`publications`](#publications)     | Entries of a BibTeX file                      |
+| [`newpage`](#newpage)               | A page break                                  |
 
-Each section type has specific fields and formatting rules. Below are detailed descriptions and example YAML configurations for each section type.
+### `entries`
 
-### 1. Education
+The `entries` layout lists positions, such as jobs or teaching.
 
-The `education` section is used to list your academic qualifications. It typically includes details like the university name, location, dates, degree, honors, thesis title, and supervisor.
+| Field      | Type   | Description                                              | Required |
+| ---------- | ------ | -------------------------------------------------------- | -------- |
+| `title`    | string | The organisation, in bold.                               | Yes      |
+| `location` | string | Printed after the title.                                 | No       |
+| `date`     | string | Printed on the right of the first line.                  | No       |
+| `subtitle` | string | The second line, for example your position.              | No       |
+| `note`     | string | Printed on the right of the second line.                 | No       |
+| `details`  | list   | Extra lines, such as a department or a city.             | No       |
+| `bullets`  | list   | Bullet points.                                           | No       |
 
-| Field          | Type   | Description                                     | Required |
-| -------------- | ------ | ----------------------------------------------- | -------- |
-| `university`   | string | The name of the university or institution.      | Yes      |
-| `location`     | string | The location of the university or institution.  | Yes      |
-| `dates`        | string | The period during which the degree was pursued. | Yes      |
-| `degree`       | string | The name of the degree obtained.                | Yes      |
-| `honors`       | string | Honors received, if any.                        | No       |
-| `thesis_title` | string | Title of the thesis, if applicable.             | No       |
-| `supervisor`   | string | Name of the supervisor, if applicable.          | No       |
-| `bullets`      | list   | List of bullet points (optional).               | No       |
+```yaml
+- title: Teaching and Volunteering
+  layout: entries
+  entries:
+    - title: Virtual Coding Academy
+      date: January 2020 - December 2021
+      subtitle: Instructor
+      note: 'Supervisor: Dr. Eve Code'
+      details:
+        - Department of Computer Science
+        - Imaginaria, Wonderland
+      bullets:
+        - Taught introductory and advanced courses in Python programming.
+        - Mentored students on their final projects and provided guidance on coding best practices.
+    - title: Tech Youth Initiative
+      date: July 2019 - June 2020
+      subtitle: Volunteer Coordinator
+      details:
+        - Nowhere City, Utopia
+      bullets:
+        - Organized coding boot camps and hackathons for underprivileged youth.
+        - Managed a team of volunteers and ensured smooth operation of all events.
+```
 
+![entries layout](docs/img/layout-entries.png)
 
-Example:
+### `entries-inline`
+
+The `entries-inline` layout takes the same fields as `entries` and prints them more compactly. It suits education.
+
+```yaml
+- title: Education
+  layout: entries-inline
+  entries:
+    - title: Fictional University
+      location: Imaginaria, Wonderland
+      date: September 2021 - June 2024
+      subtitle: Bachelor of Science in *Computer Science*
+      note: '**Magna Cum Laude**'
+      details:
+        - "Thesis Title: *An Exploration of ['Quantum Computing'](https://en.wikipedia.org/wiki/Quantum_computing) in Virtual Environments*"
+        - 'Supervisor: Dr. Alice Wonder'
+    - title: Imaginary Institute of Technology
+      location: Nowhere City, Utopia
+      date: August 2018 - May 2021
+      subtitle: Associate Degree in Artificial Intelligence
+      details:
+        - 'Supervisor: Dr. Bob Builder'
+      bullets:
+        - 'Relevant Coursework: Machine Learning, Advanced Algorithms'
+```
+
+![entries-inline layout](docs/img/layout-entries-inline.png)
+
+### `list`
+
+The `list` layout prints bullet points. An entry is plain text, or a `text` with nested `bullets`.
+
+| Field     | Type   | Description                      | Required |
+| --------- | ------ | -------------------------------- | -------- |
+| `text`    | string | The bullet point.                | Yes      |
+| `bullets` | list   | Nested points under this bullet. | No       |
+
+```yaml
+- title: Honors and Awards
+  layout: list
+  entries:
+    - Dean's List (2023, 2022)
+    - Best Paper Award at Tech Innovations Conference (2023)
+    - Outstanding Graduate Award, Fictional University (2024)
+
+- title: Professional Activities
+  layout: list
+  description: Served/ing as a reviewer for
+  entries:
+    - text: Journals
+      bullets:
+        - Journal of Artificial Intelligence Research (JAIR)
+        - Journal of Machine Learning Research (JMLR)
+    - text: Conferences
+      bullets:
+        - IEEE Conference on Computer Vision and Pattern Recognition (CVPR)
+        - International Conference on Learning Representations (ICLR)
+```
+
+![list layout](docs/img/layout-list.png)
+
+### `pairs`
+
+The `pairs` layout prints a label on the left and its text on the right, useful for skills and languages.
+
+| Field   | Type   | Description            | Required |
+| ------- | ------ | ---------------------- | -------- |
+| `title` | string | The label on the left. | Yes      |
+| `text`  | string | The text on the right. | Yes      |
+
+```yaml
+- title: Skills
+  layout: pairs
+  entries:
+    - title: Spoken Languages
+      text: English (Fluent), Spanish (Intermediate)
+    - title: Programming Languages
+      text: Python, Java, C++, SQL, JavaScript
+    - title: Tools and Technologies
+      text: AWS, Docker, Kubernetes, TensorFlow, Git, Jenkins, Linux, Jira
+```
+
+![pairs layout](docs/img/layout-pairs.png)
+
+### `dated`
+
+The `dated` layout prints one line per entry with the date in front.
+
+| Field  | Type   | Description                    | Required |
+| ------ | ------ | ------------------------------ | -------- |
+| `date` | string | The date, such as `Nov. 2023`. | No       |
+| `text` | string | The talk, event or item.       | Yes      |
+
+```yaml
+- title: Invited Talks/Workshops
+  layout: dated
+  entries:
+    - date: Nov. 2023
+      text: "'AI in Everyday Life', Invited talk, Tech Conference 2023, Imaginaria."
+    - date: Oct. 2022
+      text: "'Cloud Computing for Beginners', Workshop, FutureTech Expo 2022, Nowhere City."
+    - date: May 2024
+      text: "'Robotics in Modern Industry', Guest lecture, Imaginary Institute of Technology."
+    - date: Aug. 2023
+      text: "'Building Scalable Systems with Docker and Kubernetes', Workshop, DevOps World 2023, Tech City."
+    - date: Sep. 2022
+      text: "'Ethics in AI', Panel discussion, Ethics in Technology Conference 2022, Metropolis."
+```
+
+![dated layout](docs/img/layout-dated.png)
+
+### `text`
+
+The `text` layout prints one paragraph per entry, for a summary or a research statement.
+
+| Field  | Type   | Description    | Required |
+| ------ | ------ | -------------- | -------- |
+| `text` | string | The paragraph. | Yes      |
+
+```yaml
+- title: Summary
+  layout: text
+  entries:
+    - Software engineer with five years of experience in *cloud platforms* and *robotics*.
+    - Interested in autonomous navigation, scalable systems and teaching programming to new developers.
+```
+
+![text layout](docs/img/layout-text.png)
+
+### `publications`
+
+The `publications` layout lists the entries of a BibTeX file. It has no `entries`. See [BibTeX Configuration](#bibtex-configuration).
+
+| Key         | Type   | Description                                                | Required |
+| ----------- | ------ | ---------------------------------------------------------- | -------- |
+| `bib`       | string | The `.bib` file, relative to the YAML file.                | Yes      |
+| `highlight` | list   | Author names to print in bold. The default is your `name`. | No       |
+
+```yaml
+- title: Publications
+  layout: publications
+  bib: publications.bib
+  highlight: [John Doe]
+```
+
+![publications layout](docs/img/layout-publications.png)
+
+### `newpage`
+
+The plain string `newpage` in the section list starts a new page.
 
 ```yaml
 sections:
-  - type: education
-    content:
-      - university: "Fictional University"
-        location: "Imaginaria, Wonderland"
-        dates: "September 2021 - June 2024"
-        degree: "Bachelor of Science in Computer Science"
-        honors: "Magna Cum Laude"
-        thesis_title: "An Exploration of Quantum Computing in Virtual Environments"
-        supervisor: "Dr. Alice Wonder"
-      - university: "Imaginary Institute of Technology"
-        location: "Nowhere City, Utopia"
-        dates: "August 2018 - May 2021"
-        degree: "Associate Degree in Artificial Intelligence"
-        supervisor: "Dr. Bob Builder"
-        bullets:
-          - "Relevant Coursework: Machine Learning, Advanced Algorithms"
+  - title: Honors and Awards
+    layout: list
+    entries:
+      - Dean's List (2023, 2022)
+      - Best Paper Award at Tech Innovations Conference (2023)
+
+  - newpage
+
+  - title: Certifications
+    layout: entries
+    entries:
+      - title: Certified Kubernetes Administrator
+        date: Graduated December 2023
+        subtitle: Cloud Native Computing Foundation
 ```
 
-![education-section](docs/img/education-section.png)
+![newpage](docs/img/layout-newpage.png)
 
-### 2. Experience
+# Text Formatting
 
-The `experience` section is used to detail your professional experiences and releated details.
+Every text field understands a small Markdown-like markup.
 
-| Key       | Type   | Description                 | Required |
-| --------- | ------ | --------------------------- | -------- |
-| `type`    | string | Must be `experience`.       | Yes      |
-| `content` | list   | List of experience entries. | Yes      |
+| Write                         | Result                                  |
+| ----------------------------- | --------------------------------------- |
+| `**Bold**`                    | **Bold**                                |
+| `*Italic*`                    | *Italic*                                |
+| `[My Portfolio](https://...)` | A link                                  |
+| `"First line\nSecond line"`   | A line break                            |
+| two spaces                    | A small space                           |
+| four spaces or a tab          | A wider space                           |
+| `'quoted phrase'`             | “quoted phrase” with LaTeX quotes       |
+| `30% of R&D`                  | Printed as written, with no escaping    |
+| `5\* rating`                  | 5\* rating, with a literal star         |
+| `{latex: '\textsc{Name}'}`    | Raw LaTeX, inserted as it is            |
 
-**Experience Entry**
-
-| Key      | Type   | Description                                                                                         | Required |
-| -------- | ------ | --------------------------------------------------------------------------------------------------- | -------- |
-| `name`   | string | Title of the experience section.                                                                    | Yes      |
-| `entity` | list   | List of experience entities. This is used to group relevant experiences together under one section. | Yes      |
-
-**Experience Entity**
-
-| Key                | Type   | Description                               | Required |
-| ------------------ | ------ | ----------------------------------------- | -------- |
-| `organization`     | string | Name of the organization or company.      | Yes      |
-| `dates`            | string | Duration of employment or involvement.    | Yes      |
-| `position`         | string | Position or role held.                    | Yes      |
-| `responsibilities` | list   | List of responsibilities or achievements. | No       |
-| `supervisor`       | string | Supervisor's name (optional).             | No       |
-| `department`       | string | Department name (optional).               | No       |
-| `location`         | string | Location of the organization (optional).  | No       |
-
-Example:
+Accented letters, Greek letters and common math symbols print as they are. See [the full list of supported characters](src/cv_tools/templates/latex/unicode.txt).
 
 ```yaml
-- type: experience
-  content:
-    - name: "Professional Experience"
-      entity:
-        - organization: "Tech Innovations Inc."
-          dates: "July 2024 - Present"
-          position: "Software Engineer"
-          responsibilities:
-            - "Developed and maintained cloud-based solutions for various enterprise clients."
-            - "Led a team of developers in designing scalable software architectures."
-            - "Improved system performance by 30% through code optimization and database restructuring."
-        - organization: "NextGen Robotics"
-          dates: "June 2022 - June 2024"
-          position: "Robotics Engineer"
-          responsibilities:
-            - "Designed and implemented autonomous navigation systems for industrial robots."
-            - "Collaborated with cross-functional teams to integrate machine learning models into robotic platforms."
+- title: Text Formatting
+  layout: list
+  entries:
+    - "**Bold**, *italic* and ***bold italic*** text"
+    - "A [link to my portfolio](https://www.johndoeportfolio.com)"
+    - "A 'quoted phrase' becomes LaTeX quotes"
+    - "First line\nSecond line"
+    - "Two  spaces and four    spaces"
+    - "LaTeX specials print as written: 30% & $5 for #1 in C_1"
+    - "Literal escapes: 5\\* rating and \\[not a link\\](x)"
+    - "Unicode: café, naïve, α ≤ β, x → ∞"
+    - {latex: "Raw \\LaTeX: \\textsc{Small Caps}"}
 ```
 
-![experience-section](docs/img/experience-section.png)
+![text formatting](docs/img/text-formatting.png)
 
-### 3. Bullets
+# Editor Support
 
-| Key           | Description                                  |
-| ------------- | -------------------------------------------- |
-| `type`        | Must be `bullets`.                           |
-| `title`       | Title of the bullet section.                 |
-| `description` | Description or introductory text (optional). |
-| `content`     | List of bullet points.                       |
-
-**Bullet Item**
-
-| Key        | Description                                               |
-| ---------- | --------------------------------------------------------- |
-| `item`     | Main bullet point text.                                   |
-| `subitems` | List of sub-bullet points under the main item (optional). |
-
-Example:
+Files from `cv-tools init` start with a schema comment. With the [YAML extension for VS Code](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml), it gives autocompletion and shows errors as you type.
 
 ```yaml
-- type: bullets
-  title: "Honors and Awards"
-  description: ""
-  content:
-    - item: "Dean's List (2023, 2022)"
-    - item: "Best Paper Award at Tech Innovations Conference (2023)"
-    - item: "Outstanding Graduate Award, Fictional University (2024)"
+# yaml-language-server: $schema=https://cv-tools.phonethk.com/schema/v2.json
 ```
 
-![bullets-section-1](docs/img/bullets-section-1.png)
-
-```yaml
-- type: bullets
-  title: "Professional Activities"
-  description: "Served/ing as a reviewer for"
-  content:
-    - item: "Journals"
-      subitems:
-        - "Journal of Artificial Intelligence Research (JAIR)"
-        - "Journal of Machine Learning Research (JMLR)"
-    - item: "Conferences"
-      subitems:
-        - "IEEE Conference on Computer Vision and Pattern Recognition (CVPR)"
-        - "International Conference on Learning Representations (ICLR)"
-```
-
-![bullets-section-2](docs/img/bullets-section-2.png)
-
-### 4. Skills
-
-| Key       | Description       |
-| --------- | ----------------- |
-| `type`    | Must be `skills`. |
-| `content` | List of skills.   |
-
-**Skills Entry**
-
-| Key    | Description                     |
-| ------ | ------------------------------- |
-| `name` | Title of the skills category.   |
-| `data` | List of skills or technologies. |
-
-Example:
-
-```yaml
-- type: skills
-  content:
-    - name: "Spoken Languages"
-      data: "English (Fluent), Spanish (Intermediate)"
-    - name: "Programming Languages"
-      data: "Python, Java, C++, SQL, JavaScript"
-    - name: "Tools and Technologies"
-      data: "AWS, Docker, Kubernetes, TensorFlow, Git, Jenkins, Linux, Jira"
-```
-
-![skills-section](docs/img/skills-section.png)
-
-### 5. Talks
-
-| Key       | Description                     |
-| --------- | ------------------------------- |
-| `type`    | Must be `talks`.                |
-| `title`   | Title of the talks section.     |
-| `content` | List of talks or presentations. |
-
-**Talk Entry**
-
-| Key     | Description                                                  |
-| ------- | ------------------------------------------------------------ |
-| `name`  | Title of the talk, type, conference or event name, location. |
-| `month` | Month of the talk.                                           |
-| `year`  | Year of the talk.                                            |
-
-Example:
-
-```yaml
-- type: talks
-  title: "Invited Talks/Workshops"
-  content:
-    - name: "``AI in Everyday Life'', Invited talk, Tech Conference 2023, Imaginaria."
-      month: "Nov."
-      year: "2023"
-    - name: "``Cloud Computing for Beginners'', Workshop, FutureTech Expo 2022, Nowhere City."
-      month: "Oct."
-      year: "2022"
-    - name: "``Robotics in Modern Industry'', Guest lecture, Imaginary Institute of Technology."
-      month: "May"
-      year: "2021"
-    - name: "``Building Scalable Systems with Docker and Kubernetes'', Workshop, DevOps World 2023, Tech City."
-      month: "Aug."
-      year: "2023"
-    - name: "``Ethics in AI'', Panel discussion, Ethics in Technology Conference 2022, Metropolis."
-      month: "Sep."
-      year: "2022"
-```
-
-![talks-section](docs/img/talks-section.png)
-
-### 6. Publications
-
-The `publications` section type is designed to list all relevant research articles, papers, patents and academic publications. This section automatically pulls data from a user-specified BibTeX file to render the publications in your CV. For more information on how to configure and link your BibTeX file, refer to the [BibTeX Configuration Section](#bibtex-configuration).
-
-| Key       | Type   | Description                                                                           | Required |
-| --------- | ------ | ------------------------------------------------------------------------------------- | -------- |
-| `type`    | string | Must be `publications`. Specifies that the section will render academic publications. | Yes      |
-| `title`   | string | Title of the publications section.                                                    | Yes      |
-| `bibfile` | string | Path to the BibTeX file.                                                              | Yes      |
-
-Example:
-
-```yaml
-sections:
-  - type: publications
-    title: "Publications"
-    bibfile: publications.bib
-```
-
-### 7. New Page
-
-The `newpage` section type is used to force the current page to end and start a new one. This can be useful when you want to ensure that certain sections or content start on a fresh page, particularly in situations where visual organization is important.
-
-| Key    | Type   | Description                                                             | Required |
-| ------ | ------ | ----------------------------------------------------------------------- | -------- |
-| `type` | string | Must be `newpage`. Forces the current page to end and starts a new one. | Yes      |
-
-Example:
-
-```yaml
-sections:
-  - type: newpage
-```
-
-An example of a complete YAML configuration can be found [here](config/cv.yaml).
-
-## Using Special Characters
-
-When configuring your YAML files, you might want to include special formatting within strings, such as bold text, hyperlinks, line breaks, and horizontal spacing. These special characters and formatting options will be automatically converted into the appropriate LaTeX commands during the rendering process. Here's how to use them:
-
-### Supported Characters
-
-- **Bold Text:**  
-  To make text bold, wrap the text with `**` (e.g., `"**Bold Text**"`).
-
-- **Italics:**  
-  To italicize text, wrap the text with `*` (e.g., `"*Italic Text*"`).
-
-- **Hyperlinks:**  
-  To create a hyperlink, use the Markdown link syntax `[text](url)` (e.g., `"[My Portfolio](https://myportfolio.com)"`).
-
-- **Line Breaks:**  
-  To insert a line break, use the newline character `\n` (e.g., `"First Line\nSecond Line"`).
-
-- **Horizontal Spacing:**
-
-  - To add a small space, use two spaces (e.g., `"Text  2 spaces later"`).
-  - To add an "em" space, use four spaces or a tab (e.g., `"Text    4 spaces later"` or `"Text\twith a tab"`).
-
-- **Quotes**
-  - Always use single quotes for quoted phrases (e.g., 'Data Science Club') to avoid issues with double quotes inside YAML.
-  - cv-tools will automatically convert these into proper LaTeX-style double quotes (``like this'') during rendering.
-
-Here’s an example YAML configuration that utilizes these special characters:
-
-```yaml
-heading:
-  name: "John Doe" # mandatory
-
-sections:
-  - type: education
-    content:
-      - university: "Fictional University"
-        location: "Imaginaria, Wonderland"
-        dates: "September 2021 - June 2024"
-        degree: "Bachelor of Science in *Computer Science*"
-        honors: "**Magna Cum Laude**"
-        thesis_title: "An Exploration of ['Quantum Computing'](https://en.wikipedia.org/wiki/Quantum_computing) in Virtual Environments"
-        supervisor: "Dr. Alice Wonder"
-```
-
-![special-characters-section](docs/img/special-characters-section.png)
+`cv-tools validate cv.yaml` checks a file and reports errors with line numbers.
 
 # BibTeX Configuration
 
-Managing your publications is straightforward with a BibTeX file. The BibTeX file allows you to maintain a structured list of your publications, which can be automatically formatted and included in your CV.
-
-![publications-section](docs/img/publications-section.png)
-
-## Steps to Configure BibTeX:
-
-1. **Create a BibTeX file:** Create a `.bib` file containing entries for your publications. The tool will automatically format these entries and include them in your CV.
-2. **Add a `publications` section:** In your YAML configuration file, add a section with the type `publications`. Use the `title` field to name the section as desired.
-3. **Specify the BibTeX file path:** In the `publications` section, set the `bibfile` field to the path of your BibTeX file.
-
-**Example BibTeX Entry:**
-
-> Note that cv-tools will automatically bold the author's name in publications if it matches the heading name.
-
-> In most cases, BibTeX entries do not include the URL field. cv-tools will add the URL link at the end only if the entry contains a URL field. If you would like to include a link to your publication, please add the URL field to the BibTeX entry manually.
+Keep your publications in a BibTeX file and add a `publications` section that points to it with `bib`.
 
 ```bibtex
 @article{doe2024quantum,
@@ -597,11 +402,50 @@ Managing your publications is straightforward with a BibTeX file. The BibTeX fil
 }
 ```
 
-Your publications will be included in the CV in the order they appear in the .bib file. An example BibTeX data file is provided [here](config/publications.bib).
+> cv-tools prints your name in bold in the author list. Set `highlight` in the section to bold other names.
+
+> Most BibTeX entries have no `url` field. cv-tools adds a [Link] only when the entry has one, so add the field by hand where you want the link.
+
+Publications appear in the order of the `.bib` file. An example BibTeX file is provided [here](examples/publications.bib).
+
+# Migrating from v1
+
+v1 files (with `heading`, `subheading` and `type:` sections) still build, with a deprecation warning. Support for them will be removed in a future release. Convert your file once and keep the new one.
+
+```bash
+$ cv-tools migrate old.yaml -o cv.yaml
+$ cv-tools build cv.yaml
+```
+
+The new file gives the same PDF.
+
+| v1                                                  | v2                                    |
+| --------------------------------------------------- | ------------------------------------- |
+| `heading: {name: ...}`                              | `name`                                |
+| `subheading` with `links` and `socials`             | `contact`                             |
+| `type: education`                                   | `layout: entries-inline`              |
+| `type: experience`                                  | `layout: entries`                     |
+| `type: bullets` with `item`, `subitems`             | `layout: list` with `text`, `bullets` |
+| `type: skills` with `name`, `data`                  | `layout: pairs` with `title`, `text`  |
+| `type: talks` with `name`, `month`, `year`          | `layout: dated` with `text`, `date`   |
+| `type: publications` with `bibfile`                 | `layout: publications` with `bib`     |
+| `type: newpage`                                     | `newpage`                             |
+| `content`                                           | `entries`                             |
+| `university`, `organization`                        | `title`                               |
+| `degree`, `position`                                | `subtitle`                            |
+| `dates`                                             | `date`                                |
+| `responsibilities`                                  | `bullets`                             |
+
+A few small fixes change the PDF of some v1 files. See the [CHANGELOG](CHANGELOG.md).
+
+`run.sh` still works but is deprecated. Use `cv-tools build` instead.
 
 # Contributing
 
 Feel free to contribute to this project by submitting issues or pull requests. Contributions are welcome to improve the templates, add new features, or fix bugs.
+
+- Python tests run with `pytest` after `pip install -e '.[test]'`.
+- Web app tests run with `npm --prefix web test`.
 
 # Acknowledgments
 

@@ -1,0 +1,14 @@
+{#- v1 "skills": "title:" on the left, text on the right. -#}
+{% macro render(section) %}
+    % ====================== {{ section.comment }} Section ====================== %
+    \begin{rSection}{ {{-section.title-}} }
+    {% if section.description %}
+        {{ section.description }}
+    {%-endif-%}
+    \begin{itemize}[leftmargin=0em, label={}, noitemsep]
+    {% for entry in section.entries %}
+    \item { {{-entry.title-}} :} \hfill { {{-entry.text-}} }
+    {%-endfor %}
+    \end{itemize}
+    \end{rSection}
+{% endmacro %}

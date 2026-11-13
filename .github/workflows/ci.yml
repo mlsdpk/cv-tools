@@ -1,0 +1,111 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+  # docker.yml and release.yml call it for a release tag.
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Python ${{ matrix.python }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python: ["3.10", "3.11", "3.12", "3.13", "3.14"]
+        include:
+          # The tests with fake pdflatex and docker shell scripts skip themselves here.
+          - os: windows-latest
+            python: "3.13"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install cv-tools with the test dependencies
+        run: python -m pip install -e '.[test]'
+
+      - name: Run the tests that need no TeX
+        run: python -m pytest -q -m "not tex"
+
+  tex:
+    name: Full suite with TeX Live 2026
+    runs-on: ubuntu-latest
+    env:
+      CV_TOOLS_REQUIRE_TEX: "1"
+      CV_TOOLS_REQUIRE_BROWSER: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      # cm-unicode and lm-math are the preview fonts that the fidelity test loads.
+      - name: Install TeX Live 2026
+        uses: TeX-Live/setup-texlive-action@eb78d21f41941476d9121e3a0abcab73265c876f # v4.1.1
+        with:
+          version: 2026
+          packages: |
+            latex-bin
+            cm-unicode
+            lm-math
+          package-file: src/cv_tools/templates/latex/packages.txt
+
+      - name: Install pdftoppm for the pixel tests
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends poppler-utils
+
+      - name: Install cv-tools with the test dependencies
+        run: python -m pip install -e '.[test,fidelity]'
+
+      - name: Install Chromium for the fidelity test
+        run: python -m playwright install --with-deps chromium
+
+      # doctor also accepts a running Docker, so check that it chose the local pdflatex.
+      - name: Check that the local TeX Live has every package
+        run: |
+          cv-tools doctor | tee "$RUNNER_TEMP/doctor.txt"
+          grep -q "^ready: 'cv-tools build' uses the local pdflatex$" "$RUNNER_TEMP/doctor.txt"
+
+      - name: Check that packages.txt matches this TeX Live
+        run: python tools/derive_packages.py --check
+
+      - name: Check that unicode.txt matches this TeX Live
+        run: python tools/derive_unicode.py --check
+
+      - name: Build the example with the local pdflatex
+        run: |
+          cv-tools build examples/cv.yaml --engine pdflatex -o "$RUNNER_TEMP/example.pdf"
+          test -s "$RUNNER_TEMP/example.pdf"
+
+      - name: Run the full test suite
+        run: python -m pytest -q
+
+      - name: Upload the pixel diffs
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: pixel-diffs
+          path: tests/_artifacts/
+          if-no-files-found: ignore

@@ -1,0 +1,14 @@
+# Exact versions for the Docker image (pyproject.toml keeps the lower bounds).
+attrs==26.1.0
+Jinja2==3.1.6
+jsonschema==4.26.0
+jsonschema-specifications==2025.9.1
+latexcodec==3.0.1
+MarkupSafe==3.0.4
+pybtex==0.26.1
+PyYAML==6.0.3
+referencing==0.37.0
+rpds-py==2026.9.1
+ruamel.yaml==0.19.1
+setuptools==84.2.1
+typing_extensions==4.16.0

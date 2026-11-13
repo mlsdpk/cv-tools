@@ -1,0 +1,8 @@
+version: 2
+name: ""
+sections:
+  - title: Summary
+    layout: text
+    entries:
+      - Software engineer with five years of experience in *cloud platforms* and *robotics*.
+      - Interested in autonomous navigation, scalable systems and teaching programming to new developers.

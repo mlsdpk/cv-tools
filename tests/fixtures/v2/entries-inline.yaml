@@ -1,0 +1,20 @@
+version: 2
+name: Jane Roe
+sections:
+  - title: Education
+    layout: entries-inline
+    description: Degrees, newest first.
+    entries:
+      - title: Fictional University
+        location: Imaginaria, Wonderland
+        date: September 2021 - June 2024
+        subtitle: Bachelor of Science in *Computer Science*
+        note: "**Magna Cum Laude**"
+        details:
+          - "Thesis Title: *An Exploration of Quantum Computing*"
+          - "Supervisor: Dr. Alice Wonder"
+        bullets:
+          - "Relevant Coursework: Machine Learning"
+      - title: No Location Institute
+        date: "2018"
+        subtitle: Diploma

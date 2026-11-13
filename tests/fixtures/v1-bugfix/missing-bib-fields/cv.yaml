@@ -1,0 +1,6 @@
+heading:
+  name: "Jane Roe"
+sections:
+  - type: publications
+    title: "Publications"
+    bibfile: pubs.bib

@@ -1,0 +1,17 @@
+# Web engine parity fixture: raw LaTeX, OT1 at 14.4pt, in a contact item, an entry title, date and bullet.
+# From the engine review (2026-11-12), where the browser engine lacked the fonts.
+
+version: 2
+name: Jane Roe
+contact:
+  - - latex: '{\Large Large}'
+sections:
+  - title: Raw
+    layout: entries
+    entries:
+      - title:
+          latex: '{\Large Large}'
+        date:
+          latex: '{\Large Large}'
+        bullets:
+          - latex: '{\Large Large}'

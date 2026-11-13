@@ -1,0 +1,279 @@
+{
+  "pyodide": [
+    "pyyaml",
+    "jinja2",
+    "markupsafe",
+    "jsonschema"
+  ],
+  "pypi": [
+    {
+      "name": "pybtex",
+      "version": "0.26.1",
+      "imports": [
+        "pybtex"
+      ],
+      "depends": [
+        "latexcodec",
+        "pyyaml"
+      ],
+      "url": "https://files.pythonhosted.org/packages/44/f6/775eb92e865b28cdb4ad1f2bed7a5446197516f76b58a950faa3be3fd08d/pybtex-0.26.1-py3-none-any.whl",
+      "sha256": "e26c0412cc54f5f21b2a6d9d175762a2d2af9ccf3a8f651cdb89ec035db77aa1"
+    },
+    {
+      "name": "latexcodec",
+      "version": "3.0.1",
+      "imports": [
+        "latexcodec"
+      ],
+      "depends": [],
+      "url": "https://files.pythonhosted.org/packages/b5/40/23569737873cc9637fd488606347e9dd92b9fa37ba4fcda1f98ee5219a97/latexcodec-3.0.1-py3-none-any.whl",
+      "sha256": "a9eb8200bff693f0437a69581f7579eb6bca25c4193515c09900ce76451e452e"
+    },
+    {
+      "name": "ruamel.yaml",
+      "version": "0.19.1",
+      "imports": [
+        "ruamel"
+      ],
+      "depends": [],
+      "url": "https://files.pythonhosted.org/packages/b8/0c/51f6841f1d84f404f92463fc2b1ba0da357ca1e3db6b7fbda26956c3b82a/ruamel_yaml-0.19.1-py3-none-any.whl",
+      "sha256": "27592957fedf6e0b62f281e96effd28043345e0e66001f97683aa9a40c667c93"
+    }
+  ],
+  "pyodideLicense": {
+    "url": "https://raw.githubusercontent.com/pyodide/pyodide/314.0.7/LICENSE",
+    "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5"
+  },
+  "notices": {
+    "comment": "Licences of the code linked into Pyodide's core, from Pyodide's build files at the pinned tag. 'rst' takes one section of a .rst file, 'comment' the first /* */ comment. Review when updating Pyodide.",
+    "pyodide": "314.0.7",
+    "python": "3.14.2",
+    "components": [
+      {
+        "component": "CPython 3.14.2",
+        "license": "PSF-2.0",
+        "file": "pyodide-core/cpython.txt",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/python/cpython/v3.14.2/LICENSE",
+            "sha256": "b0e25a78cffb43f4d92de8b61ccfa1f1f98ecbc22330b54b5251e7b6ba010231"
+          }
+        ]
+      },
+      {
+        "component": "CPython 3.14.2, incorporated third-party code (Mersenne Twister, SipHash24, dtoa, cfuhash, GUS, pyzstd bindings and others)",
+        "license": "LicenseRef-CPython-Incorporated-Software",
+        "file": "pyodide-core/cpython-incorporated.txt",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/python/cpython/v3.14.2/Doc/license.rst",
+            "sha256": "c695d550b135e53e38807e76496d1db17d22c40e461d1f3f354c86188d3305dd",
+            "rst": "Licenses and Acknowledgements for Incorporated Software"
+          }
+        ]
+      },
+      {
+        "component": "Expat 2.7.3 (bundled with CPython)",
+        "license": "MIT",
+        "file": "pyodide-core/expat.txt",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/python/cpython/v3.14.2/Modules/expat/COPYING",
+            "sha256": "122f2c27000472a201d337b9b31f7eb2b52d091b02857061a8880371612d9534"
+          }
+        ]
+      },
+      {
+        "component": "mpdecimal 2.5.1 (libmpdec, bundled with CPython)",
+        "license": "BSD-2-Clause",
+        "file": "pyodide-core/mpdecimal.txt",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/python/cpython/v3.14.2/Doc/license.rst",
+            "sha256": "c695d550b135e53e38807e76496d1db17d22c40e461d1f3f354c86188d3305dd",
+            "rst": "libmpdec"
+          }
+        ]
+      },
+      {
+        "component": "HACL* (bundled with CPython)",
+        "license": "MIT",
+        "file": "pyodide-core/hacl-star.txt",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/python/cpython/v3.14.2/Modules/_hacl/Hacl_Hash_SHA2.h",
+            "sha256": "442d8997d2bcda20ddf628665e2e69945400e1ab3019bc14fc7c8e20db20c320",
+            "comment": true
+          }
+        ]
+      },
+      {
+        "component": "mimalloc 2.1.2 (bundled with CPython)",
+        "license": "MIT",
+        "file": "pyodide-core/mimalloc.txt",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/python/cpython/v3.14.2/Doc/license.rst",
+            "sha256": "c695d550b135e53e38807e76496d1db17d22c40e461d1f3f354c86188d3305dd",
+            "rst": "mimalloc"
+          }
+        ]
+      },
+      {
+        "component": "libffi 3.4.4 (commit f08493d)",
+        "license": "MIT",
+        "file": "pyodide-core/libffi.txt",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/libffi/libffi/f08493d249d2067c8b3207ba46693dd858f95db3/LICENSE",
+            "sha256": "2c9c2acb9743e6b007b91350475308aee44691d96aa20eacef8e199988c8c388"
+          }
+        ]
+      },
+      {
+        "component": "zlib 1.3.1",
+        "license": "Zlib",
+        "file": "pyodide-core/zlib.txt",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/madler/zlib/v1.3.1/LICENSE",
+            "sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243"
+          }
+        ]
+      },
+      {
+        "component": "bzip2 1.0.6",
+        "license": "bzip2-1.0.6",
+        "file": "pyodide-core/bzip2.txt",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/emscripten-ports/bzip2/1.0.6/LICENSE",
+            "sha256": "4919cfb14a73cd64fcef67b107613970cf1659a09aa675dba31314f373bc7204"
+          }
+        ]
+      },
+      {
+        "component": "XZ Utils 5.2.2 (liblzma)",
+        "license": "LicenseRef-Public-Domain",
+        "file": "pyodide-core/xz.txt",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/tukaani-project/xz/v5.2.2/COPYING",
+            "sha256": "c4f8e14fafe458d84808a4cd8b69f94673ebe2bf8fc992291629a69ac12218f8"
+          }
+        ]
+      },
+      {
+        "component": "Zstandard 1.5.7",
+        "license": "BSD-3-Clause",
+        "file": "pyodide-core/zstd.txt",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/python/cpython-source-deps/zstd-1.5.7/LICENSE",
+            "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8"
+          }
+        ]
+      },
+      {
+        "component": "SQLite 3.39.0",
+        "license": "blessing",
+        "file": "pyodide-core/sqlite.txt",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.39.0/LICENSE.md",
+            "sha256": "9c6479123f32a1ed50d9a0af203dfe8972e65035b0cdeef436b5f8d0924517fe"
+          }
+        ]
+      },
+      {
+        "component": "hiwire (commit 6a1e672)",
+        "license": "MPL-2.0",
+        "file": "pyodide-core/hiwire.txt",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/pyodide/hiwire/6a1e67280a15d929ebeceee54a6358c9c8d5f697/LICENSE",
+            "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5"
+          }
+        ]
+      },
+      {
+        "component": "Emscripten 5.0.3 (runtime and system libraries)",
+        "license": "MIT OR NCSA",
+        "file": "pyodide-core/emscripten.txt",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/emscripten-core/emscripten/5.0.3/LICENSE",
+            "sha256": "620a78084fc7ca97c0b5dea9abf891f3ffcadfdbf305276f099c9c4e12fc1d86"
+          }
+        ]
+      },
+      {
+        "component": "musl libc (Emscripten 5.0.3)",
+        "license": "MIT",
+        "file": "pyodide-core/musl.txt",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/emscripten-core/emscripten/5.0.3/system/lib/libc/musl/COPYRIGHT",
+            "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af"
+          }
+        ]
+      },
+      {
+        "component": "LLVM libc++, libc++abi and compiler-rt (Emscripten 5.0.3)",
+        "license": "Apache-2.0 WITH LLVM-exception",
+        "file": "pyodide-core/llvm-runtimes.txt",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/emscripten-core/emscripten/5.0.3/system/lib/libcxx/LICENSE.TXT",
+            "sha256": "539dd7aed86e8a4f12cbdd0e6c50c189c7d74847e4fecc64ce2c6ee3a01da38b"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/emscripten-core/emscripten/5.0.3/system/lib/libcxxabi/LICENSE.TXT",
+            "sha256": "e2b35be49f7284a45b7baca8fc7b3ab7440e7902392b2528a457816b5bb2a15c"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/emscripten-core/emscripten/5.0.3/system/lib/compiler-rt/LICENSE.TXT",
+            "sha256": "1a8f1058753f1ba890de984e48f0242a3a5c29a6a8f2ed9fd813f36985387e8d"
+          }
+        ]
+      },
+      {
+        "component": "MiniLZ4 (Emscripten 5.0.3, in pyodide.asm.mjs)",
+        "license": "MIT",
+        "file": "pyodide-core/mini-lz4.txt",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/emscripten-core/emscripten/5.0.3/third_party/mini-lz4.js",
+            "sha256": "ac1eaa04b68d792d962d5946504ee5141ef58a9df86a0dfcf0ffa63d08634e46",
+            "comment": true
+          }
+        ]
+      }
+    ]
+  },
+  "fonts": {
+    "cmUnicode": {
+      "file": "computer-modern/OFL.txt",
+      "sha256": "73273dffdefe2e5f1e138084d4a4b65b1c50df2ab0179f78484f31beefe30d84"
+    },
+    "fontAwesome": {
+      "font": {
+        "url": "https://raw.githubusercontent.com/xdanaux/fontawesome-latex/v4.6.3.1/FontAwesome.otf",
+        "sha256": "9a3bde5fa63112798ab59bfba9bd081db3f743758194c454119012c9a98a9044"
+      },
+      "ofl": {
+        "url": "https://raw.githubusercontent.com/spdx/license-list-data/v3.29.0/text/OFL-1.1.txt",
+        "sha256": "8eea8287e5876b539670cadb82e99f9a7afddec6f6730811be1daf25d2e9bcfd"
+      }
+    },
+    "latinModernMath": {
+      "comment": "The same latinmodern-math.otf as TeX Live's lm-math; the preview takes the FONT_RANGES symbols from it.",
+      "url": "https://www.gust.org.pl/projects/e-foundry/lm-math/download/latinmodern-math-1959.zip",
+      "sha256": "aaaa060b4ffc091461e875efb9498b9abfa7c7a48f38eb33882868839903a4f8",
+      "font": "latinmodern-math-1959/otf/latinmodern-math.otf",
+      "fontSha256": "6075562b771f8b82f0c179e363389684f2dd09de30038269e2628e504bd7be0f",
+      "license": "latinmodern-math-1959/doc/GUST-FONT-LICENSE.txt",
+      "licenseSha256": "2bd69affc3da00715116f713f57eab9707e96daf3562ad0215987b15b9c16f73"
+    }
+  }
+}

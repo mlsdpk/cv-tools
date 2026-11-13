@@ -1,0 +1,32 @@
+# Null list items: a bare '-' under content, subitems, responsibilities and bullets.
+heading:
+  name: "Jane Roe"
+sections:
+  - type: bullets
+    title: T
+    content:
+      - item: "a"
+        subitems:
+          - "s1"
+          -
+      - item:
+      -
+  - type: experience
+    content:
+      - name: W
+        entity:
+          - organization: O
+            position: P
+            responsibilities:
+              - "r1"
+              -
+  - type: education
+    content:
+      - university: U
+        bullets:
+          - ~
+  - type: skills
+    content:
+      - name: "S"
+        data: "D"
+      -

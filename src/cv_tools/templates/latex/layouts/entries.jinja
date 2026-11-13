@@ -1,0 +1,29 @@
+{#- v1 "experience": one rSubsection per entry. -#}
+{%-macro render(section)-%}
+    {% for _ in [section] %}
+        {{ _render_section(section) }}
+    {% endfor %}
+{% endmacro %}
+
+{%-macro _render_section(section)-%}
+    % ====================== {{ section.comment }} Section ====================== %
+    \begin{rSection}{ {{-section.title-}} }
+    {%- if section.description %}{{ section.description }}\par{% endif %}
+    {% for entry in section.entries %}
+    \begin{rSubsection}
+    {\textbf{ {{-entry.title-}} }{% if entry.location is not none %}, {{ entry.location }}{% endif %}}
+    { {{ entry.date }} }
+    { {{ entry.subtitle }} }
+    { {{- entry.note -}} }
+    { {{- entry.details | join('\\\\') -}} }
+    {%-if entry.bullets-%}
+    {%-for bullet in entry.bullets-%}
+        \item {{ bullet}}
+    {%-endfor%}
+    {% else %} 
+        \item[]\vspace{-2em}
+    {%-endif-%}
+    \end{rSubsection}
+    {% endfor %}
+    \end{rSection}
+{% endmacro %}

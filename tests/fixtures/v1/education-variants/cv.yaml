@@ -1,0 +1,39 @@
+heading:
+  name: "Jane Roe"
+sections:
+  - type: education
+    content:
+      # Every optional field present.
+      - university: "Full University"
+        location: "City, Country"
+        dates: "2019 - 2023"
+        degree: "PhD in Robotics"
+        honors: "With distinction"
+        thesis_title: "Counting on Imaginary Numbers"
+        supervisor: "Prof. A. Advisor"
+        bullets:
+          - "First bullet"
+          - "Second bullet with **bold**"
+      # No location: v1 still prints the comma.
+      - university: "No Location College"
+        dates: "2015 - 2019"
+        degree: "BSc"
+      # Thesis without supervisor, empty bullet list.
+      - university: "Thesis Only"
+        location: "Somewhere"
+        dates: "2013"
+        degree: "MSc"
+        thesis_title: "A thesis"
+        bullets: []
+      # Supervisor without thesis, bullets without honors.
+      - university: "Supervisor Only"
+        location: "Elsewhere"
+        dates: "2012"
+        degree: "Diploma"
+        supervisor: "Dr. B"
+        bullets:
+          - "Only bullet"
+      # Nothing but the name.
+      - university: "Bare"
+  - type: education
+    content: []

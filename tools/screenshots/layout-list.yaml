@@ -1,0 +1,22 @@
+version: 2
+name: ""
+sections:
+  - title: Honors and Awards
+    layout: list
+    entries:
+      - Dean's List (2023, 2022)
+      - Best Paper Award at Tech Innovations Conference (2023)
+      - Outstanding Graduate Award, Fictional University (2024)
+
+  - title: Professional Activities
+    layout: list
+    description: Served/ing as a reviewer for
+    entries:
+      - text: Journals
+        bullets:
+          - Journal of Artificial Intelligence Research (JAIR)
+          - Journal of Machine Learning Research (JMLR)
+      - text: Conferences
+        bullets:
+          - IEEE Conference on Computer Vision and Pattern Recognition (CVPR)
+          - International Conference on Learning Representations (ICLR)

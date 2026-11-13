@@ -1,0 +1,357 @@
+{
+  "comment": "A component is listed only when one of its markers (a string in the binary) is in busytex.wasm; a missing required one fails the build. 'source' is a path in texlive-source unless it names another archive.",
+  "components": [
+    {
+      "name": "pdfTeX",
+      "license": "GPL-2.0-or-later",
+      "texts": [
+        "texts/GPL-2.0.txt"
+      ],
+      "source": "texk/web2c/pdftexdir",
+      "markers": [
+        "This is pdfTeX"
+      ],
+      "required": true
+    },
+    {
+      "name": "XeTeX",
+      "license": "MIT (the XeTeX additions; TeX itself is Knuth's)",
+      "notices": [
+        "notices/xetex-COPYING.txt"
+      ],
+      "source": "texk/web2c/xetexdir",
+      "markers": [
+        "This is XeTeX"
+      ]
+    },
+    {
+      "name": "LuaHBTeX",
+      "license": "GPL-2.0-or-later",
+      "texts": [
+        "texts/GPL-2.0.txt"
+      ],
+      "source": "texk/web2c/luatexdir",
+      "markers": [
+        "This is LuaHBTeX"
+      ]
+    },
+    {
+      "name": "MetaPost library (mplib)",
+      "license": "LGPL-3.0-or-later",
+      "texts": [
+        "texts/LGPL-3.0.txt",
+        "texts/GPL-3.0.txt"
+      ],
+      "source": "texk/web2c/mplibdir",
+      "markers": [
+        "mplibdir/mp.w"
+      ]
+    },
+    {
+      "name": "dvipdfmx (xdvipdfmx)",
+      "license": "GPL-2.0-or-later",
+      "texts": [
+        "texts/GPL-2.0.txt"
+      ],
+      "source": "texk/dvipdfm-x",
+      "markers": [
+        "xdvipdfmx"
+      ]
+    },
+    {
+      "name": "BibTeX8 (bibtex-x)",
+      "license": "GPL-2.0-or-later",
+      "texts": [
+        "texts/GPL-2.0.txt"
+      ],
+      "source": "texk/bibtex-x",
+      "markers": [
+        "bibtex8"
+      ]
+    },
+    {
+      "name": "MakeIndex",
+      "license": "MakeIndex licence (permissive)",
+      "notices": [
+        "notices/makeindex-COPYING.txt"
+      ],
+      "source": "texk/makeindexk",
+      "markers": [
+        "makeindex"
+      ]
+    },
+    {
+      "name": "kpathsea",
+      "license": "LGPL-2.1-or-later",
+      "texts": [
+        "texts/LGPL-2.1.txt"
+      ],
+      "source": "texk/kpathsea",
+      "markers": [
+        "kpathsea version"
+      ],
+      "required": true
+    },
+    {
+      "name": "xpdf (PDF inclusion in pdfTeX and XeTeX)",
+      "license": "GPL-2.0-only OR GPL-3.0-only",
+      "texts": [
+        "texts/GPL-2.0.txt",
+        "texts/GPL-3.0.txt"
+      ],
+      "source": "libs/xpdf",
+      "markers": [
+        "xpdf"
+      ]
+    },
+    {
+      "name": "pplib (PDF inclusion in LuaTeX)",
+      "license": "no licence statement in its source; distributed with LuaTeX (GPL-2.0-or-later)",
+      "texts": [
+        "texts/GPL-2.0.txt"
+      ],
+      "source": "libs/pplib",
+      "markers": [
+        "Compiled with pplib version"
+      ]
+    },
+    {
+      "name": "libpng",
+      "license": "libpng-2.0",
+      "notices": [
+        "notices/libpng-LICENSE.txt"
+      ],
+      "source": "libs/libpng",
+      "markers": [
+        "libpng version"
+      ]
+    },
+    {
+      "name": "zlib",
+      "license": "Zlib",
+      "notices": [
+        "notices/zlib-LICENSE.txt"
+      ],
+      "source": "libs/zlib",
+      "markers": [
+        "incorrect header check"
+      ],
+      "required": true
+    },
+    {
+      "name": "FreeType",
+      "license": "FTL OR GPL-2.0-or-later",
+      "notices": [
+        "notices/freetype-LICENSE.txt",
+        "notices/freetype-FTL.txt"
+      ],
+      "texts": [
+        "texts/GPL-2.0.txt"
+      ],
+      "source": "libs/freetype2",
+      "markers": [
+        "FreeType internals"
+      ]
+    },
+    {
+      "name": "HarfBuzz",
+      "license": "MIT (Old MIT)",
+      "notices": [
+        "notices/harfbuzz-COPYING.txt"
+      ],
+      "source": "libs/harfbuzz",
+      "markers": [
+        "harfbuzz-src"
+      ]
+    },
+    {
+      "name": "Graphite2",
+      "license": "LGPL-2.1-or-later OR MPL-2.0 OR GPL-2.0-or-later",
+      "notices": [
+        "notices/graphite2-LICENSE.txt"
+      ],
+      "texts": [
+        "texts/LGPL-2.1.txt"
+      ],
+      "source": "libs/graphite2",
+      "markers": [
+        "graphite2-src"
+      ]
+    },
+    {
+      "name": "ICU",
+      "license": "Unicode-3.0 (ICU licence)",
+      "notices": [
+        "notices/icu-LICENSE.txt"
+      ],
+      "source": "libs/icu",
+      "markers": [
+        "icudt"
+      ]
+    },
+    {
+      "name": "Lua 5.3",
+      "license": "MIT",
+      "notices": [
+        "notices/lua-5.3-notice.txt"
+      ],
+      "source": "libs/lua53",
+      "markers": [
+        "Lua 5.3"
+      ]
+    },
+    {
+      "name": "LuaFileSystem",
+      "license": "MIT",
+      "notices": [
+        "notices/luafilesystem-LICENSE.txt"
+      ],
+      "source": "texk/web2c/luatexdir/luafilesystem",
+      "markers": [
+        "LuaFileSystem is a Lua library"
+      ]
+    },
+    {
+      "name": "LuaSocket",
+      "license": "MIT",
+      "notices": [
+        "notices/luasocket-LICENSE.txt"
+      ],
+      "source": "texk/web2c/luatexdir/luasocket",
+      "markers": [
+        "socket.core"
+      ]
+    },
+    {
+      "name": "luaharfbuzz",
+      "license": "MIT",
+      "notices": [
+        "notices/luaharfbuzz-LICENSE.txt"
+      ],
+      "source": "texk/web2c/luatexdir/luaharfbuzz",
+      "markers": [
+        "luaharfbuzz"
+      ]
+    },
+    {
+      "name": "TECkit",
+      "license": "LGPL-2.1-or-later OR CPL-0.5",
+      "texts": [
+        "texts/LGPL-2.1.txt"
+      ],
+      "source": "libs/teckit",
+      "markers": [
+        "TECkit"
+      ]
+    },
+    {
+      "name": "zziplib",
+      "license": "LGPL-2.0-or-later OR MPL-1.1",
+      "texts": [
+        "texts/LGPL-2.1.txt"
+      ],
+      "source": "libs/zziplib",
+      "markers": [
+        "zziplib"
+      ]
+    },
+    {
+      "name": "libpaper",
+      "license": "GPL-2.0",
+      "texts": [
+        "texts/GPL-2.0.txt"
+      ],
+      "source": "libs/libpaper",
+      "markers": [
+        "libpaper"
+      ]
+    },
+    {
+      "name": "Expat",
+      "license": "MIT",
+      "notices": [
+        "notices/expat-COPYING.txt"
+      ],
+      "source": "expat-2.5.0.tar.gz",
+      "markers": [
+        "XML_DTD support in Expat"
+      ]
+    },
+    {
+      "name": "Fontconfig",
+      "license": "HPND-sell-variant (MIT-style)",
+      "notices": [
+        "notices/fontconfig-COPYING.txt"
+      ],
+      "source": "fontconfig-2.13.96.tar.gz",
+      "markers": [
+        "fontconfig/src"
+      ]
+    },
+    {
+      "name": "Emscripten runtime (busytex.module.js glue and the C library, musl)",
+      "license": "MIT OR NCSA (Emscripten); MIT (musl)",
+      "notices": [
+        "notices/emscripten-LICENSE.txt",
+        "notices/musl-COPYRIGHT.txt"
+      ],
+      "source": "emscripten 3.1.43",
+      "markers": [],
+      "required": true
+    },
+    {
+      "name": "busytex (busytex.c, the multi-call main program, and the build scripts)",
+      "license": "MIT (as the README of the busytex repository states; the repository has no licence file)",
+      "source": "busytex archive in sources.json",
+      "markers": [],
+      "required": true
+    }
+  ],
+  "fonts_comment": "Font licences of the TeX Live packages whose font files (.tfm, .pfb, .otf, .enc) are in the bundle or the font pack, by package name. They are separate from the package licence of the TeX Catalogue. build-bundle.mjs fails when a package ships font files and has no entry here.",
+  "fonts": {
+    "amsfonts": {
+      "license": "OFL-1.1 (Copyright 1997, 2009 American Mathematical Society)",
+      "texts": [
+        "texts/OFL-1.1.txt"
+      ],
+      "notices": [
+        "notices/amsfonts-OFL.txt"
+      ]
+    },
+    "cm": {
+      "license": "Knuth (Computer Modern metrics; free use, no changes under the same names)",
+      "texts": [],
+      "notices": []
+    },
+    "cm-super": {
+      "license": "GPL-2.0-or-later with a font embedding exception (Copyright 2001, 2002, 2008 Vladimir Volovich)",
+      "texts": [
+        "texts/GPL-2.0.txt"
+      ],
+      "notices": [
+        "notices/cm-super-README.txt"
+      ]
+    },
+    "ec": {
+      "license": "ec font licence (free; Copyright 1990-2012 Norbert Schwarz and Jörg Knappen)",
+      "texts": [],
+      "notices": [
+        "notices/ec-copyrite.txt"
+      ]
+    },
+    "fontawesome": {
+      "license": "OFL-1.1 (Font Awesome 4 by Dave Gandy)",
+      "texts": [
+        "texts/OFL-1.1.txt"
+      ],
+      "notices": []
+    },
+    "latex-fonts": {
+      "license": "LPPL-1.3c (the LaTeX picture fonts line and lcircle, metrics only)",
+      "texts": [
+        "texts/LPPL-1.3c.txt"
+      ],
+      "notices": []
+    }
+  }
+}

@@ -1,0 +1,7 @@
+version: 2
+name: Jane Roe
+sections:
+  - title: Summary
+    layout: text
+    entries:
+      - true

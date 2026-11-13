@@ -1,0 +1,6 @@
+version: 2
+name: Jane Roe
+sections:
+  - title: Talks
+    layout: dates
+    entries: []

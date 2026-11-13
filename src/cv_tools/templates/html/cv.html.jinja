@@ -1,0 +1,19 @@
+{#- Inline content stays on one line, because spaces between inline elements print. -#}
+{% import "macros.jinja" as m %}
+<div class="cv-document" data-source-format="{{ source_format }}" data-editable="{{ 'true' if editable else 'false' }}">
+{% for page in pages %}
+<div class="cv-page"{{ page.where }}>
+{% if loop.first %}
+<header class="cv-header{% if not contact %} cv-no-contact{% endif %}">
+{{ field("h1", "cv-name", name) }}
+{% for line in contact %}
+{{ m.contact_line(line) }}
+{% endfor %}
+</header>
+{% endif %}
+{% for section in page.sections %}
+{{ m.section(section) }}
+{% endfor %}
+</div>
+{% endfor %}
+</div>

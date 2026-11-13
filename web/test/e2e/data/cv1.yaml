@@ -1,0 +1,37 @@
+version: 2
+name: Jane Doe        # aligned comment
+date: 2024
+
+contact:
+  - - jane@x.org
+    - Curriculum Vitae, {date}
+
+sections:
+  - title: About
+    layout: text
+    entries:
+      - |
+        First paragraph with **bold** and a [link](https://example.org).
+        Second line.
+  - title: Talks
+    layout: dated
+    entries:
+      - date: 2023
+        text: Talk *one* \* star
+      - date: 2022
+        text: &t Talk two
+      - date: 2021
+        text: *t
+  - title: Skills
+    layout: pairs
+    entries:
+      - title: Lang
+        text: Python
+      - title: Tools
+        text: Git
+      - title: Other
+        text: Stuff
+  - title: Single
+    layout: list
+    entries:
+      - Only item

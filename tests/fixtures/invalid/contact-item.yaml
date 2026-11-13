@@ -1,0 +1,5 @@
+version: 2
+name: Jane Roe
+contact:
+  - - url: https://example.com
+      orcid: 0000-0000-0000-0000

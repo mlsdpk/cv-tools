@@ -1,0 +1,129 @@
+# yaml-language-server: $schema=https://cv-tools.phonethk.com/schema/v2.json
+# cv-tools v2 example. Build it with: cv-tools build examples/cv.yaml
+version: 2
+name: John Doe
+
+contact:
+  - - url: https://www.johndoeportfolio.com
+    - orcid: 0000-0000-0000-0000
+    - linkedin: https://linkedin.com/in/johndoe
+  - - johndoe@email.com
+    - Curriculum Vitae, {date}
+
+sections:
+  - title: Education
+    layout: entries-inline
+    entries:
+      - title: Fictional University
+        location: Imaginaria, Wonderland
+        date: September 2021 - June 2024
+        subtitle: Bachelor of Science in *Computer Science*
+        note: '**Magna Cum Laude**'
+        details:
+          - "Thesis Title: *An Exploration of ['Quantum Computing'](https://en.wikipedia.org/wiki/Quantum_computing) in Virtual Environments*"
+          - 'Supervisor: Dr. Alice Wonder'
+      - title: Imaginary Institute of Technology
+        location: Nowhere City, Utopia
+        date: August 2018 - May 2021
+        subtitle: Associate Degree in Artificial Intelligence
+        details:
+          - 'Supervisor: Dr. Bob Builder'
+
+  - title: Professional Experience
+    layout: entries
+    entries:
+      - title: Tech Innovations Inc.
+        date: July 2024 - Present
+        subtitle: Software Engineer
+        bullets:
+          - Developed and maintained cloud-based solutions for various enterprise clients.
+          - Led a team of developers in designing scalable software architectures.
+          - Improved system performance by 30% through code optimization and database restructuring.
+      - title: NextGen Robotics
+        date: June 2022 - June 2024
+        subtitle: Robotics Engineer
+        bullets:
+          - Designed and implemented autonomous navigation systems for industrial robots.
+          - Collaborated with cross-functional teams to integrate machine learning models into robotic platforms.
+
+  - title: Teaching and Volunteering
+    layout: entries
+    entries:
+      - title: Virtual Coding Academy
+        date: January 2020 - December 2021
+        subtitle: Instructor
+        note: 'Supervisor: Dr. Eve Code'
+        details:
+          - Department of Computer Science
+          - Imaginaria, Wonderland
+        bullets:
+          - Taught introductory and advanced courses in Python programming.
+          - Mentored students on their final projects and provided guidance on coding best practices.
+      - title: Tech Youth Initiative
+        date: July 2019 - June 2020
+        subtitle: Volunteer Coordinator
+        details:
+          - Nowhere City, Utopia
+        bullets:
+          - Organized coding boot camps and hackathons for underprivileged youth.
+          - Managed a team of volunteers and ensured smooth operation of all events.
+
+  - title: Honors and Awards
+    layout: list
+    entries:
+      - Dean's List (2023, 2022)
+      - Best Paper Award at Tech Innovations Conference (2023)
+      - Outstanding Graduate Award, Fictional University (2024)
+
+  - newpage
+
+  - title: Certifications
+    layout: entries
+    entries:
+      - title: Certified Kubernetes Administrator
+        date: Graduated December 2023
+        subtitle: Cloud Native Computing Foundation
+      - title: AWS Certified Solutions Architect
+        date: Graduated March 2022
+        subtitle: Amazon Web Services
+
+  - title: Skills
+    layout: pairs
+    entries:
+      - title: Spoken Languages
+        text: English (Fluent), Spanish (Intermediate)
+      - title: Programming Languages
+        text: Python, Java, C++, SQL, JavaScript
+      - title: Tools and Technologies
+        text: AWS, Docker, Kubernetes, TensorFlow, Git, Jenkins, Linux, Jira
+
+  - title: Professional Activities
+    layout: list
+    description: Served/ing as a reviewer for
+    entries:
+      - text: Journals
+        bullets:
+          - Journal of Artificial Intelligence Research (JAIR)
+          - Journal of Machine Learning Research (JMLR)
+      - text: Conferences
+        bullets:
+          - IEEE Conference on Computer Vision and Pattern Recognition (CVPR)
+          - International Conference on Learning Representations (ICLR)
+
+  - title: Invited Talks/Workshops
+    layout: dated
+    entries:
+      - date: Nov. 2023
+        text: "'AI in Everyday Life', Invited talk, Tech Conference 2023, Imaginaria."
+      - date: Oct. 2022
+        text: "'Cloud Computing for Beginners', Workshop, FutureTech Expo 2022, Nowhere City."
+      - date: May 2024
+        text: "'Robotics in Modern Industry', Guest lecture, Imaginary Institute of Technology."
+      - date: Aug. 2023
+        text: "'Building Scalable Systems with Docker and Kubernetes', Workshop, DevOps World 2023, Tech City."
+      - date: Sep. 2022
+        text: "'Ethics in AI', Panel discussion, Ethics in Technology Conference 2022, Metropolis."
+
+  - title: Publications
+    layout: publications
+    bib: publications.bib

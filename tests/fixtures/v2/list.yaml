@@ -1,0 +1,17 @@
+version: 2
+name: Jane Roe
+sections:
+  - title: Professional Activities
+    layout: list
+    description: Served/ing as a reviewer for
+    entries:
+      - text: Journals
+        bullets:
+          - Journal of Artificial Intelligence Research (JAIR)
+          - Journal of Machine Learning Research (JMLR)
+      - Best Paper Award (2023)
+      - {latex: "Raw \\LaTeX{} entry"}
+      - text: A mapping without bullets
+  - title: Empty List
+    layout: list
+    entries: []

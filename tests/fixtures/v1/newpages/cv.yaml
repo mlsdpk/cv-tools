@@ -1,0 +1,14 @@
+heading:
+  name: "Jane Roe"
+sections:
+  - type: newpage
+  - type: bullets
+    title: "Page two"
+    content:
+      - item: "Second page"
+  - type: newpage
+  - type: newpage
+  - type: skills
+    content:
+      - name: "Tools"
+        data: "Git"

@@ -1,0 +1,8 @@
+version: 2
+name: Jane Roe
+sections:
+  - title: Education
+    layout: entries-inline
+    entries:
+      - title: Uni
+        dates: 2020

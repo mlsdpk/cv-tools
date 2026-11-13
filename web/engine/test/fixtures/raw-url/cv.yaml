@@ -1,0 +1,17 @@
+# Web engine parity fixture: raw LaTeX, \url in italic (the date), in a contact item, an entry title, date and bullet.
+# From the engine review (2026-11-12), where the browser engine lacked the fonts.
+
+version: 2
+name: Jane Roe
+contact:
+  - - latex: '\url{https://example.org/a_b}'
+sections:
+  - title: Raw
+    layout: entries
+    entries:
+      - title:
+          latex: '\url{https://example.org/a_b}'
+        date:
+          latex: '\url{https://example.org/a_b}'
+        bullets:
+          - latex: '\url{https://example.org/a_b}'

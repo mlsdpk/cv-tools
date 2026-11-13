@@ -1,0 +1,47 @@
+version: 2
+name: Long Lines
+date: 3 March 2024
+contact:
+  # Wider than the text, so it reaches into both margins (\centerline).
+  - - Department of Theoretical and Imaginary Engineering, Fictional University, 5 Founder's College Road
+    - url: https://x.org
+sections:
+  - title: Experience
+    layout: entries
+    entries:
+      # The title fills its line, so the date starts the next line.
+      - title: Department of Theoretical and Imaginary Engineering, Fictional University
+        location: Nowhere, Utopia
+        date: Sep. 2019 -- Aug. 2024
+        subtitle: Doctor of Philosophy in Mathematics, thesis on imaginary numbers in fictional universes
+        note: Advisor Alice Wonderland
+        bullets: [Counted imaginary numbers in Wonderland.]
+      # The title wraps; the date shares its second line.
+      - title: A Very Long Organisation Name That Wraps Onto A Second Line Because It Is So Long
+        location: Somewhere Far Away
+        date: 2018 -- 2019
+        subtitle: Research Assistant
+        note: Part time
+        bullets: [Short bullet.]
+      - title: Short Title
+        date: 2017
+        note: A note without a subtitle prints on the left
+  - title: Education
+    layout: entries-inline
+    entries:
+      # The date starts on the title's line and wraps.
+      - title: Department of Theoretical and Imaginary Engineering, Fictional University
+        location: Nowhere
+        date: 2019 -- 2024
+        subtitle: Doctor of Philosophy in Mathematics, thesis on imaginary numbers in fiction
+        note: GPA 4.0/4.0
+  - title: Skills
+    layout: pairs
+    entries:
+      - title: Programming
+        text: C++ (templates, concepts), Python (NumPy, PyTorch, JAX), Julia, MATLAB, Bash, CMake, LaTeX
+      - title: Languages and frameworks
+        text: >-
+          English, Spanish, French, ROS 2, NumPy, SciPy, Eigen, Boost, Google Test, Docker, Git,
+          GitHub Actions, Sphinx, Doxygen, and many other tools that make this text wrap over three lines of the page
+      - {title: Tools, text: "Git, Docker"}

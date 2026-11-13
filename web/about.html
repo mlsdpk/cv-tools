@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>About cv-tools web</title>
+  </head>
+  <body class="about">
+    <header class="topbar">
+      <a class="wordmark" href="./">cv-tools</a>
+      <span class="file-state">About and licences</span>
+      <span class="spacer"></span>
+      <a class="btn" href="./">Back to the editor</a>
+    </header>
+    <main class="about-main">
+      <h1>About and licences</h1>
+      <p>
+        cv-tools web edits a CV written in YAML and produces the same PDF as the
+        <a href="https://github.com/mlsdpk/cv-tools">cv-tools</a> command line tool. Everything runs in this browser.
+        Nothing you type is uploaded: your files are saved in this browser's storage, and a share link carries the CV
+        inside the link itself.
+      </p>
+      <p>
+        cv-tools is MIT licensed. The page bundles the components below, each under its own licence. The licence texts
+        ship with the site.
+      </p>
+
+      <h2>cv-tools</h2>
+      <div id="cv-tools"><p>Loading.</p></div>
+
+      <h2>TeX engine</h2>
+      <div id="engine"><p>Loading.</p></div>
+
+      <h2>Python runtime</h2>
+      <div id="python"><p>Loading.</p></div>
+
+      <h2>JavaScript libraries and fonts</h2>
+      <div id="npm"><p>Loading.</p></div>
+    </main>
+    <script type="module" src="./src/about.ts"></script>
+  </body>
+</html>

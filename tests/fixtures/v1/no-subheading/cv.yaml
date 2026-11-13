@@ -1,0 +1,13 @@
+# A CV without contact lines.
+heading:
+  name: "Jane Roe"
+
+sections:
+  - type: skills
+    content:
+      - name: "Languages"
+        data: "Python, C++"
+  - type: bullets
+    title: "Awards"
+    content:
+      - item: "Best paper"

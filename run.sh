@@ -1,19 +1,19 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # MIT License
-# 
+#
 # Copyright (c) 2024 Phone Thiha Kyaw
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be included in all
 # copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,214 +22,189 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-# Function to print the usage
+# Deprecated wrapper around 'cv-tools build', removed in a future release.
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 usage() {
-    info "Usage: $0 [-c config_file] [-o output_file]"
-    info "  -c, --config   Specify the configuration YAML file (default: config/cv.yaml)"
-    info "  --tex-only     Only generate the LaTeX (.tex) file without producing a PDF"
-    info "  --no-deps      Skip checking and installing dependencies"
-    info "  -o, --output   Specify the output LaTeX file (default: output/output.tex)"
-    info "  -h, --help     Display this help message and exit"
-    exit 1
-}
-
-# Function to check if a command exists
-command_exists() {
-    command -v "$1" >/dev/null 2>&1
-}
-
-# Function to check and install if a LaTeX package is not found
-check_latex_package() {
-    local package="$1"
-    # --only-installed reads the local package database only. Without it, tlmgr downloads the
-    # database of a CTAN mirror on every call and reports nothing when that mirror is down.
-    PACKAGE_INFO=$(tlmgr info --only-installed "$package" 2>/dev/null)
-    
-    if echo "$PACKAGE_INFO" | grep -q -E "installed:\s*Yes"; then
-        success "LaTeX package $package is already installed."
-    else
-        error "LaTeX package $package is not installed."
-        info "Attempting to install $package..."
-
-        # Run the installation
-        tlmgr install "$package"
-        if [ $? -eq 0 ]; then
-            success "LaTeX package $package has been installed."
-        else
-            error "Failed to install LaTeX package $package."
-            exit 1
-        fi
-    fi
-}
-
-# Function to check and install LaTeX packages from a file
-check_latex_packages_from_file() {
-    local package_file="$1"
-    while IFS= read -r package || [ -n "$package" ]; do
-        package=$(echo "$package" | xargs)  # Trim any surrounding whitespace
-        if [ -n "$package" ]; then
-            check_latex_package "$package"
-        fi
-    done < "$package_file"
-}
-
-info() {
-    echo -e "\033[1;34m[INFO]\033[0m $1"
-}
-
-success() {
-    echo -e "\033[1;32m[SUCCESS]\033[0m $1"
+    echo "Usage: $0 [-c config_file] [-o output_file] [--tex-only] [--no-deps]"
+    echo "  -c, --config   the CV YAML file (default: config/cv.yaml; examples/cv.yaml without config/)"
+    echo "  -o, --output   the output LaTeX file (default: output/output.tex)"
+    echo "  --tex-only     only write the LaTeX files, without producing a PDF"
+    echo "  --no-deps      skip the dependency checks and call pdflatex directly"
+    echo "  -h, --help     show this help message and exit"
+    echo
+    echo "run.sh is deprecated. Use 'cv-tools build' instead (see 'cv-tools build --help')."
 }
 
 error() {
-    echo -e "\033[1;31m[ERROR]\033[0m $1" >&2
+    echo "run.sh: error: $1" >&2
 }
 
-# Get the directory of the script
-CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CONFIG_FILE=""
+OUTPUT_FILE="$ROOT/output/output.tex"
+TEX_ONLY=0
+NO_DEPS=0
 
-# Default file paths
-CONFIG_DIR="$CURRENT_DIR/config"
-CONFIG_FILE="$CONFIG_DIR/cv.yaml"
-TEMPLATE_DIR="$CURRENT_DIR/template"
-LATEX_TEMPLATE_FILE="$TEMPLATE_DIR/template.tex.jinja"
-SCRIPT_DIR="$CURRENT_DIR/scripts"
-OUTPUT_DIR="$CURRENT_DIR/output"
-OUTPUT_FILE="$OUTPUT_DIR/output.tex"
-
-# Default value for only generating tex source file
-GENERATE_TEX_ONLY=0
-
-# Default value for skipping dependency installation
-SKIP_DEPS_INSTALL=0
-
-# Parse command-line options
-while [[ "$1" != "" ]]; do
-    case $1 in
-        -c | --config )
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -c | --config | -o | --output )
+            if [ $# -lt 2 ]; then
+                error "option $1 needs a value"
+                usage >&2
+                exit 1
+            fi
+            case "$1" in
+                -c | --config ) CONFIG_FILE="$2" ;;
+                * ) OUTPUT_FILE="$2" ;;
+            esac
             shift
-            CONFIG_FILE="$1"
             ;;
         --tex-only )
-            GENERATE_TEX_ONLY=1
+            TEX_ONLY=1
             ;;
         --no-deps )
-            SKIP_DEPS_INSTALL=1
-            ;;
-        -o | --output )
-            shift
-            OUTPUT_FILE="$1"
-            OUTPUT_DIR="$(dirname "$OUTPUT_FILE")"
+            NO_DEPS=1
             ;;
         -h | --help )
             usage
+            exit 0
             ;;
         * )
-            error "Invalid option $1"
-            usage
+            error "invalid option $1"
+            usage >&2
+            exit 1
             ;;
     esac
     shift
 done
 
-# Start of the script
-info "Intializing the script..."
+echo "run.sh is deprecated and will be removed in a future release. Use 'cv-tools build' instead." >&2
 
-# Create the output directory if it doesn't exist
-info "Creating output directory..."
-mkdir -p "$OUTPUT_DIR"
-
-# Copy the resume.cls file to the output directory
-info "Copying resume.cls to output directory..."
-cp "$TEMPLATE_DIR/resume.cls" "$OUTPUT_DIR/"
-
-# Run the Python script with the provided or default paths
-info "Generating LaTeX file..."
-python "$SCRIPT_DIR/generate_latex.py" "$CONFIG_FILE" "$LATEX_TEMPLATE_FILE" "$OUTPUT_FILE"
-
-if [ $? -eq 0 ]; then
-        success "OK."
+if [ -z "$CONFIG_FILE" ]; then
+    if [ ! -d "$ROOT/config" ]; then
+        CONFIG_FILE="$ROOT/examples/cv.yaml"
+    elif [ -f "$ROOT/config/cv.yaml" ]; then
+        CONFIG_FILE="$ROOT/config/cv.yaml"
     else
-        error "Failed"
-        exit 1
-fi
-
-# Notify the user that LaTeX generation is complete
-success "LaTeX CV generation complete. Output saved to $OUTPUT_FILE"
-
-# Compile the LaTeX file to PDF
-if [ "$GENERATE_TEX_ONLY" -eq 0 ]; then
-    # If --no-deps-install is not set, check dependencies
-    if [ "$SKIP_DEPS_INSTALL" -eq 0 ]; then
-
-        info "Verifying required libraries and dependencies..."
-
-        # Check if LaTeX is installed
-        if command_exists pdflatex; then
-            success "pdflatex found."
-        else
-            error "Error: command pdflatex not found." 
-            error "LaTeX is not installed. Please install LaTeX (e.g., TeX Live) to proceed."
-            exit 1
-        fi
-
-        # Check if Python is installed
-        if ! command_exists python; then
-            error "Error: python is not installed. Please install python to proceed."
-            exit 1
-        fi
-
-        # Check if Python version is 3.x
-        PYTHON_VERSION=$(python -c 'import sys; version=sys.version_info[:3]; print("{0}.{1}".format(*version))')
-        if [[ ! $PYTHON_VERSION =~ ^3\.[0-9]+$ ]]; then
-            error "Error: python version 3.x is required. Detected python version: $PYTHON_VERSION"
-            exit 1
-        fi
-
-        # Output Python version and location
-        PYTHON_PATH=$(command -v python)
-        success "python found. Using python version $PYTHON_VERSION from $PYTHON_PATH"
-
-        # Check and install required Python packages from requirements.txt
-        info "Checking for required Python packages..."
-        if [ -f "$CURRENT_DIR/requirements.txt" ]; then
-            pip install -r $CURRENT_DIR/requirements.txt
-            if [ $? -eq 0 ]; then
-                success "All required Python packages have been installed."
-            else
-                error "Failed to install required Python packages."
-                exit 1
+        error "$ROOT/config/cv.yaml does not exist"
+        example="$ROOT/config/<file>.yaml"
+        found=0
+        for candidate in "$ROOT"/config/*.yaml "$ROOT"/config/*.yml; do
+            if [ -f "$candidate" ]; then
+                if [ "$found" -eq 0 ]; then
+                    echo "YAML files in $ROOT/config:" >&2
+                    example="$candidate"
+                fi
+                found=1
+                echo "  $candidate" >&2
             fi
-        else
-            error "requirements.txt file not found."
-            exit 1
+        done
+        if [ "$found" -eq 0 ]; then
+            echo "$ROOT/config has no YAML files." >&2
         fi
-
-        # Read and install required LaTeX packages
-        LATEX_PACKAGE_FILE="$CURRENT_DIR/packages.list"
-        if [ -f "$LATEX_PACKAGE_FILE" ]; then
-            info "Verifying required LaTeX packages..."
-            check_latex_packages_from_file "$LATEX_PACKAGE_FILE"
-        else
-            error "LaTeX package file not found: $LATEX_PACKAGE_FILE"
-            exit 1
-        fi
-
-        # Notify the user that all dependencies are satisfied
-        success "All required libraries and dependencies have been verified and installed."
-    else
-        info "Skipping dependency checks and installations."
+        echo "Choose the CV file with -c, for example: $0 -c $example" >&2
+        exit 1
     fi
+fi
+echo "run.sh: building $CONFIG_FILE" >&2
 
-    info "Compiling LaTeX to PDF..."
-    cd "$OUTPUT_DIR" && pdflatex "$(basename "$OUTPUT_FILE")"
+new_enough() {
+    "$1" -c 'import sys; sys.exit(sys.version_info < (3, 10))' >/dev/null 2>&1
+}
 
-    if [ $? -eq 0 ]; then
-        success "PDF generation complete. Output saved to ${OUTPUT_FILE%.tex}.pdf"
+python_version() {
+    "$1" -c 'import platform; print(platform.python_version())' 2>/dev/null
+}
+
+in_environment() {
+    "$1" -c 'import os, sys; sys.exit(not (sys.prefix != sys.base_prefix or os.path.isdir(os.path.join(sys.prefix, "conda-meta"))))' >/dev/null 2>&1
+}
+
+too_old() {
+    version="$(python_version "$1")"
+    if [ -z "$version" ]; then
+        echo "$2 cannot be run as Python"
     else
-        error "Error during PDF compilation."
+        echo "$2 is $version"
+    fi
+}
+
+if [ -n "${CV_TOOLS_PYTHON:-}" ]; then
+    PY="$CV_TOOLS_PYTHON"
+    if ! new_enough "$PY"; then
+        error "Python 3.10 or newer is required ($(too_old "$PY" "CV_TOOLS_PYTHON=$PY"))"
+        exit 1
+    fi
+else
+    PY=""
+    TOO_OLD=""
+    CANDIDATES=()
+    if [ -n "${VIRTUAL_ENV:-}" ]; then
+        CANDIDATES+=("$VIRTUAL_ENV/bin/python")
+    fi
+    if [ -n "${CONDA_PREFIX:-}" ]; then
+        CANDIDATES+=("$CONDA_PREFIX/bin/python")
+    fi
+    CANDIDATES+=("$ROOT/.venv/bin/python" python3 python3.14 python3.13 python3.12 python3.11 python3.10)
+    for candidate in "${CANDIDATES[@]}"; do
+        if ! command -v "$candidate" >/dev/null 2>&1; then
+            continue
+        fi
+        if new_enough "$candidate"; then
+            PY="$candidate"
+            break
+        fi
+        TOO_OLD="${TOO_OLD:-$candidate}"
+    done
+    if [ -z "$PY" ]; then
+        if [ -n "$TOO_OLD" ]; then
+            error "Python 3.10 or newer is required ($(too_old "$TOO_OLD" "$TOO_OLD")); set CV_TOOLS_PYTHON to a newer Python"
+        else
+            error "Python 3.10 or newer is required, but no python3 was found; set CV_TOOLS_PYTHON to one"
+        fi
         exit 1
     fi
 fi
 
-exit 0
+export PYTHONPATH="$ROOT/src${PYTHONPATH:+:$PYTHONPATH}"
+
+ARGS=(build "$CONFIG_FILE" -o "$OUTPUT_FILE")
+if [ "$TEX_ONLY" -eq 1 ]; then
+    ARGS+=(--tex-only)
+fi
+
+if "$PY" -c 'import cv_tools.cli' >/dev/null 2>&1; then
+    :
+elif [ "$NO_DEPS" -eq 1 ]; then
+    problem="$("$PY" -c 'import cv_tools.cli' 2>&1 | tail -n 1)"
+    error "$PY cannot import cv-tools (${problem:-unknown error}); run without --no-deps to install its dependencies"
+    exit 1
+else
+    if ! in_environment "$PY"; then
+        # PEP 668: never pip-install into a system Python.
+        if [ -e "$ROOT/.venv" ]; then
+            error "$ROOT/.venv exists but has no usable Python 3.10 or newer; remove it or set CV_TOOLS_PYTHON"
+            exit 1
+        fi
+        echo "run.sh: creating a virtual environment in $ROOT/.venv with $PY" >&2
+        if ! "$PY" -m venv "$ROOT/.venv"; then
+            error "$PY could not create $ROOT/.venv (on Debian and Ubuntu, install python3-venv)"
+            exit 1
+        fi
+        PY="$ROOT/.venv/bin/python"
+    fi
+    echo "run.sh: installing cv-tools and its dependencies with pip into the environment of $PY" >&2
+    if ! "$PY" -m pip install "$ROOT"; then
+        error "pip could not install cv-tools and its dependencies"
+        exit 1
+    fi
+fi
+
+if [ "$NO_DEPS" -eq 1 ]; then
+    ARGS+=(--engine pdflatex)
+else
+    ARGS+=(--engine auto)
+fi
+
+exec "$PY" -m cv_tools "${ARGS[@]}"

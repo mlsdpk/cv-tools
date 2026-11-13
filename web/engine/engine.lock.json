@@ -1,0 +1,70 @@
+{
+  "repo": "SiglumProject/busytex",
+  "tag": "busytex-latex-2026-06-01-9b3bbacc9bbb",
+  "sourceCommit": "9b3bbacc9bbb57ed10a0e8b3a73789274a91bd07",
+  "pdftex": "pdfTeX 1.40.29 (TeX Live 2026)",
+  "texliveYear": 2026,
+  "archive": {
+    "name": "busytex-latex-2026-06-01-9b3bbacc9bbb.tar.gz",
+    "sha256": "0a967a435700ba398e1374c8edc3bcf2f011c2f844b51c1465a9d73c73f08c78",
+    "urls": [
+      "https://github.com/SiglumProject/busytex/releases/download/busytex-latex-2026-06-01-9b3bbacc9bbb/busytex-latex-2026-06-01-9b3bbacc9bbb.tar.gz",
+      "https://packages.siglum.org/releases/tl2026-82d0f37405264c2b/downloads/busytex/busytex-latex-2026-06-01-9b3bbacc9bbb/busytex-latex-2026-06-01-9b3bbacc9bbb.tar.gz"
+    ]
+  },
+  "files": {
+    "busytex.js": "036ecf65da27d4ac611d2864d60b3422af17d6093f386c260675e53c52c55636",
+    "busytex.wasm": "cbab7875df78a117c8bac4374e477055bf5a4779c00389e8b0d923457ea47d64",
+    "LICENSE.TL": "8147ff504e6d7d89a7c42d5c3dfbaa8705ad17f72c82a5c1bce5f4f0ee8b2fb7",
+    "LICENSE.CTAN": "380d83c62ec2ae91617b42739699676f23446039f2f88fa092da47e0c49f1eae",
+    "versions.txt": "0fa8e4a8a35fe5d9f9c118900fb6548806817da9f114cb25c163eb9962deade2",
+    "source-commit.txt": "e1f40412e4858985c1e010ccf5e4c85a8e1786d54608cff2288d9cdae8fad919"
+  },
+  "sources": [
+    {
+      "name": "busytex",
+      "what": "Build scripts and busytex.c at sourceCommit",
+      "license": "MIT",
+      "url": "https://github.com/SiglumProject/busytex/archive/9b3bbacc9bbb57ed10a0e8b3a73789274a91bd07.tar.gz",
+      "file": "busytex-9b3bbacc9bbb57ed10a0e8b3a73789274a91bd07.tar.gz",
+      "bytes": 79343,
+      "sha256": "359f094120dabccefc2f1f2cf9139d3a1c314ef52ba3153ad5e8dfaea0570963"
+    },
+    {
+      "name": "texlive-source",
+      "what": "TeX Live sources (pdfTeX, XeTeX, LuaHBTeX, dvipdfmx, kpathsea and the libraries in libs/) at the commit versions.txt names",
+      "license": "GPL, LGPL and others, see THIRD_PARTY.md",
+      "url": "https://github.com/TeX-Live/texlive-source/archive/f26cc5ed05a1f784d1e694fe5b9cfc3ce992c03d.tar.gz",
+      "file": "texlive-source-f26cc5ed05a1f784d1e694fe5b9cfc3ce992c03d.tar.gz",
+      "bytes": 149469490,
+      "sha256": "34d0a84101893a26bf1a2805e7b545b40faa3da3c84b5ac6d15f35fb707ca697"
+    },
+    {
+      "name": "expat",
+      "what": "Expat 2.5.0",
+      "license": "MIT",
+      "url": "https://github.com/libexpat/libexpat/releases/download/R_2_5_0/expat-2.5.0.tar.gz",
+      "file": "expat-2.5.0.tar.gz",
+      "bytes": 719235,
+      "sha256": "6b902ab103843592be5e99504f846ec109c1abb692e85347587f237a4ffa1033"
+    },
+    {
+      "name": "fontconfig",
+      "what": "Fontconfig 2.13.96",
+      "license": "HPND-sell-variant",
+      "url": "https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.13.96.tar.gz",
+      "file": "fontconfig-2.13.96.tar.gz",
+      "bytes": 2133746,
+      "sha256": "dbabc038d41cfc3f14da1b173ae103ba7cc678efb17e091b9e801c6286b3f684"
+    },
+    {
+      "name": "emscripten",
+      "what": "Emscripten 3.1.43 (the glue and the C library)",
+      "license": "MIT OR NCSA",
+      "url": "https://github.com/emscripten-core/emscripten/archive/refs/tags/3.1.43.tar.gz",
+      "file": "emscripten-3.1.43.tar.gz",
+      "bytes": 28943352,
+      "sha256": "f44f43a9a8696398fd2d5ad7df3cc2a265c2c097ed2938a7fac2a8ba551a0f66"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+version: 2
+name: ""
+sections:
+  - title: Text Formatting
+    layout: list
+    entries:
+      - "**Bold**, *italic* and ***bold italic*** text"
+      - "A [link to my portfolio](https://www.johndoeportfolio.com)"
+      - "A 'quoted phrase' becomes LaTeX quotes"
+      - "First line\nSecond line"
+      - "Two  spaces and four    spaces"
+      - "LaTeX specials print as written: 30% & $5 for #1 in C_1"
+      - "Literal escapes: 5\\* rating and \\[not a link\\](x)"
+      - "Unicode: café, naïve, α ≤ β, x → ∞"
+      - {latex: "Raw \\LaTeX: \\textsc{Small Caps}"}

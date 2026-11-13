@@ -1,0 +1,8 @@
+version: 2
+name: John Doe
+contact:
+  - - url: https://www.johndoeportfolio.com
+    - orcid: 0000-0000-0000-0000
+    - linkedin: https://linkedin.com/in/johndoe
+  - - johndoe@email.com
+    - Curriculum Vitae, {date}
