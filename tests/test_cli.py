@@ -94,7 +94,7 @@ def test_tex_only(run, tmp_path):
     r = run("build", V2_EXAMPLE, "--tex-only", cwd=tmp_path)
     assert r.returncode == 0, r.stderr
     assert sorted(p.name for p in tmp_path.iterdir()) == ["cv.tex", "orcid.pdf", "resume.cls"]
-    assert "\\documentclass{resume}" in (tmp_path / "cv.tex").read_text()
+    assert "\\documentclass{resume}" in (tmp_path / "cv.tex").read_text(encoding="utf-8")
     assert r.stderr.splitlines() == ["wrote cv.tex", "wrote resume.cls", "wrote orcid.pdf"]
 
 
@@ -139,7 +139,7 @@ def test_migrate_to_stdout_and_file(run, tmp_path):
     assert r.stderr == ""
     r = run("migrate", "old.yaml", "-o", "new.yaml", cwd=tmp_path)
     assert r.returncode == 0
-    assert (tmp_path / "new.yaml").read_text() == run("migrate", "old.yaml", cwd=tmp_path).stdout
+    assert (tmp_path / "new.yaml").read_text(encoding="utf-8") == run("migrate", "old.yaml", cwd=tmp_path).stdout
     assert r.stderr == "wrote new.yaml\n"
 
 
@@ -149,7 +149,7 @@ def test_migrate_into_another_directory_keeps_the_bib_file(run, tmp_path):
     shutil.copy(V1_EXAMPLE.parent / "publications.bib", tmp_path / "old" / "publications.bib")
     r = run("migrate", "old/cv.yaml", "-o", "new/cv.yaml", cwd=tmp_path)
     assert r.returncode == 0, r.stderr
-    text = (tmp_path / "new" / "cv.yaml").read_text()
+    text = (tmp_path / "new" / "cv.yaml").read_text(encoding="utf-8")
     stdout = run("migrate", "old/cv.yaml", cwd=tmp_path).stdout
     assert "    bib: publications.bib\n" in stdout
     assert text == stdout.replace("    bib: publications.bib\n", "    bib: ../old/publications.bib\n")
@@ -187,14 +187,14 @@ def test_migrate_into_a_directory(run, tmp_path):
     shutil.copy(V1_EXAMPLE, tmp_path / "old" / "my-cv.yaml")
     shutil.copy(V1_EXAMPLE.parent / "publications.bib", tmp_path / "old" / "publications.bib")
     (tmp_path / "existing").mkdir()
-    for target, written in [("existing", "existing/my-cv.yaml"), ("new/", "new/my-cv.yaml")]:
+    for target, written in [("existing", str(Path("existing/my-cv.yaml"))), ("new/", str(Path("new/my-cv.yaml")))]:
         r = run("migrate", "old/my-cv.yaml", "-o", target, cwd=tmp_path)
         assert (r.returncode, r.stderr) == (0, f"wrote {written}\n")
         doc = api.load(tmp_path / written)
         assert [s.bib for s in doc.sections if s.bib] == [(tmp_path / "old" / "publications.bib").resolve()]
     # The overwrite rules apply to the file inside the directory.
     r = run("migrate", "old/my-cv.yaml", "-o", "existing", cwd=tmp_path)
-    assert (r.returncode, r.stderr) == (1, "existing/my-cv.yaml: error: already exists; use --force to overwrite it\n")
+    assert (r.returncode, r.stderr) == (1, f"{Path('existing/my-cv.yaml')}: error: already exists; use --force to overwrite it\n")
     r = run("migrate", "old/my-cv.yaml", "-o", "old/", "--force", cwd=tmp_path)
     assert r.returncode == 1 and "the output is the input file" in r.stderr
 
@@ -221,22 +221,22 @@ def test_migrate_refuses_to_overwrite(run, tmp_path):
     (tmp_path / "new.yaml").write_text("mine")
     r = run("migrate", V1_EXAMPLE, "-o", "new.yaml", cwd=tmp_path)
     assert (r.returncode, r.stderr) == (1, "new.yaml: error: already exists; use --force to overwrite it\n")
-    assert (tmp_path / "new.yaml").read_text() == "mine"
+    assert (tmp_path / "new.yaml").read_text(encoding="utf-8") == "mine"
     r = run("migrate", V1_EXAMPLE, "-o", "new.yaml", "--force", cwd=tmp_path)
     assert r.returncode == 0, r.stderr
-    assert (tmp_path / "new.yaml").read_text().startswith("# yaml-language-server")
+    assert (tmp_path / "new.yaml").read_text(encoding="utf-8").startswith("# yaml-language-server")
 
 
 def test_migrate_never_overwrites_its_input(run, tmp_path):
     shutil.copy(V1_EXAMPLE, tmp_path / "cv.yaml")
-    before = (tmp_path / "cv.yaml").read_text()
+    before = (tmp_path / "cv.yaml").read_text(encoding="utf-8")
     for target in ("cv.yaml", "./sub/../cv.yaml", str(tmp_path / "cv.yaml")):
         (tmp_path / "sub").mkdir(exist_ok=True)
         r = run("migrate", "cv.yaml", "-o", target, "--force", cwd=tmp_path)
         assert r.returncode == 1
         assert r.stderr == (f"{target}: error: the output is the input file; write the v2 file elsewhere "
                             "and check it before replacing the v1 file\n")
-    assert (tmp_path / "cv.yaml").read_text() == before
+    assert (tmp_path / "cv.yaml").read_text(encoding="utf-8") == before
 
 
 def test_migrate_prints_warnings(run, tmp_path):
@@ -317,7 +317,7 @@ def test_build_summarizes_v1_warnings(run, tmp_path):
 
 
 def test_build_summary_is_singular_for_one_warning(run, tmp_path):
-    text = V1_EXAMPLE.read_text().replace("heading:\n", "heading:\n  nickname: JD\n", 1)
+    text = V1_EXAMPLE.read_text(encoding="utf-8").replace("heading:\n", "heading:\n  nickname: JD\n", 1)
     assert "nickname" in text
     (tmp_path / "cv.yaml").write_text(text)
     shutil.copy(V1_EXAMPLE.parent / "publications.bib", tmp_path / "publications.bib")
@@ -534,7 +534,7 @@ def test_init_refuses_to_overwrite(run, tmp_path, existing):
     r = run("init", cwd=tmp_path)
     assert r.returncode == 1
     assert r.stderr == f"{existing}: error: already exists; 'cv-tools init' never overwrites files\n"
-    assert (tmp_path / existing).read_text() == "mine"
+    assert (tmp_path / existing).read_text(encoding="utf-8") == "mine"
     assert sorted(p.name for p in tmp_path.iterdir()) == [existing]  # nothing else was written
 
 
@@ -546,7 +546,7 @@ def test_starter_matches_the_example():
 
     starter = resources.files("cv_tools") / "starter"
     assert set(cli.STARTER_FILES) == {"cv.yaml", "publications.bib"}
-    assert yaml.safe_load(starter.joinpath("cv.yaml").read_text()) == yaml.safe_load(V2_EXAMPLE.read_text())
+    assert yaml.safe_load(starter.joinpath("cv.yaml").read_text(encoding="utf-8")) == yaml.safe_load(V2_EXAMPLE.read_text(encoding="utf-8"))
     assert starter.joinpath("publications.bib").read_bytes() == (V2_EXAMPLE.parent / "publications.bib").read_bytes()
 
 
@@ -586,7 +586,7 @@ def test_doctor_tlmgr_prints_the_install_command(run, tmp_path):
     # Nothing is checked, so it works with an empty PATH.
     r = run("doctor", "--tlmgr", cwd=tmp_path, extra_env={"PATH": str(tmp_path)})
     assert r.returncode == 0, r.stderr
-    packages = (ROOT / "src" / "cv_tools" / "templates" / "latex" / "packages.txt").read_text().split("\n")
+    packages = (ROOT / "src" / "cv_tools" / "templates" / "latex" / "packages.txt").read_text(encoding="utf-8").split("\n")
     names = [line for line in packages if line and not line.startswith("#")]
     assert r.stdout == "tlmgr install latex-bin " + " ".join(names) + "\n"
 

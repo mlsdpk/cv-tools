@@ -22,12 +22,12 @@ RUN apt-get update \
 
 WORKDIR /tmp/install-tl
 
-# Each layer resolves the repository again, so a cached layer 1 never hands an
-# old mirror to layer 2. install-tl only warns about a missing or expired key,
-# so the greps require "(verified)".
+# One layer installs everything from one mirror, since mirrors lag each other by
+# a day or so. install-tl only warns about a missing or expired key, so the
+# greps require "(verified)".
 COPY docker/tl-repository.sh /usr/local/bin/tl-repository
+COPY src/cv_tools/templates/latex/packages.txt /tmp/packages.txt
 
-# Layer 1 does not depend on packages.txt, so editing that file reuses it.
 RUN curl -fsSL -o install-tl-unx.tar.gz "${TL_HISTORIC}/${TL_YEAR}/install-tl-unx.tar.gz" \
  && echo "${INSTALL_TL_SHA512}  install-tl-unx.tar.gz" | sha512sum -c - \
  && tar -xzf install-tl-unx.tar.gz --strip-components=1 \
@@ -38,20 +38,11 @@ RUN curl -fsSL -o install-tl-unx.tar.gz "${TL_HISTORIC}/${TL_YEAR}/install-tl-un
  && grep -q "^Installing TeX Live ${TL_YEAR} from: .* (verified)$" /tmp/install-tl.out \
  && platform_dir="$(echo /usr/local/texlive/bin/*)" \
  && ln -s "${platform_dir}" /usr/local/texlive/bin/default \
- && /usr/local/texlive/bin/default/tlmgr --repository "${repository}" install latex-bin 2>&1 | tee /tmp/tlmgr.out \
+ && { echo latex-bin; sed -e 's/#.*//' /tmp/packages.txt; } \
+      | xargs /usr/local/texlive/bin/default/tlmgr --repository "${repository}" install 2>&1 | tee /tmp/tlmgr.out \
  && grep -q "^tlmgr: package repository .* (verified)$" /tmp/tlmgr.out \
  && rm -rf /usr/local/texlive/tlpkg/backups /usr/local/texlive/texmf-var/web2c/*/*.log \
-      /usr/local/texlive/install-tl.log /tmp/install-tl /tmp/*.out
-
-COPY src/cv_tools/templates/latex/packages.txt /tmp/packages.txt
-
-RUN repository="$(TL_YEAR="${TL_YEAR}" TL_HISTORIC="${TL_HISTORIC}" TL_MIRROR="${TL_MIRROR}" tl-repository)" \
- && echo "installing the cv-tools packages from ${repository}" \
- && sed -e 's/#.*//' /tmp/packages.txt | xargs /usr/local/texlive/bin/default/tlmgr --repository "${repository}" install \
-      2>&1 | tee /tmp/tlmgr.out \
- && grep -q "^tlmgr: package repository .* (verified)$" /tmp/tlmgr.out \
- && rm -rf /usr/local/texlive/tlpkg/backups /usr/local/texlive/texmf-var/web2c/*/*.log \
-      /tmp/packages.txt /tmp/tlmgr.out
+      /usr/local/texlive/install-tl.log /tmp/install-tl /tmp/*.out /tmp/packages.txt
 
 
 FROM ${PYTHON_IMAGE}

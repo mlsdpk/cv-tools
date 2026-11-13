@@ -14,7 +14,7 @@ from fakes import DAEMON_DOWN, fake_docker, fake_tex, posix_only
 
 
 def test_required_packages_are_packages_txt():
-    lines = (TEMPLATE_DIR / "packages.txt").read_text().splitlines()
+    lines = (TEMPLATE_DIR / "packages.txt").read_text(encoding="utf-8").splitlines()
     assert doctor.required_packages() == [line for line in lines if line and not line.startswith("#")]
 
 
@@ -38,9 +38,12 @@ def _tlpdb() -> Path:
 
 @pytest.mark.tex
 def test_every_probe_belongs_to_its_package():
+    text = _tlpdb().read_text(encoding="utf-8", errors="replace")
+    if f"depend release/{doctor.TESTED_TEXLIVE}\n" not in text:
+        pytest.skip(f"packages.txt names TeX Live {doctor.TESTED_TEXLIVE} packages")
     runfiles: dict[str, set[str]] = {}
     package = None
-    for line in _tlpdb().read_text(encoding="utf-8", errors="replace").splitlines():
+    for line in text.splitlines():
         if line.startswith("name "):
             package = line[5:].strip()
         elif line.startswith(" ") and package:

@@ -63,7 +63,7 @@ def fake_python(tmp_path, import_ok=True, name="fakepython", version=None, envir
 
 def calls(log):
     out, current = [], []
-    for line in log.read_text().splitlines():
+    for line in log.read_text(encoding="utf-8").splitlines():
         if line == "--":
             out.append(current)
             current = []
@@ -320,7 +320,7 @@ def test_python_path_points_to_the_checkout(tmp_path):
     script.write_text(f'#!/bin/sh\necho "$PYTHONPATH" > "{tmp_path}/pythonpath"\nexit 0\n')
     script.chmod(0o755)
     run_sh(root, "--no-deps", cwd=tmp_path, python=script)
-    assert (tmp_path / "pythonpath").read_text().strip().split(":")[0] == f"{root}/src"
+    assert (tmp_path / "pythonpath").read_text(encoding="utf-8").strip().split(":")[0] == f"{root}/src"
 
 
 def test_old_python_is_rejected(tmp_path):

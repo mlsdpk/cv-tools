@@ -58,7 +58,7 @@ def browser():
         _skip_or_fail("pdftoppm is not installed")
     with sync_playwright() as p:
         try:
-            chromium = p.chromium.launch()
+            chromium = p.chromium.launch(args=["--font-render-hinting=none"])
         except Exception as e:  # browsers not downloaded
             _skip_or_fail(f"Chromium for Playwright is not available ({str(e).splitlines()[0]})")
         yield chromium, fonts
@@ -194,7 +194,7 @@ def main(paths: list[str]) -> None:
     out = ARTIFACTS / "fidelity"
     out.mkdir(parents=True, exist_ok=True)
     with sync_playwright() as p:
-        chromium = p.chromium.launch()
+        chromium = p.chromium.launch(args=["--font-render-hinting=none"])
         for arg in paths:
             path = Path(arg)
             doc = api.load(path)

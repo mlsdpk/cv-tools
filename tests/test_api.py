@@ -41,7 +41,7 @@ def test_render_result_files():
 
 
 def test_class_has_no_tikz():
-    cls = (TEMPLATE_DIR / "resume.cls").read_text()
+    cls = (TEMPLATE_DIR / "resume.cls").read_text(encoding="utf-8")
     for package in ("tikz", "pgf", "scalerel", "academicons"):
         assert f"{{{package}}}" not in cls
     assert "\\includegraphics" in cls
@@ -142,7 +142,7 @@ def test_write_tex(tmp_path):
     result = api.render_tex(api.loads(MINIMAL))
     written = engine.write_tex(result, tmp_path / "sub" / "my.tex")
     assert [p.name for p in written] == ["my.tex", "resume.cls", "orcid.pdf"]
-    assert (tmp_path / "sub" / "my.tex").read_text() == result.tex
+    assert (tmp_path / "sub" / "my.tex").read_text(encoding="utf-8") == result.tex
 
 
 def test_test_helpers_compile_with_the_local_pdflatex(monkeypatch):

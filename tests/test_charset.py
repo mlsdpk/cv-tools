@@ -1,6 +1,7 @@
 """Characters pdflatex cannot print are reported before compiling, with their place in the file."""
 
 import io
+import os
 import re
 import subprocess
 import sys
@@ -128,7 +129,7 @@ def test_v1_files_are_checked_at_the_v1_place(tmp_path):
 def test_cli_reports_the_character(tmp_path):
     (tmp_path / "cv.yaml").write_text("version: 2\nname: Jane 😀 Roe\n", encoding="utf-8")
     r = subprocess.run([sys.executable, "-m", "cv_tools", "build", "cv.yaml", "--tex-only"], cwd=tmp_path,
-                       capture_output=True, text=True)
+                       capture_output=True, text=True, encoding="utf-8", env={**os.environ, "PYTHONIOENCODING": "utf-8"})
     assert r.returncode == 1
     assert r.stderr.startswith("cv.yaml:2:12: error: name: the character '😀' (U+1F600 GRINNING FACE)")
     assert not (tmp_path / "cv.tex").exists()
@@ -169,4 +170,4 @@ def test_class_declares_only_what_latex_leaves_out(tmp_path):
     ours = derive_unicode.declared(TEMPLATE_DIR / "resume.cls")
     assert {ord(c) for c in GREEK + SYMBOLS} - latex <= ours
     assert not ours & latex
-    assert re.findall(r"DeclareUnicodeCharacter\{(\w+)\}", (TEMPLATE_DIR / "resume.cls").read_text())
+    assert re.findall(r"DeclareUnicodeCharacter\{(\w+)\}", (TEMPLATE_DIR / "resume.cls").read_text(encoding="utf-8"))

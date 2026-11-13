@@ -71,6 +71,9 @@ jobs:
             latex-bin
             cm-unicode
             lm-math
+            pgf
+            scalerel
+            academicons
           package-file: src/cv_tools/templates/latex/packages.txt
 
       - name: Install pdftoppm for the pixel tests

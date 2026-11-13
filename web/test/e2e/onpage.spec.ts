@@ -390,11 +390,11 @@ test("required fields left empty show a placeholder at text size, and a section 
   await expect.poll(() => savedYaml(page)).toMatch(/^name: (''|"")$/m);
   const name = at(page, "name");
   await expect(name).toHaveAttribute("data-ph", "add name");
+  await expect.poll(() => name.evaluate((e) => getComputedStyle(e, "::before").content)).toBe('"add name"');
   const ph = await name.evaluate((e) => {
     const s = getComputedStyle(e, "::before");
-    return { content: s.content, size: s.fontSize, transform: s.textTransform };
+    return { size: s.fontSize, transform: s.textTransform };
   });
-  expect(ph.content).toBe('"add name"');
   expect(parseFloat(ph.size)).toBeLessThan(16);
   expect(ph.transform).toBe("none");
   await expect(at(page, "sections.1.title")).toHaveAttribute("data-ph", "add title");

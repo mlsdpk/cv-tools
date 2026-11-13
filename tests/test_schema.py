@@ -1,6 +1,7 @@
 """JSON Schema: validity, valid files, and friendly line-numbered errors."""
 
 import json
+import os
 import warnings
 
 import jsonschema
@@ -29,7 +30,7 @@ def test_schema_is_valid_draft_2020_12():
 
 def test_schema_file_is_packaged_json():
     path = ROOT / "src" / "cv_tools" / "schema" / "cv-v2.schema.json"
-    assert json.loads(path.read_text()) == schema()
+    assert json.loads(path.read_text(encoding="utf-8")) == schema()
 
 
 @pytest.mark.parametrize("path", V2_FILES, ids=ids(V2_FILES))
@@ -108,7 +109,7 @@ def test_invalid_fixture_message(name):
         with pytest.raises(CVError) as info:
             api.load(path)
     errors = info.value.errors if isinstance(info.value, ValidationError) else [info.value]
-    expected = [f"{path}:" + m.replace("{dir}", str(path.parent.resolve())) for m in INVALID[name]]
+    expected = [f"{path}:" + m.replace("{dir}/", str(path.parent.resolve()) + os.sep) for m in INVALID[name]]
     assert [str(e) for e in errors] == expected
 
 
