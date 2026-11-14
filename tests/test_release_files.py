@@ -45,13 +45,13 @@ def _github_glob(pattern: str) -> re.Pattern:
 
 
 @pytest.mark.parametrize("workflow", ["docker.yml", "release.yml", "pages.yml"])
-def test_only_major_and_minor_tags_release(workflow):
+def test_only_release_tags_publish(workflow):
     text = (WORKFLOWS / workflow).read_text(encoding="utf-8")
     (pattern,) = re.findall(r'tags: \["([^"]+)"\]', text)
     glob = _github_glob(pattern)
-    for tag in ("v2.0.0", "v2.1.0", "v10.12.0"):
+    for tag in ("v2.0.0", "v2.0.1", "v2.1.10", "v10.12.0"):
         assert glob.match(tag), tag
-    for tag in ("v2.0.1", "v2.1.10", "v2.0.0rc1", "v2.0.0-beta.1", "v2.0.0.dev0", "v2.0", "version-2"):
+    for tag in ("v2.0.0rc1", "v2.0.0-beta.1", "v2.0.0.dev0", "v2.0", "v2", "version-2"):
         assert not glob.match(tag), tag
 
 

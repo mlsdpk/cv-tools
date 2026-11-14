@@ -1,6 +1,6 @@
 """cv-tools: generate a LaTeX CV from a YAML file."""
 
-__version__ = "2.0.0"
+__version__ = "2.0.1"
 
 from .api import build_pdf, load, migrate_text, render_html, render_tex  # noqa: E402
 

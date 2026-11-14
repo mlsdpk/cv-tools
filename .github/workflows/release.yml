@@ -3,7 +3,7 @@ name: Release
 # A vX.Y.Z tag publishes cv-tools to PyPI; docker.yml pushes the image for the same tag.
 on:
   push:
-    tags: ["v[0-9]+.[0-9]+.0"]
+    tags: ["v[0-9]+.[0-9]+.[0-9]+"]
 
 permissions:
   contents: read

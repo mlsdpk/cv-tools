@@ -1,11 +1,11 @@
 name: Web app
 
 # Builds and tests the browser app (web/) on every push and pull request. Only a release tag
-# (vX.Y.0, as for PyPI and Docker) deploys it to GitHub Pages, at https://cv-tools.phonethk.com/.
+# (vX.Y.Z, as for PyPI and Docker) deploys it to GitHub Pages, at https://cv-tools.phonethk.com/.
 on:
   push:
     branches: [master]
-    tags: ["v[0-9]+.[0-9]+.0"]
+    tags: ["v[0-9]+.[0-9]+.[0-9]+"]
   pull_request:
   # Deploys when run against a release tag.
   workflow_dispatch:
@@ -34,7 +34,7 @@ jobs:
         env:
           EVENT: ${{ github.event_name }}
         run: |
-          if [ "$EVENT" = pull_request ] || ! [[ "$GITHUB_REF" =~ ^refs/tags/v[0-9]+\.[0-9]+\.0$ ]]; then
+          if [ "$EVENT" = pull_request ] || ! [[ "$GITHUB_REF" =~ ^refs/tags/v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "deploy=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
