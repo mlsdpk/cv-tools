@@ -62,7 +62,7 @@ async function boot(root: string, totalBytes: number): Promise<PyodideAPI> {
   let py: PyodideAPI;
   try {
     py = await loadPyodide({ indexURL, stdout: () => {}, stderr: () => {} });
-    await py.loadPackage(["cv-tools"], { messageCallback: () => {}, errorCallback: (m) => console.warn(m) });
+    await py.loadPackage(["cv-tools-cli"], { messageCallback: () => {}, errorCallback: (m) => console.warn(m) });
   } finally {
     done();
   }

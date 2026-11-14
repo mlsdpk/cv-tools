@@ -14,7 +14,7 @@ describe.skipIf(!ready)("py bridge in Pyodide", () => {
   beforeAll(async () => {
     const { loadPyodide } = await import(/* @vite-ignore */ PYODIDE + "pyodide.mjs");
     const py = await loadPyodide({ indexURL: PYODIDE, stdout: () => {}, stderr: () => {} });
-    await py.loadPackage(["cv-tools"], { messageCallback: () => {} });
+    await py.loadPackage(["cv-tools-cli"], { messageCallback: () => {} });
     py.runPython(read("../../src/py/bridge.py"));
     call = (name, ...args) => JSON.parse((py.globals.get(name) as Fn)(...args.map((a) => JSON.stringify(a))));
   }, 120_000);
