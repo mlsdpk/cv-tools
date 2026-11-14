@@ -115,3 +115,55 @@ test("every page box starts its first line where the PDF does", async ({ page })
   expect(html.length).toBe(tex.length);
   html.forEach((y, i) => expect(Math.abs(y - tex[i]), `page ${i + 1}: HTML ${y.toFixed(1)} px, PDF ${tex[i].toFixed(1)} px`).toBeLessThanOrEqual(2));
 });
+
+// iOS WebKit lays out text wrongly under CSS zoom (desktop engines do not show it), so the page is scaled with a transform.
+test("phone: the page is scaled with a transform and its box takes the scaled size", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await openApp(page);
+  await needLive(page);
+  await expect(page.locator("#live .cv-page").first()).toBeVisible();
+  const measure = () =>
+    page.evaluate(() => {
+      const host = document.getElementById("live")!;
+      const root = host.shadowRoot!;
+      const zoomed = [document.documentElement, ...document.querySelectorAll("*"), ...root.querySelectorAll("*")]
+        .filter((e) => getComputedStyle(e).zoom !== "1")
+        .map((e) => `${e.tagName.toLowerCase()}.${e.className}`);
+      const text = root.querySelector<HTMLElement>('[data-path="sections.1.entries.0.title"]')!;
+      const pages = [...root.querySelectorAll<HTMLElement>(".cv-document > .cv-page")];
+      const first = pages[0].getBoundingClientRect();
+      const last = pages.at(-1)!.getBoundingClientRect();
+      const box = host.getBoundingClientRect();
+      const scroller = document.getElementById("preview-scroll")!;
+      return {
+        zoomed,
+        scale: first.width / pages[0].offsetWidth,
+        text: { screen: text.getBoundingClientRect().height, layout: text.offsetHeight },
+        box: { left: box.left, top: box.top, width: box.width, height: box.height },
+        pages: { left: first.left, top: first.top, width: first.width, height: last.bottom - first.top },
+        overflow: [document.documentElement.scrollWidth - document.documentElement.clientWidth, scroller.scrollWidth - scroller.clientWidth],
+      };
+    });
+  const check = async (step: string) => {
+    const m = await measure();
+    expect(m.zoomed, step).toEqual([]);
+    expect(m.scale, step).toBeLessThan(0.6);
+    // offsetHeight is rounded to a whole layout pixel.
+    expect(Math.abs(m.text.screen - m.text.layout * m.scale), step).toBeLessThan(m.scale);
+    for (const k of ["left", "top", "width", "height"] as const) expect(Math.abs(m.box[k] - m.pages[k]), `${step}: ${k}`).toBeLessThan(1);
+    expect(m.overflow, step).toEqual([0, 0]);
+  };
+  await check("on load");
+  // Selecting an entry adds its tools and makes the page taller.
+  await at(page, "sections.1.entries.0.title").click();
+  await page.keyboard.press("Escape");
+  await expect(page.locator("#live .cv-tools")).toBeVisible();
+  await check("with an entry selected");
+  // Scrolled to the end, the last page ends one padding above the bottom of the view.
+  const gap = await page.locator("#preview-scroll").evaluate((s) => {
+    s.scrollTo(0, s.scrollHeight);
+    const pages = document.getElementById("live")!.shadowRoot!.querySelectorAll(".cv-document > .cv-page");
+    return s.getBoundingClientRect().top + s.clientTop + s.clientHeight - pages[pages.length - 1].getBoundingClientRect().bottom - parseFloat(getComputedStyle(s).paddingBottom);
+  });
+  expect(Math.abs(gap)).toBeLessThan(1);
+});

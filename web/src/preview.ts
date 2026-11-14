@@ -62,11 +62,12 @@ const SLACK = 20;
 export const ALIAS_HINT = "Defined through a YAML alias. Edit it in the YAML, where the anchor (&) is.";
 
 const UI_FONT = "Inter, system-ui, sans-serif";
-/** A size in screen pixels, whatever the page's zoom. */
+/** A size in screen pixels, whatever the page's scale. */
 const px = (n: number) => `calc(${n}px * var(--cv-unzoom))`;
 const BASE_CSS = `
-:host { display: block; --cv-unzoom: 1; }
-.cv-root { position: relative; }
+:host { display: block; --cv-scale: 1; --cv-unzoom: 1; }
+/* Scaled to fit the screen; the host reserves the scaled size (setScale). */
+.cv-root { position: relative; width: max-content; transform: scale(var(--cv-scale)); transform-origin: 0 0; }
 :host(.cv-blocked) .cv-root { opacity: 0.45; filter: grayscale(1); }
 [data-cv-edit], .cv-ph { cursor: text; }
 :host(.cv-editable) [data-cv-edit]:not([data-editing]):hover { outline: 1px dashed #6b6b6b; outline-offset: 2px; }
@@ -133,7 +134,7 @@ const BASE_CSS = `
 .cv-actions button { border: 1px solid #000; padding: 4px 10px; }
 .cv-actions .cv-primary { background: #000; color: #fff; }
 @media (pointer: coarse) {
-  /* 44 CSS pixels on screen, whatever the page's zoom. */
+  /* 44 CSS pixels on screen, whatever the page's scale. */
   :host { --cv-tools-h: ${px(46)}; }
   .cv-tools { font-size: ${px(13)}; }
   .cv-tools button, .cv-add-entry, .cv-add button, .cv-add input, .cv-add select, .cv-layouts label {
@@ -320,6 +321,7 @@ export class LivePreview {
     });
     this.tools = this.makeTools();
     this.root.append(this.content);
+    new ResizeObserver(() => this.reserve()).observe(this.content);
     this.renderAddButton();
 
     this.root.addEventListener("pointerdown", (e) => this.onPointerDown(e as PointerEvent), true);
@@ -487,9 +489,18 @@ export class LivePreview {
     this.host.classList.toggle("cv-blocked", on);
   }
 
-  setZoom(zoom: number) {
-    this.host.style.zoom = String(zoom);
-    this.host.style.setProperty("--cv-unzoom", String(1 / zoom));
+  /** Scales the page with a transform: CSS zoom breaks text layout in iOS WebKit. */
+  setScale(scale: number) {
+    this.host.style.setProperty("--cv-scale", String(scale));
+    this.host.style.setProperty("--cv-unzoom", String(1 / scale));
+    this.reserve();
+  }
+
+  /** A transform keeps the layout size, so the host takes the scaled size for scrolling and centring. */
+  private reserve() {
+    const { width, height } = this.content.getBoundingClientRect();
+    this.host.style.width = `${width}px`;
+    this.host.style.height = `${height}px`;
   }
 
   pageWidth(): number {
@@ -525,6 +536,7 @@ export class LivePreview {
   }
 
   private pagesChanged() {
+    this.reserve();
     this.host.dataset.pages = String(this.pages().length);
     this.cb.pages();
   }

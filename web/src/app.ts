@@ -643,7 +643,7 @@ export class App {
     $("hint-migrate").hidden = blocked !== "v1";
   }
 
-  private zoom(): number {
+  private scale(): number {
     const scroller = $("preview-scroll");
     const style = getComputedStyle(scroller);
     const avail = scroller.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight) - (this.phone.matches ? 16 : 0);
@@ -661,7 +661,7 @@ export class App {
     clearTimeout(this.fitTimer);
     this.fitTimer = window.setTimeout(() => {
       if (this.effectiveLayout() === "yaml") return;
-      this.live.setZoom(this.zoom());
+      this.live.setScale(this.scale());
       if (this.live.needsPages) this.live.repaginate();
       this.updatePageInfo();
     }, 30);
