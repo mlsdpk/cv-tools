@@ -11,7 +11,7 @@ A tool to automate the creation of professional LaTeX-based CVs.
 ![Jinja](https://img.shields.io/badge/jinja-white.svg?style=for-the-badge&logo=jinja&logoColor=black)
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 
-![cover photo](docs/img/cover.png)
+![cover photo](https://raw.githubusercontent.com/mlsdpk/cv-tools/master/docs/img/cover.png)
 
 </div>
 
@@ -38,7 +38,7 @@ CV Tools turns a YAML file into a professional LaTeX CV. You write your details 
 
 Open [cv-tools.phonethk.com](https://cv-tools.phonethk.com/), edit the YAML and download the PDF. Nothing to install, just an up-to-date browser.
 
-![the web app](docs/img/web-demo.gif)
+![the web app](https://raw.githubusercontent.com/mlsdpk/cv-tools/master/docs/img/web-demo.gif)
 
 # Getting Started
 
@@ -47,7 +47,7 @@ Open [cv-tools.phonethk.com](https://cv-tools.phonethk.com/), edit the YAML and 
 Install cv-tools with [pipx](https://pipx.pypa.io). It needs Python 3.10 or newer.
 
 ```bash
-$ pipx install cv-tools
+$ pipx install cv-tools-cli
 ```
 
 ## Usage
@@ -88,7 +88,7 @@ $ cv-tools build cv.yaml
 
 # YAML Configuration
 
-A CV file has a header and a list of sections. The complete example is [`examples/cv.yaml`](examples/cv.yaml).
+A CV file has a header and a list of sections. The complete example is [`examples/cv.yaml`](https://github.com/mlsdpk/cv-tools/blob/master/examples/cv.yaml).
 
 ## Header
 
@@ -114,7 +114,7 @@ contact:
     - Curriculum Vitae, {date}
 ```
 
-![contact lines](docs/img/contact.png)
+![contact lines](https://raw.githubusercontent.com/mlsdpk/cv-tools/master/docs/img/contact.png)
 
 ## Sections
 
@@ -169,7 +169,7 @@ The `entries` layout lists positions, such as jobs or teaching.
         - Managed a team of volunteers and ensured smooth operation of all events.
 ```
 
-![entries layout](docs/img/layout-entries.png)
+![entries layout](https://raw.githubusercontent.com/mlsdpk/cv-tools/master/docs/img/layout-entries.png)
 
 ### `entries-inline`
 
@@ -197,7 +197,7 @@ The `entries-inline` layout takes the same fields as `entries` and prints them m
         - 'Relevant Coursework: Machine Learning, Advanced Algorithms'
 ```
 
-![entries-inline layout](docs/img/layout-entries-inline.png)
+![entries-inline layout](https://raw.githubusercontent.com/mlsdpk/cv-tools/master/docs/img/layout-entries-inline.png)
 
 ### `list`
 
@@ -230,7 +230,7 @@ The `list` layout prints bullet points. An entry is plain text, or a `text` with
         - International Conference on Learning Representations (ICLR)
 ```
 
-![list layout](docs/img/layout-list.png)
+![list layout](https://raw.githubusercontent.com/mlsdpk/cv-tools/master/docs/img/layout-list.png)
 
 ### `pairs`
 
@@ -253,7 +253,7 @@ The `pairs` layout prints a label on the left and its text on the right, useful 
       text: AWS, Docker, Kubernetes, TensorFlow, Git, Jenkins, Linux, Jira
 ```
 
-![pairs layout](docs/img/layout-pairs.png)
+![pairs layout](https://raw.githubusercontent.com/mlsdpk/cv-tools/master/docs/img/layout-pairs.png)
 
 ### `dated`
 
@@ -280,7 +280,7 @@ The `dated` layout prints one line per entry with the date in front.
       text: "'Ethics in AI', Panel discussion, Ethics in Technology Conference 2022, Metropolis."
 ```
 
-![dated layout](docs/img/layout-dated.png)
+![dated layout](https://raw.githubusercontent.com/mlsdpk/cv-tools/master/docs/img/layout-dated.png)
 
 ### `text`
 
@@ -298,7 +298,7 @@ The `text` layout prints one paragraph per entry, for a summary or a research st
     - Interested in autonomous navigation, scalable systems and teaching programming to new developers.
 ```
 
-![text layout](docs/img/layout-text.png)
+![text layout](https://raw.githubusercontent.com/mlsdpk/cv-tools/master/docs/img/layout-text.png)
 
 ### `publications`
 
@@ -316,7 +316,7 @@ The `publications` layout lists the entries of a BibTeX file. It has no `entries
   highlight: [John Doe]
 ```
 
-![publications layout](docs/img/layout-publications.png)
+![publications layout](https://raw.githubusercontent.com/mlsdpk/cv-tools/master/docs/img/layout-publications.png)
 
 ### `newpage`
 
@@ -340,7 +340,7 @@ sections:
         subtitle: Cloud Native Computing Foundation
 ```
 
-![newpage](docs/img/layout-newpage.png)
+![newpage](https://raw.githubusercontent.com/mlsdpk/cv-tools/master/docs/img/layout-newpage.png)
 
 # Text Formatting
 
@@ -359,7 +359,7 @@ Every text field understands a small Markdown-like markup.
 | `5\* rating`                  | 5\* rating, with a literal star         |
 | `{latex: '\textsc{Name}'}`    | Raw LaTeX, inserted as it is            |
 
-Accented letters, Greek letters and common math symbols print as they are. See [the full list of supported characters](src/cv_tools/templates/latex/unicode.txt).
+Accented letters, Greek letters and common math symbols print as they are. See [the full list of supported characters](https://github.com/mlsdpk/cv-tools/blob/master/src/cv_tools/templates/latex/unicode.txt).
 
 ```yaml
 - title: Text Formatting
@@ -376,7 +376,7 @@ Accented letters, Greek letters and common math symbols print as they are. See [
     - {latex: "Raw \\LaTeX: \\textsc{Small Caps}"}
 ```
 
-![text formatting](docs/img/text-formatting.png)
+![text formatting](https://raw.githubusercontent.com/mlsdpk/cv-tools/master/docs/img/text-formatting.png)
 
 # Editor Support
 
@@ -406,7 +406,7 @@ Keep your publications in a BibTeX file and add a `publications` section that po
 
 > Most BibTeX entries have no `url` field. cv-tools adds a [Link] only when the entry has one, so add the field by hand where you want the link.
 
-Publications appear in the order of the `.bib` file. An example BibTeX file is provided [here](examples/publications.bib).
+Publications appear in the order of the `.bib` file. An example BibTeX file is provided [here](https://github.com/mlsdpk/cv-tools/blob/master/examples/publications.bib).
 
 # Migrating from v1
 
@@ -436,7 +436,7 @@ The new file gives the same PDF.
 | `dates`                                             | `date`                                |
 | `responsibilities`                                  | `bullets`                             |
 
-A few small fixes change the PDF of some v1 files. See the [CHANGELOG](CHANGELOG.md).
+A few small fixes change the PDF of some v1 files. See the [CHANGELOG](https://github.com/mlsdpk/cv-tools/blob/master/CHANGELOG.md).
 
 `run.sh` still works but is deprecated. Use `cv-tools build` instead.
 

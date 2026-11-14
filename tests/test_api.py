@@ -18,7 +18,7 @@ MINIMAL = "version: 2\nname: Jane Roe\nsections: []\n"
 
 def test_public_api():
     # pyproject.toml takes the version from cv_tools.__version__.
-    assert importlib.metadata.version("cv-tools") == cv_tools.__version__
+    assert importlib.metadata.version("cv-tools-cli") == cv_tools.__version__
     assert cv_tools.load is api.load
     assert set(cv_tools.__all__) >= {"load", "render_tex", "build_pdf", "migrate_text"}
 

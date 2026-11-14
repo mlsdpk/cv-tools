@@ -220,7 +220,7 @@ export async function writePreviewFonts(out) {
 }
 
 function findWheel(dir) {
-  const whl = readdirSync(dir).filter((f) => /^cv_tools-.*\.whl$/.test(f)).sort();
+  const whl = readdirSync(dir).filter((f) => /^cv_tools_cli-.*\.whl$/.test(f)).sort();
   return whl.length ? join(dir, whl[whl.length - 1]) : null;
 }
 
@@ -298,8 +298,8 @@ async function main() {
   const wheelFile = wheelPath.split(/[\\/]/).pop();
   const cvVersion = wheelFile.split("-")[1];
   writeFileSync(join(pyDir, wheelFile), wheel);
-  packages["cv-tools"] = {
-    name: "cv-tools", version: cvVersion, file_name: wheelFile, install_dir: "site", sha256: sha256(wheel),
+  packages["cv-tools-cli"] = {
+    name: "cv-tools-cli", version: cvVersion, file_name: wheelFile, install_dir: "site", sha256: sha256(wheel),
     package_type: "package", imports: ["cv_tools"],
     depends: ["pyyaml", "jinja2", "pybtex", "jsonschema", "ruamel-yaml", "latexcodec"], unvendored_tests: false, tool: {},
   };

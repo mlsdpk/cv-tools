@@ -64,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/project/cv-tools/
+      url: https://pypi.org/project/cv-tools-cli/
     permissions:
       id-token: write
     steps:
